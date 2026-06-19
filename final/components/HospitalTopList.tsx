@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { Hospital } from "@/lib/home-data";
 
 type HospitalTopListProps = {
@@ -16,9 +17,12 @@ export function HospitalTopList({ hospitals }: HospitalTopListProps) {
             <span className="absolute left-1.5 top-2 grid h-3.5 w-8 place-items-center rounded-[14px] bg-primary text-[8px] font-semibold leading-none text-white">
               BEST
             </span>
-            <img
+            <Image
               src={hospital.image}
               alt=""
+              width={44}
+              height={44}
+              unoptimized
               className="absolute right-1.5 top-2.5 h-11 w-11 rounded-xl object-cover"
             />
             <div className="pt-[44px]">
@@ -29,7 +33,14 @@ export function HospitalTopList({ hospitals }: HospitalTopListProps) {
                 {hospital.description}
               </p>
               <div className="mt-1 flex items-center gap-0.5 text-[8px] font-semibold leading-[10px] text-[#6b7280]">
-                <img src="/assets/icons/common/star.png" alt="" className="h-2 w-2" />
+                <Image
+                  src="/assets/icons/common/star.png"
+                  alt=""
+                  width={8}
+                  height={8}
+                  unoptimized
+                  className="h-2 w-2"
+                />
                 <span className="truncate">{hospital.rating}</span>
               </div>
               <p className="mt-1 text-xs font-semibold leading-[15px] text-black">

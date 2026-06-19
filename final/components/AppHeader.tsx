@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const headerIcons = [
   { label: "혜택", src: "/assets/icons/header/gift.png" },
   { label: "검색", src: "/assets/icons/header/search.png" },
@@ -28,9 +30,12 @@ export function AppHeader() {
           <span className="text-[26px] font-extrabold leading-[39px] text-figmaMuted">
             나만의
           </span>
-          <img
+          <Image
             src="/assets/logos/brand-mark.png"
             alt="닥터"
+            width={40}
+            height={24}
+            unoptimized
             className="h-6 w-10 object-contain"
           />
         </div>
@@ -42,7 +47,14 @@ export function AppHeader() {
               aria-label={icon.label}
               className="relative grid h-6 w-6 place-items-center"
             >
-              <img src={icon.src} alt="" className="h-6 w-6 object-contain" />
+              <Image
+                src={icon.src}
+                alt=""
+                width={24}
+                height={24}
+                unoptimized
+                className="h-6 w-6 object-contain"
+              />
               {icon.badge ? (
                 <span className="absolute -right-1 -top-1 grid h-4 min-w-4 place-items-center rounded-full bg-[#f04242] px-1 text-[10px] font-bold leading-none text-white">
                   N

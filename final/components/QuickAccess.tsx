@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { QuickAction } from "@/lib/home-data";
 
 type QuickAccessProps = {
@@ -17,9 +18,12 @@ export function QuickAccess({ actions }: QuickAccessProps) {
             type="button"
             className="flex h-[108px] flex-col items-center rounded-[14px] bg-white px-2 pb-2 pt-3 shadow-soft"
           >
-            <img
+            <Image
               src={action.icon}
               alt=""
+              width={48}
+              height={48}
+              unoptimized
               className={`h-12 w-12 object-contain ${index === 0 ? "mt-0" : ""}`}
             />
             <span className="mt-1 whitespace-pre-line text-center text-sm font-semibold leading-[18px] text-textPrimary">

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { CareItem } from "@/lib/home-data";
 
 type PopularCareGridProps = {
@@ -29,7 +30,14 @@ export function PopularCareGrid({ items }: PopularCareGridProps) {
                 </p>
               </div>
             </div>
-            <img src={item.icon} alt="" className="h-[78px] w-[78px] object-contain" />
+            <Image
+              src={item.icon}
+              alt=""
+              width={78}
+              height={78}
+              unoptimized
+              className="h-[78px] w-[78px] object-contain"
+            />
           </article>
         ))}
       </div>
@@ -47,7 +55,14 @@ export function PopularCareGrid({ items }: PopularCareGridProps) {
                 {item.subtitle}
               </p>
             </div>
-            <img src={item.icon} alt="" className="h-[52px] w-[52px] object-contain" />
+            <Image
+              src={item.icon}
+              alt=""
+              width={52}
+              height={52}
+              unoptimized
+              className="h-[52px] w-[52px] object-contain"
+            />
           </article>
         ))}
       </div>
