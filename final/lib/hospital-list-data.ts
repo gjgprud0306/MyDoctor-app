@@ -16,7 +16,7 @@ export const hospitalList: HospitalListItem[] = [
     wait: "평균 대기 10분",
     price: "315,000원",
     saving: "제진 95%",
-    image: "/assets/images/thumbnails/hospital-rank-01.png",
+    image: "/assets/images/hospitals/hospital-list-01.png",
   },
   {
     name: "수원더셀의원",
@@ -25,7 +25,7 @@ export const hospitalList: HospitalListItem[] = [
     wait: "평균 대기 15분",
     price: "300,000원",
     saving: "제진 92%",
-    image: "/assets/images/thumbnails/hospital-rank-02.png",
+    image: "/assets/images/hospitals/hospital-list-02.png",
   },
   {
     name: "한가온한방병원",
@@ -34,7 +34,7 @@ export const hospitalList: HospitalListItem[] = [
     wait: "평균 대기 10분",
     price: "325,000원",
     saving: "제진 90%",
-    image: "/assets/images/thumbnails/hospital-rank-03.png",
+    image: "/assets/images/hospitals/hospital-list-03.png",
   },
   {
     name: "강남바른의원",
@@ -43,7 +43,7 @@ export const hospitalList: HospitalListItem[] = [
     wait: "평균 대기 15분",
     price: "310,000원",
     saving: "제진 90%",
-    image: "/assets/images/thumbnails/hospital-rank-01.png",
+    image: "/assets/images/hospitals/hospital-list-04.png",
   },
   {
     name: "서울슬림의원",
@@ -52,6 +52,6 @@ export const hospitalList: HospitalListItem[] = [
     wait: "평균 대기 20분",
     price: "320,000원",
     saving: "제진 90%",
-    image: "/assets/images/thumbnails/hospital-rank-02.png",
+    image: "/assets/images/hospitals/hospital-list-05.png",
   },
 ];
