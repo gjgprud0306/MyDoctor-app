@@ -29,6 +29,7 @@
 - 2026-06-20 `92f7838 fix: resolve home screen issues` 커밋 후 `origin/main` push 완료
 - 2026-06-20 프로모션 배너 화질 재수정: Figma `24:149` 배너 노드를 3x 임시 복제 후 1056x606 PNG로 재추출하여 `final/public/assets/images/banners/promo-diet-compare.png` 교체
 - 2026-06-20 퀵메뉴 상단 3개 아이콘 화질 재수정: Figma `24:187`, `24:192`, `24:197` 아이콘 노드를 3x 임시 복제 후 144x144 PNG로 재추출하여 `location.png`, `history.png`, `phone.png` 교체
+- 2026-06-20 헤더 상단 재수정: iOS 상태바를 Figma 좌표 기준 CSS로 재구현하고 Figma `24:125` 로고 노드를 3x 328x117 PNG로 재추출하여 `brand-logo.png`로 적용
 
 ### 검증 결과
 
@@ -46,6 +47,7 @@
 - 2026-06-20 lint: 별도 ESLint 구성 없음. `npm run lint`는 안내 메시지 출력 후 정상 종료하도록 정리, 추가 수정 후 재확인 완료
 - 2026-06-20 banner-quality: `promo-diet-compare.png`가 Figma 3x export 기반 1056x606 PNG임을 `sips`/`file`로 확인
 - 2026-06-20 quick-icon-quality: `location.png`, `history.png`, `phone.png`가 Figma 3x export 기반 144x144 PNG임을 `sips`/`file`로 확인
+- 2026-06-20 header-quality: `brand-logo.png`가 Figma 3x export 기반 328x117 PNG임을 `sips`/`file`로 확인
 
 ### 남은 작업
 

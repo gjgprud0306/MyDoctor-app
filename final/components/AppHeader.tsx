@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { SystemIcon } from "@/components/SystemIcon";
 
 const headerIcons = [
@@ -8,22 +9,29 @@ const headerIcons = [
 
 function StatusBar() {
   return (
-    <div className="device-status flex h-[50px] items-end justify-between px-8 pb-[7px] text-[17px] font-bold leading-[22px] text-black">
-      <span>9:41</span>
-      <div className="flex items-center gap-1.5">
+    <div className="device-status relative h-[50px] text-black">
+      <span className="absolute left-[55px] top-[21px] text-[17px] font-bold leading-[22px]">
+        9:41
+      </span>
+      <div className="absolute right-[34px] top-[25px] flex h-[13px] items-start gap-[7px]">
         <span className="grid h-[13px] w-[19px] grid-cols-4 items-end gap-[2px]">
-          <span className="h-[4px] rounded-[1px] bg-black" />
-          <span className="h-[7px] rounded-[1px] bg-black" />
-          <span className="h-[10px] rounded-[1px] bg-black" />
+          <span className="h-[5px] rounded-[1px] bg-black" />
+          <span className="h-[8px] rounded-[1px] bg-black" />
+          <span className="h-[11px] rounded-[1px] bg-black" />
           <span className="h-[13px] rounded-[1px] bg-black" />
         </span>
-        <span className="relative h-[13px] w-[18px] overflow-hidden">
-          <span className="absolute left-0 top-[4px] h-[15px] w-[18px] rounded-t-full border-[2px] border-black border-b-0" />
-          <span className="absolute bottom-0 left-1/2 h-[3px] w-[3px] -translate-x-1/2 rounded-full bg-black" />
+        <span className="relative h-[13px] w-[18px]">
+          <span className="absolute left-0 top-0 h-[8px] w-[18px] overflow-hidden">
+            <span className="absolute left-0 top-0 h-[17px] w-[18px] rounded-t-full border-[4px] border-black border-b-0" />
+          </span>
+          <span className="absolute left-[4px] top-[5px] h-[6px] w-[10px] overflow-hidden">
+            <span className="absolute left-0 top-0 h-[10px] w-[10px] rounded-t-full border-[4px] border-black border-b-0" />
+          </span>
+          <span className="absolute bottom-0 left-[7px] h-[4px] w-[4px] rounded-full bg-black" />
         </span>
-        <span className="relative h-[13px] w-[27px] rounded-[3px] border border-black p-[2px]">
-          <span className="absolute -right-[3px] top-[4px] h-[5px] w-[2px] rounded-r bg-black" />
-          <span className="block h-full w-[18px] rounded-[2px] bg-black" />
+        <span className="relative h-[13px] w-[27px] rounded-[4px] border border-black p-[2px]">
+          <span className="absolute -right-[3px] top-[4px] h-[5px] w-[2px] rounded-r bg-black/40" />
+          <span className="block h-full w-full rounded-[2px] bg-black" />
         </span>
       </div>
     </div>
@@ -34,16 +42,17 @@ export function AppHeader() {
   return (
     <header data-section="header" className="app-header h-[98px] bg-appBg">
       <StatusBar />
-      <div className="flex h-12 items-center justify-between px-5">
-        <div className="flex items-baseline gap-[1px]" aria-label="나만의닥터">
-          <span className="text-[26px] font-extrabold leading-none text-figmaMuted">
-            나만의
-          </span>
-          <span className="text-[25px] font-extrabold leading-none text-figmaMuted">
-            Dr.
-          </span>
-        </div>
-        <div className="flex items-center gap-4">
+      <div className="relative h-12">
+        <Image
+          src="/assets/logos/brand-logo.png"
+          alt="나만의Dr."
+          width={109}
+          height={39}
+          priority
+          unoptimized
+          className="absolute left-5 top-1 h-[39px] w-[109px] object-contain"
+        />
+        <div className="absolute right-5 top-3 flex items-center gap-4">
           {headerIcons.map((icon) => (
             <button
               key={icon.label}
