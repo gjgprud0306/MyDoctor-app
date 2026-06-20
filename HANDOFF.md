@@ -27,6 +27,7 @@
 - 2026-06-20 추가 수정: 검색/돋보기 SVG path를 손잡이가 더 명확한 형태로 조정
 - 2026-06-20 추가 수정: 헤더 좌측 로고의 흐릿한 PNG `brand-mark.png` 사용을 중단하고 `나만의Dr.` 텍스트 로고로 교체
 - 2026-06-20 `92f7838 fix: resolve home screen issues` 커밋 후 `origin/main` push 완료
+- 2026-06-20 프로모션 배너 화질 재수정: Figma `24:149` 배너 노드를 3x 임시 복제 후 1056x606 PNG로 재추출하여 `final/public/assets/images/banners/promo-diet-compare.png` 교체
 
 ### 검증 결과
 
@@ -42,6 +43,7 @@
 - 2026-06-20 assets-structure: `hifi/public/assets/images/screens/` 하위로 화면 PNG 17개 이동 확인, `final/public/assets/` 하위 `.DS_Store` 제거 확인
 - 2026-06-20 dev: 현재 실행 환경에서 `npm run dev -- --hostname 127.0.0.1 --port 3000/3001` 모두 `listen EPERM`으로 포트 바인딩 실패. 브라우저 렌더링 QA는 이번 턴에서 미실행
 - 2026-06-20 lint: 별도 ESLint 구성 없음. `npm run lint`는 안내 메시지 출력 후 정상 종료하도록 정리, 추가 수정 후 재확인 완료
+- 2026-06-20 banner-quality: `promo-diet-compare.png`가 Figma 3x export 기반 1056x606 PNG임을 `sips`/`file`로 확인
 
 ### 남은 작업
 
