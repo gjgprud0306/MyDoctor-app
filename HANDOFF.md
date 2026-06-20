@@ -30,6 +30,7 @@
 - 2026-06-20 프로모션 배너 화질 재수정: Figma `24:149` 배너 노드를 3x 임시 복제 후 1056x606 PNG로 재추출하여 `final/public/assets/images/banners/promo-diet-compare.png` 교체
 - 2026-06-20 퀵메뉴 상단 3개 아이콘 화질 재수정: Figma `24:187`, `24:192`, `24:197` 아이콘 노드를 3x 임시 복제 후 144x144 PNG로 재추출하여 `location.png`, `history.png`, `phone.png` 교체
 - 2026-06-20 헤더 상단 재수정: iOS 상태바를 Figma 좌표 기준 CSS로 재구현하고 Figma `24:125` 로고 노드를 3x 328x117 PNG로 재추출하여 `brand-logo.png`로 적용
+- 2026-06-20 헤더 액션 아이콘 재수정: Figma `24:133`, `24:138`, `24:142` 아이콘 노드를 3x 72x72 PNG로 재추출하고 파일명 매핑 및 배치 순서(혜택, 검색, 알림)를 Figma 기준으로 교정
 
 ### 검증 결과
 
@@ -48,6 +49,7 @@
 - 2026-06-20 banner-quality: `promo-diet-compare.png`가 Figma 3x export 기반 1056x606 PNG임을 `sips`/`file`로 확인
 - 2026-06-20 quick-icon-quality: `location.png`, `history.png`, `phone.png`가 Figma 3x export 기반 144x144 PNG임을 `sips`/`file`로 확인
 - 2026-06-20 header-quality: `brand-logo.png`가 Figma 3x export 기반 328x117 PNG임을 `sips`/`file`로 확인
+- 2026-06-20 header-action-quality: `gift.png`, `search.png`, `notification.png`가 Figma 3x export 기반 72x72 PNG임을 `sips`/`file`로 확인
 
 ### 남은 작업
 

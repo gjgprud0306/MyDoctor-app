@@ -1,10 +1,9 @@
 import Image from "next/image";
-import { SystemIcon } from "@/components/SystemIcon";
 
 const headerIcons = [
-  { label: "혜택", icon: "benefits" as const },
-  { label: "검색", icon: "search" as const },
-  { label: "알림", icon: "bell" as const, badge: true },
+  { label: "혜택", src: "/assets/icons/header/gift.png", left: 269 },
+  { label: "검색", src: "/assets/icons/header/search.png", left: 309 },
+  { label: "알림", src: "/assets/icons/header/notification.png", left: 349, badge: true },
 ];
 
 function StatusBar() {
@@ -52,21 +51,25 @@ export function AppHeader() {
           unoptimized
           className="absolute left-5 top-1 h-[39px] w-[109px] object-contain"
         />
-        <div className="absolute right-5 top-3 flex items-center gap-4">
+        <div className="absolute left-0 top-0 h-12 w-full">
           {headerIcons.map((icon) => (
             <button
               key={icon.label}
               type="button"
               aria-label={icon.label}
-              className="relative grid h-6 w-6 place-items-center"
+              className="absolute top-3 grid h-6 w-6 place-items-center"
+              style={{ left: icon.left }}
             >
-              <SystemIcon
-                name={icon.icon}
-                className="h-6 w-6 text-[#21242c]"
-                strokeWidth={2.1}
+              <Image
+                src={icon.src}
+                alt=""
+                width={24}
+                height={24}
+                unoptimized
+                className="h-6 w-6 object-contain"
               />
               {icon.badge ? (
-                <span className="absolute -right-1 -top-1 grid h-4 min-w-4 place-items-center rounded-full bg-[#f04242] px-1 text-[10px] font-bold leading-none text-white">
+                <span className="absolute left-3 -top-1 grid h-4 min-w-4 place-items-center rounded-full bg-[#f04242] px-1 text-[10px] font-bold leading-none text-white">
                   N
                 </span>
               ) : null}
