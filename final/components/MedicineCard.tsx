@@ -56,7 +56,20 @@ export function MedicineCard({ item, top }: MedicineCardProps) {
         className="absolute grid h-10 w-10 place-items-center rounded-full border border-[#e1e6ef] bg-white"
         style={{ left: item.buttonLeft, top: item.buttonTop }}
       >
-        <span className="h-3 w-3 rotate-45 border-r-2 border-t-2 border-[#98a2b3]" />
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 24 24"
+          className="h-6 w-6 text-[#98a2b3]"
+          fill="none"
+        >
+          <path
+            d="m9 6 6 6-6 6"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+          />
+        </svg>
       </button>
     </article>
   );

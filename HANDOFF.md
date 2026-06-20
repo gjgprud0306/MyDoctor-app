@@ -33,6 +33,7 @@
 - 2026-06-20 헤더 액션 아이콘 재수정: Figma `24:133`, `24:138`, `24:142` 아이콘 노드를 3x 72x72 PNG로 재추출하고 파일명 매핑 및 배치 순서(혜택, 검색, 알림)를 Figma 기준으로 교정
 - 2026-06-20 Figma `52:90` `Screen_MedicineList` 구현: `/medicine-list` 페이지, `MedicineListScreen`, `MedicineCard`, `medicine-data` 추가 및 약 이미지 5개를 3x PNG로 export 후 `final/public/assets/images/medicines/`에 저장
 - 2026-06-20 홈 화면 `다이어트` 카드 클릭 동작 구현: 새 페이지 이동 없이 홈 위에 딤드 오버레이와 하단 상승 바텀시트로 `MedicineListScreen` 표시, 딤드 영역 클릭 시 닫힘 처리
+- 2026-06-20 바텀시트 약 리스트 UI 조정: 히어로 텍스트와 첫 카드 사이 여백을 24px 축소하고 카드 우측 chevron을 SVG로 교체해 원형 버튼 중앙 정렬
 
 ### 검증 결과
 
@@ -55,6 +56,7 @@
 - 2026-06-20 medicine-list-assets: `mounjaro.png`, `wegovy.png`, `saxenda.png` 204x204, `oral-diet.png` 186x186, `info-shield.png` 156x156 확인
 - 2026-06-20 medicine-list-build: `final/`에서 `npm run build` 성공, `/medicine-list` static route 생성 확인
 - 2026-06-20 medicine-bottom-sheet-build: 홈 화면 바텀시트 연결 후 `final/`에서 `npm run build` 성공
+- 2026-06-20 medicine-list-spacing-build: 약 리스트 간격/chevron 조정 후 `final/`에서 `npm run build` 성공
 
 ### 남은 작업
 

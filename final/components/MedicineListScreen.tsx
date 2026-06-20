@@ -2,7 +2,7 @@ import Image from "next/image";
 import { MedicineCard } from "@/components/MedicineCard";
 import { medicines } from "@/lib/medicine-data";
 
-const cardTops = [184, 294, 414, 534];
+const cardTops = [160, 270, 390, 510];
 
 export function MedicineListScreen() {
   return (
@@ -25,7 +25,7 @@ export function MedicineListScreen() {
           <MedicineCard key={item.name} item={item} top={cardTops[index]} />
         ))}
 
-        <section className="absolute left-5 top-[658px] h-[61px] w-[353px] rounded-[14px] bg-[#f0f6ff]">
+        <section className="absolute left-5 top-[634px] h-[61px] w-[353px] rounded-[14px] bg-[#f0f6ff]">
           <Image
             src="/assets/images/medicines/info-shield.png"
             alt=""
