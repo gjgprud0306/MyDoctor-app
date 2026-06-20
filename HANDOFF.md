@@ -41,6 +41,7 @@
 - 2026-06-20 Figma `52:295` `Screen_PickupMethod_02` 구현: `/pickup-method` 페이지 추가, `Screen_DietDoseSelect` 하단 CTA에서 라우팅 이동, 뒤로가기 버튼 `/diet-dose-select` 이동, 지도/히어로 이미지 3x export 및 수령 방법 카드/하단 CTA 구현
 - 2026-06-20 PickupMethod 히어로 문구 간격 조정: 제목 줄간격 34px→30px, 설명문 상단 여백 8px→4px 및 line-height 21px→18px로 축소
 - 2026-06-20 PickupMethod 수령 방법 카드 수정: 카드 2개 폭/위치를 동일하게 맞추고 클릭 시 하나만 활성화되는 선택 상태 구현
+- 2026-06-20 Figma `52:393` `Screen_HospitalList` 구현: `/hospital-list` 페이지 추가, PickupMethod 하단 CTA에서 라우팅 이동, 뒤로가기 버튼 `/pickup-method` 이동, 지도 3x export 및 필터 칩/병원 카드 5개/하단 고정 CTA 구현
 
 ### 검증 결과
 
@@ -73,6 +74,8 @@
 - 2026-06-20 pickup-method-build: `final/`에서 `npm run build` 성공, `/pickup-method` static route 생성 확인
 - 2026-06-20 pickup-method-copy-spacing-build: 히어로 문구 간격 조정 후 `final/`에서 `npm run build` 성공
 - 2026-06-20 pickup-method-card-select-build: 수령 방법 카드 폭 및 선택 상태 수정 후 `final/`에서 `npm run build` 성공
+- 2026-06-20 hospital-list-assets: `hospital-list-map.png` 1047x504 확인
+- 2026-06-20 hospital-list-build: `final/`에서 `npm run build` 성공, `/hospital-list` static route 생성 확인
 
 ### 남은 작업
 
