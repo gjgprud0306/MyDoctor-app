@@ -2,12 +2,13 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const doses = [
-  { label: "2.5mg", selected: true, stepperLeft: 207 },
-  { label: "5mg", selected: false, stepperLeft: 203 },
-  { label: "7.5mg", selected: false, stepperLeft: 203 },
-  { label: "10mg", selected: false, stepperLeft: 203 },
+  { label: "2.5mg", stepperLeft: 207 },
+  { label: "5mg", stepperLeft: 203 },
+  { label: "7.5mg", stepperLeft: 203 },
+  { label: "10mg", stepperLeft: 203 },
 ];
 
 function StatusBar() {
@@ -41,7 +42,17 @@ function StatusBar() {
   );
 }
 
-function DoseStepper({ left }: { left: number }) {
+function DoseStepper({
+  left,
+  value,
+  onDecrease,
+  onIncrease,
+}: {
+  left: number;
+  value: number;
+  onDecrease: () => void;
+  onIncrease: () => void;
+}) {
   return (
     <div
       className="absolute top-[7px] h-[30px] w-[106px] rounded-[15px] border border-[#dce3ee] bg-[#f9fbff]"
@@ -49,15 +60,17 @@ function DoseStepper({ left }: { left: number }) {
     >
       <button
         type="button"
+        onClick={onDecrease}
         className="absolute left-0 top-0 h-[30px] w-[32px] text-[18px] font-bold leading-[30px] text-[#2f70ff]"
       >
         -
       </button>
       <span className="absolute left-[45px] top-0 h-[30px] w-4 text-center text-[16px] font-bold leading-[30px] text-[#111827]">
-        0
+        {value}
       </span>
       <button
         type="button"
+        onClick={onIncrease}
         className="absolute right-0 top-0 h-[30px] w-[32px] text-[18px] font-bold leading-[30px] text-[#2f70ff]"
       >
         +
@@ -68,6 +81,27 @@ function DoseStepper({ left }: { left: number }) {
 
 export function DietDoseSelectScreen() {
   const router = useRouter();
+  const [doseCounts, setDoseCounts] = useState([0, 0, 0, 0]);
+  const [isUnknownSelected, setIsUnknownSelected] = useState(false);
+  const [isDoseExpanded, setIsDoseExpanded] = useState(true);
+
+  const updateDoseCount = (index: number, delta: number) => {
+    setIsUnknownSelected(false);
+    setDoseCounts((current) =>
+      current.map((count, countIndex) => {
+        if (countIndex !== index) {
+          return count;
+        }
+
+        return Math.min(2, Math.max(0, count + delta));
+      }),
+    );
+  };
+
+  const selectUnknownDose = () => {
+    setIsUnknownSelected(true);
+    setDoseCounts([0, 0, 0, 0]);
+  };
 
   return (
     <main className="mx-auto min-h-screen w-full max-w-[393px] bg-white text-[#111827]">
@@ -148,50 +182,101 @@ export function DietDoseSelectScreen() {
               선택됨
             </p>
           </div>
-          <svg
-            aria-hidden="true"
-            viewBox="0 0 24 24"
-            className="absolute left-[313px] top-[21px] h-6 w-6 text-[#111827]"
-            fill="none"
+          <button
+            type="button"
+            aria-label="용량 선택 영역 열고 닫기"
+            aria-expanded={isDoseExpanded}
+            onClick={() => setIsDoseExpanded((current) => !current)}
+            className="absolute left-[305px] top-[13px] grid h-10 w-10 place-items-center"
           >
-            <path
-              d="m8 10 4 4 4-4"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-            />
-          </svg>
-        </section>
-
-        <section className="absolute left-5 top-60 h-[284px] w-[353px] rounded-[14px] border border-[#dce3ee] bg-white">
-          <h2 className="absolute left-4 top-[13px] text-[14px] font-bold leading-[22px]">
-            용량 선택
-          </h2>
-          {doses.map((dose, index) => (
-            <div
-              key={dose.label}
-              className={`absolute left-4 h-11 w-[321px] rounded-[14px] border ${
-                dose.selected
-                  ? "border-[#2f70ff] bg-[#f6f9ff]"
-                  : "border-[#dce3ee] bg-white"
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              className={`h-6 w-6 text-[#111827] transition-transform ${
+                isDoseExpanded ? "rotate-180" : ""
               }`}
-              style={{ top: 48 + index * 58 }}
+              fill="none"
             >
-              <span
-                className={`absolute left-[14px] top-[10px] text-[16px] font-extrabold leading-6 ${
-                  dose.selected ? "text-[#2f70ff]" : "text-[#111827]"
-                }`}
-              >
-                {dose.label}
-              </span>
-              <DoseStepper left={dose.stepperLeft} />
-            </div>
-          ))}
+              <path
+                d="m8 10 4 4 4-4"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+              />
+            </svg>
+          </button>
         </section>
 
-        <section className="absolute left-5 top-[538px] h-16 w-[353px] rounded-[14px] border border-[#dce3ee] bg-white">
-          <span className="absolute left-4 top-[21px] h-[22px] w-[22px] rounded-full border-2 border-[#c9d1de]" />
+        {isDoseExpanded ? (
+          <section className="absolute left-5 top-[220px] h-[284px] w-[353px] rounded-[14px] border border-[#dce3ee] bg-white">
+            <h2 className="absolute left-4 top-[13px] text-[14px] font-bold leading-[22px]">
+              용량 선택
+            </h2>
+            {doses.map((dose, index) => (
+              <div
+                key={dose.label}
+                className={`absolute left-4 h-11 w-[321px] rounded-[14px] border ${
+                  index === 0 && !isUnknownSelected
+                    ? "border-[#2f70ff] bg-[#f6f9ff]"
+                    : "border-[#dce3ee] bg-white"
+                }`}
+                style={{ top: 48 + index * 58 }}
+              >
+                <span
+                  className={`absolute left-[14px] top-[10px] text-[16px] font-extrabold leading-6 ${
+                    index === 0 && !isUnknownSelected
+                      ? "text-[#2f70ff]"
+                      : "text-[#111827]"
+                  }`}
+                >
+                  {dose.label}
+                </span>
+                <DoseStepper
+                  left={dose.stepperLeft}
+                  value={doseCounts[index]}
+                  onDecrease={() => updateDoseCount(index, -1)}
+                  onIncrease={() => updateDoseCount(index, 1)}
+                />
+              </div>
+            ))}
+          </section>
+        ) : null}
+
+        <button
+          type="button"
+          onClick={selectUnknownDose}
+          className={`absolute left-5 h-16 w-[353px] rounded-[14px] border bg-white text-left ${
+            isUnknownSelected
+              ? "border-[#2f70ff]"
+              : "border-[#dce3ee]"
+          }`}
+          style={{ top: isDoseExpanded ? 518 : 240 }}
+        >
+          <span
+            className={`absolute left-4 top-[21px] grid h-[22px] w-[22px] place-items-center rounded-full border-2 ${
+              isUnknownSelected
+                ? "border-[#2f70ff] bg-[#2f70ff]"
+                : "border-[#c9d1de]"
+            }`}
+          >
+            {isUnknownSelected ? (
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                className="h-[14px] w-[14px] text-white"
+                fill="none"
+              >
+                <path
+                  d="m6 12 4 4 8-8"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="3"
+                />
+              </svg>
+            ) : null}
+          </span>
           <div className="absolute left-[49px] top-[14px]">
             <h2 className="text-[14px] font-extrabold leading-[19px]">
               잘 모르겠어요 (진료 후 결정할게요)
@@ -214,7 +299,7 @@ export function DietDoseSelectScreen() {
               strokeWidth="2"
             />
           </svg>
-        </section>
+        </button>
       </section>
 
       <div className="fixed bottom-0 left-0 right-0 mx-auto h-24 w-full max-w-[393px] bg-white pt-3 shadow-[0_-8px_24px_rgba(17,24,39,0.08)]">
