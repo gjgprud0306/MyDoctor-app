@@ -148,11 +148,11 @@ export function PickupMethodScreen() {
       <section className="relative h-[650px]">
         <section className="absolute left-4 top-4 h-[118px] w-[361px]">
           <div className="absolute left-3 top-[11px]">
-            <h2 className="whitespace-pre-line text-[23px] font-extrabold leading-[34px]">
+            <h2 className="whitespace-pre-line text-[23px] font-extrabold leading-[30px]">
               {"어디서 약을\n"}
               <span className="text-[#2f70ff]">받을까요?</span>
             </h2>
-            <p className="mt-2 text-[12px] font-medium leading-[21px] text-[#6b7280]">
+            <p className="mt-1 text-[12px] font-medium leading-[18px] text-[#6b7280]">
               진료 후 약을 받을 방법을 선택해 주세요.
             </p>
           </div>
