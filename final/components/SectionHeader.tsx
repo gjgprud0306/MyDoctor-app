@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { SystemIcon } from "@/components/SystemIcon";
 
 type SectionHeaderProps = {
   title: string;
@@ -15,14 +15,7 @@ export function SectionHeader({ title }: SectionHeaderProps) {
         className="flex items-center gap-0.5 text-xs font-semibold leading-4 text-[#9ca3af]"
       >
         전체보기
-        <Image
-          src="/assets/icons/common/chevron-right.png"
-          alt=""
-          width={16}
-          height={16}
-          unoptimized
-          className="h-4 w-4"
-        />
+        <SystemIcon name="chevronRight" className="h-4 w-4" strokeWidth={2.2} />
       </button>
     </div>
   );

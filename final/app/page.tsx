@@ -10,7 +10,7 @@ import { hospitals, popularCare, quickActions } from "@/lib/home-data";
 
 export default function Home() {
   return (
-    <main className="mx-auto min-h-screen w-full max-w-[390px] bg-appBg">
+    <main className="app-shell mx-auto min-h-screen w-full max-w-[390px] bg-appBg">
       <AppHeader />
       <QuickAccess actions={quickActions} />
       <PromoBanner />

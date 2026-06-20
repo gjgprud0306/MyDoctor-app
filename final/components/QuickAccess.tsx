@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { QuickAction } from "@/lib/home-data";
+import { SystemIcon } from "@/components/SystemIcon";
 
 type QuickAccessProps = {
   actions: QuickAction[];
@@ -36,7 +37,11 @@ export function QuickAccess({ actions }: QuickAccessProps) {
         data-section="search-bar"
         className="mt-3 flex h-10 w-[353px] items-center rounded-[14px] bg-white px-[15px] shadow-soft"
       >
-        <span className="mr-2 grid h-6 w-6 place-items-center rounded-full border-2 border-[#6b7280]" />
+        <SystemIcon
+          name="search"
+          className="mr-2 h-5 w-5 shrink-0 text-[#6b7280]"
+          strokeWidth={2.2}
+        />
         <input
           readOnly
           value="병원, 진료 , 약 , 증상을 검색해보세요"

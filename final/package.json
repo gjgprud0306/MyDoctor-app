@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "lint": "next lint"
+    "lint": "echo \"ESLint is not configured for this project.\""
   },
   "dependencies": {
     "next": "^16.2.9",

@@ -43,6 +43,11 @@
 | notification.png | icons | final/public/assets/icons/header/notification.png | 헤더 알림 |
 | chevron-right.png | icons | final/public/assets/icons/common/chevron-right.png | 섹션 전체보기 |
 | star.png | icons | final/public/assets/icons/common/star.png | 병원 평점 |
+| home.png | icons | final/public/assets/icons/bottom-nav/home.png | 하단 내비게이션 export 보관 |
+| benefits.png | icons | final/public/assets/icons/bottom-nav/benefits.png | 하단 내비게이션 export 보관 |
+| health.png | icons | final/public/assets/icons/bottom-nav/health.png | 하단 내비게이션 export 보관 |
+| records.png | icons | final/public/assets/icons/bottom-nav/records.png | 하단 내비게이션 export 보관 |
+| profile.png | icons | final/public/assets/icons/bottom-nav/profile.png | 하단 내비게이션 export 보관 |
 | location.png | icons | final/public/assets/icons/quick-menu/location.png | 병원,약국 찾기 |
 | history.png | icons | final/public/assets/icons/quick-menu/history.png | 다이어트 주사기록 |
 | phone.png | icons | final/public/assets/icons/quick-menu/phone.png | 소아과 119 지도 |
@@ -60,7 +65,6 @@
 |--------|------|------------|------|
 | banner-arrow-backward.png | icons | 홈 프로모션 배너 | Figma node 24:151 export 시 유효하지 않은 노드 응답. 필요 시 Figma에서 재확인 후 export |
 | banner-arrow-forward.png | icons | 홈 프로모션 배너 | Figma node 24:153 export 필요 |
-| bottom-navigation icons | icons | 하단 내비게이션 | 현재 구현 시 CSS/텍스트 또는 추가 Figma export 필요 |
 | pwa icons | pwa | PWA 설정 | 이번 홈 화면 구현 범위 밖 |
 
 ## 디자인 토큰
@@ -106,4 +110,5 @@
 - 화면 기준 폭은 393px이며, 모바일 앱 화면으로 구현합니다.
 - 홈 화면 캡처 파일 final/public/assets/images/screens/home.png는 구현 비교용 기준 이미지입니다.
 - 루트 final/ 폴더에 있는 PNG 파일은 이번 핸드오프 export 경로가 아니므로 구현 에셋으로 사용하지 않습니다.
-- 프로모션 배너의 좌우 화살표와 하단 내비게이션 개별 아이콘은 추가 export가 필요할 수 있습니다.
+- 프로모션 배너의 좌우 화살표는 추가 export가 필요할 수 있습니다.
+- 검색, 헤더, 섹션 보조, 하단 내비게이션처럼 선명도가 중요한 시스템 아이콘은 코드 내 SVG 컴포넌트로 렌더링합니다.

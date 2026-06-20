@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { Hospital } from "@/lib/home-data";
+import { SystemIcon } from "@/components/SystemIcon";
 
 type HospitalTopListProps = {
   hospitals: Hospital[];
@@ -33,13 +34,10 @@ export function HospitalTopList({ hospitals }: HospitalTopListProps) {
                 {hospital.description}
               </p>
               <div className="mt-1 flex items-center gap-0.5 text-[8px] font-semibold leading-[10px] text-[#6b7280]">
-                <Image
-                  src="/assets/icons/common/star.png"
-                  alt=""
-                  width={8}
-                  height={8}
-                  unoptimized
-                  className="h-2 w-2"
+                <SystemIcon
+                  name="star"
+                  className="h-2 w-2 fill-[#ffcc00] text-[#ffcc00]"
+                  strokeWidth={1.8}
                 />
                 <span className="truncate">{hospital.rating}</span>
               </div>
