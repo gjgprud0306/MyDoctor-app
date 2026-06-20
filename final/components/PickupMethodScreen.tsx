@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 function StatusBar() {
   return (
@@ -40,6 +41,7 @@ type MethodCardProps = {
   meta: string[];
   selected?: boolean;
   recommended?: boolean;
+  onSelect: () => void;
 };
 
 function MethodCard({
@@ -48,10 +50,13 @@ function MethodCard({
   meta,
   selected = false,
   recommended = false,
+  onSelect,
 }: MethodCardProps) {
   return (
-    <article
-      className={`absolute left-0 h-24 w-full rounded-[14px] border bg-white ${
+    <button
+      type="button"
+      onClick={onSelect}
+      className={`absolute left-0 h-24 w-full rounded-[14px] border bg-white text-left ${
         selected ? "border-[#2f70ff]" : "border-[#dce3ee]"
       }`}
     >
@@ -108,12 +113,15 @@ function MethodCard({
           <span className="h-4 w-4 rounded-full bg-[#2f70ff]" />
         ) : null}
       </span>
-    </article>
+    </button>
   );
 }
 
 export function PickupMethodScreen() {
   const router = useRouter();
+  const [selectedMethod, setSelectedMethod] = useState<"hospital" | "pharmacy">(
+    "hospital",
+  );
 
   return (
     <main className="mx-auto min-h-screen w-full max-w-[393px] bg-white text-[#111827]">
@@ -195,15 +203,18 @@ export function PickupMethodScreen() {
               title="병원만 방문"
               description="진료 후 병원에서 바로 약을 받아요."
               meta={["동선 최소", "가장 빠른 수령"]}
-              selected
+              selected={selectedMethod === "hospital"}
               recommended
+              onSelect={() => setSelectedMethod("hospital")}
             />
           </div>
-          <div className="absolute left-[12px] top-[150px] h-24 w-[330px]">
+          <div className="absolute left-[5px] top-[150px] h-24 w-[344px]">
             <MethodCard
               title="병원 + 약국 방문"
               description="진료 후 가까운 약국에서 약을 받아요."
               meta={["약국 선택", "가격 비교"]}
+              selected={selectedMethod === "pharmacy"}
+              onSelect={() => setSelectedMethod("pharmacy")}
             />
           </div>
         </section>
