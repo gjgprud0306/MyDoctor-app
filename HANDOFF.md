@@ -38,6 +38,7 @@
 - 2026-06-20 Figma `52:216` `Screen_DietDoseSelect` 구현: `/diet-dose-select` 페이지 추가, 마운자로 카드 클릭 시 바텀시트/딤드 닫힘 후 라우팅 이동, 뒤로가기 버튼 홈 이동, 2.5mg 선택 상태/수량 스테퍼/하단 고정 CTA 구현
 - 2026-06-20 용량 선택 화면 인터랙션 구현: 각 용량 `- / 숫자 / +` 수량 조절을 0~2 범위로 제한, `잘 모르겠어요` 선택 활성화 및 수량 초기화, 마운자로 카드 chevron으로 용량 선택 영역 접기/펼치기 처리
 - 2026-06-20 용량 선택 화면 겹침 수정: 주사제 카드와 용량 선택 영역 사이 간격을 12px 추가하고 `잘 모르겠어요` 선택 시 용량 선택 영역 자동 접힘 처리
+- 2026-06-20 Figma `52:295` `Screen_PickupMethod_02` 구현: `/pickup-method` 페이지 추가, `Screen_DietDoseSelect` 하단 CTA에서 라우팅 이동, 뒤로가기 버튼 `/diet-dose-select` 이동, 지도/히어로 이미지 3x export 및 수령 방법 카드/하단 CTA 구현
 
 ### 검증 결과
 
@@ -66,6 +67,8 @@
 - 2026-06-20 diet-dose-select-build: `final/`에서 `npm run build` 성공, `/diet-dose-select` static route 생성 확인
 - 2026-06-20 diet-dose-select-interaction-build: 용량 수량 조절/잘 모르겠어요 활성화/chevron 토글 구현 후 `final/`에서 `npm run build` 성공
 - 2026-06-20 diet-dose-select-overlap-build: 용량 선택 영역 간격 및 `잘 모르겠어요` 자동 접힘 수정 후 `final/`에서 `npm run build` 성공
+- 2026-06-20 pickup-method-assets: `pickup-hero.png` 324x324, `pickup-map.png` 1059x408 확인
+- 2026-06-20 pickup-method-build: `final/`에서 `npm run build` 성공, `/pickup-method` static route 생성 확인
 
 ### 남은 작업
 

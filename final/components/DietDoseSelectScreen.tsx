@@ -306,6 +306,7 @@ export function DietDoseSelectScreen() {
       <div className="fixed bottom-0 left-0 right-0 mx-auto h-24 w-full max-w-[393px] bg-white pt-3 shadow-[0_-8px_24px_rgba(17,24,39,0.08)]">
         <button
           type="button"
+          onClick={() => router.push("/pickup-method")}
           className="mx-5 h-14 w-[353px] rounded-[8px] bg-[#2f70ff] text-[16px] font-extrabold leading-6 text-white"
         >
           병원 · 약국 선택하기
