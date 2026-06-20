@@ -32,6 +32,7 @@
 - 2026-06-20 헤더 상단 재수정: iOS 상태바를 Figma 좌표 기준 CSS로 재구현하고 Figma `24:125` 로고 노드를 3x 328x117 PNG로 재추출하여 `brand-logo.png`로 적용
 - 2026-06-20 헤더 액션 아이콘 재수정: Figma `24:133`, `24:138`, `24:142` 아이콘 노드를 3x 72x72 PNG로 재추출하고 파일명 매핑 및 배치 순서(혜택, 검색, 알림)를 Figma 기준으로 교정
 - 2026-06-20 Figma `52:90` `Screen_MedicineList` 구현: `/medicine-list` 페이지, `MedicineListScreen`, `MedicineCard`, `medicine-data` 추가 및 약 이미지 5개를 3x PNG로 export 후 `final/public/assets/images/medicines/`에 저장
+- 2026-06-20 홈 화면 `다이어트` 카드 클릭 동작 구현: 새 페이지 이동 없이 홈 위에 딤드 오버레이와 하단 상승 바텀시트로 `MedicineListScreen` 표시, 딤드 영역 클릭 시 닫힘 처리
 
 ### 검증 결과
 
@@ -53,6 +54,7 @@
 - 2026-06-20 header-action-quality: `gift.png`, `search.png`, `notification.png`가 Figma 3x export 기반 72x72 PNG임을 `sips`/`file`로 확인
 - 2026-06-20 medicine-list-assets: `mounjaro.png`, `wegovy.png`, `saxenda.png` 204x204, `oral-diet.png` 186x186, `info-shield.png` 156x156 확인
 - 2026-06-20 medicine-list-build: `final/`에서 `npm run build` 성공, `/medicine-list` static route 생성 확인
+- 2026-06-20 medicine-bottom-sheet-build: 홈 화면 바텀시트 연결 후 `final/`에서 `npm run build` 성공
 
 ### 남은 작업
 
