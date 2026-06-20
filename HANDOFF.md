@@ -2,9 +2,9 @@
 
 ### 현재 상태
 
-- GitHub (브랜치/커밋): main, 미커밋 변경 있음
+- GitHub (브랜치/커밋): main, `92f7838 fix: resolve home screen issues` push 완료
 - Vercel 배포 상태: 확인하지 않음
-- 현재 진행 중인 작업: GitHub 이슈 #1~#4 대응 완료, 검증 및 후속 push 대기
+- 현재 진행 중인 작업: GitHub 이슈 #1~#4 대응 변경사항 push 완료, Vercel 배포 확인 대기
 
 ### 완료된 작업
 
@@ -26,6 +26,7 @@
 - 2026-06-20 추가 수정: iOS 상단 상태바 아이콘을 CSS shape로 재구현하고 safe-area 중복 적용 제거
 - 2026-06-20 추가 수정: 검색/돋보기 SVG path를 손잡이가 더 명확한 형태로 조정
 - 2026-06-20 추가 수정: 헤더 좌측 로고의 흐릿한 PNG `brand-mark.png` 사용을 중단하고 `나만의Dr.` 텍스트 로고로 교체
+- 2026-06-20 `92f7838 fix: resolve home screen issues` 커밋 후 `origin/main` push 완료
 
 ### 검증 결과
 
