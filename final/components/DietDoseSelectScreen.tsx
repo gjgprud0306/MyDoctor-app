@@ -100,6 +100,7 @@ export function DietDoseSelectScreen() {
 
   const selectUnknownDose = () => {
     setIsUnknownSelected(true);
+    setIsDoseExpanded(false);
     setDoseCounts([0, 0, 0, 0]);
   };
 
@@ -209,7 +210,7 @@ export function DietDoseSelectScreen() {
         </section>
 
         {isDoseExpanded ? (
-          <section className="absolute left-5 top-[220px] h-[284px] w-[353px] rounded-[14px] border border-[#dce3ee] bg-white">
+          <section className="absolute left-5 top-[232px] h-[284px] w-[353px] rounded-[14px] border border-[#dce3ee] bg-white">
             <h2 className="absolute left-4 top-[13px] text-[14px] font-bold leading-[22px]">
               용량 선택
             </h2>
@@ -251,7 +252,7 @@ export function DietDoseSelectScreen() {
               ? "border-[#2f70ff]"
               : "border-[#dce3ee]"
           }`}
-          style={{ top: isDoseExpanded ? 518 : 240 }}
+          style={{ top: isDoseExpanded ? 530 : 240 }}
         >
           <span
             className={`absolute left-4 top-[21px] grid h-[22px] w-[22px] place-items-center rounded-full border-2 ${
