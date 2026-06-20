@@ -34,6 +34,7 @@
 - 2026-06-20 Figma `52:90` `Screen_MedicineList` 구현: `/medicine-list` 페이지, `MedicineListScreen`, `MedicineCard`, `medicine-data` 추가 및 약 이미지 5개를 3x PNG로 export 후 `final/public/assets/images/medicines/`에 저장
 - 2026-06-20 홈 화면 `다이어트` 카드 클릭 동작 구현: 새 페이지 이동 없이 홈 위에 딤드 오버레이와 하단 상승 바텀시트로 `MedicineListScreen` 표시, 딤드 영역 클릭 시 닫힘 처리
 - 2026-06-20 바텀시트 약 리스트 UI 조정: 히어로 텍스트와 첫 카드 사이 여백을 24px 축소하고 카드 우측 chevron을 SVG로 교체해 원형 버튼 중앙 정렬
+- 2026-06-20 바텀시트 약 카드 내부 간격 조정: 약효능 문구와 처방 진료비 라인 사이 간격을 줄이기 위해 가격 라인을 6px 위로 이동
 
 ### 검증 결과
 
@@ -57,6 +58,7 @@
 - 2026-06-20 medicine-list-build: `final/`에서 `npm run build` 성공, `/medicine-list` static route 생성 확인
 - 2026-06-20 medicine-bottom-sheet-build: 홈 화면 바텀시트 연결 후 `final/`에서 `npm run build` 성공
 - 2026-06-20 medicine-list-spacing-build: 약 리스트 간격/chevron 조정 후 `final/`에서 `npm run build` 성공
+- 2026-06-20 medicine-card-price-spacing-build: 약 카드 내부 가격 라인 간격 조정 후 `final/`에서 `npm run build` 성공
 
 ### 남은 작업
 

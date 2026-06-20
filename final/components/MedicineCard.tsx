@@ -41,7 +41,7 @@ export function MedicineCard({ item, top }: MedicineCardProps) {
         <p className="absolute left-[10px] top-[37px] whitespace-nowrap text-[10px] font-medium leading-[13px] text-[#4b5563]">
           {item.effect}
         </p>
-        <div className="absolute left-[10px] top-[58px] flex h-[23px] items-start gap-2">
+        <div className="absolute left-[10px] top-[52px] flex h-[23px] items-start gap-2">
           <span className="pt-[5px] text-[10px] font-medium leading-[13px] text-[#6b7280]">
             처방 진료비
           </span>
