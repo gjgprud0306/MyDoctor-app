@@ -4,12 +4,15 @@ import type { MedicineItem } from "@/lib/medicine-data";
 type MedicineCardProps = {
   item: MedicineItem;
   top: number;
+  onSelect?: () => void;
 };
 
-export function MedicineCard({ item, top }: MedicineCardProps) {
+export function MedicineCard({ item, top, onSelect }: MedicineCardProps) {
   return (
-    <article
-      className="absolute left-5 w-[353px] rounded-[14px] border border-[#d7dde8] bg-white"
+    <button
+      type="button"
+      onClick={onSelect}
+      className="absolute left-5 w-[353px] rounded-[14px] border border-[#d7dde8] bg-white text-left"
       style={{ top, height: item.cardHeight }}
     >
       <Image
@@ -50,9 +53,8 @@ export function MedicineCard({ item, top }: MedicineCardProps) {
           </strong>
         </div>
       </div>
-      <button
-        type="button"
-        aria-label={`${item.name} 자세히 보기`}
+      <span
+        aria-hidden="true"
         className="absolute grid h-10 w-10 place-items-center rounded-full border border-[#e1e6ef] bg-white"
         style={{ left: item.buttonLeft, top: item.buttonTop }}
       >
@@ -70,7 +72,7 @@ export function MedicineCard({ item, top }: MedicineCardProps) {
             strokeWidth="2"
           />
         </svg>
-      </button>
-    </article>
+      </span>
+    </button>
   );
 }

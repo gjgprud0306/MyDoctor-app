@@ -4,7 +4,11 @@ import { medicines } from "@/lib/medicine-data";
 
 const cardTops = [160, 270, 390, 510];
 
-export function MedicineListScreen() {
+type MedicineListScreenProps = {
+  onMounjaroSelect?: () => void;
+};
+
+export function MedicineListScreen({ onMounjaroSelect }: MedicineListScreenProps) {
   return (
     <main className="mx-auto h-[747px] w-full max-w-[393px] bg-white">
       <div className="relative h-full overflow-hidden">
@@ -22,7 +26,12 @@ export function MedicineListScreen() {
         </section>
 
         {medicines.map((item, index) => (
-          <MedicineCard key={item.name} item={item} top={cardTops[index]} />
+          <MedicineCard
+            key={item.name}
+            item={item}
+            top={cardTops[index]}
+            onSelect={index === 0 ? onMounjaroSelect : undefined}
+          />
         ))}
 
         <section className="absolute left-5 top-[634px] h-[61px] w-[353px] rounded-[14px] bg-[#f0f6ff]">

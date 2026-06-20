@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { AppHeader } from "@/components/AppHeader";
 import { BottomNavigation } from "@/components/BottomNavigation";
 import { HospitalTopList } from "@/components/HospitalTopList";
@@ -14,6 +15,12 @@ import { hospitals, popularCare, quickActions } from "@/lib/home-data";
 
 export function HomeScreen() {
   const [isMedicineSheetOpen, setIsMedicineSheetOpen] = useState(false);
+  const router = useRouter();
+
+  const handleMounjaroSelect = () => {
+    setIsMedicineSheetOpen(false);
+    router.push("/diet-dose-select");
+  };
 
   return (
     <main className="app-shell relative mx-auto min-h-screen w-full max-w-[390px] bg-appBg">
@@ -30,7 +37,10 @@ export function HomeScreen() {
       <HospitalTopList hospitals={hospitals} />
       <BottomNavigation />
       {isMedicineSheetOpen ? (
-        <MedicineBottomSheet onClose={() => setIsMedicineSheetOpen(false)} />
+        <MedicineBottomSheet
+          onClose={() => setIsMedicineSheetOpen(false)}
+          onMounjaroSelect={handleMounjaroSelect}
+        />
       ) : null}
     </main>
   );
