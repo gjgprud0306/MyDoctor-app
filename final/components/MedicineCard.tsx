@@ -34,7 +34,7 @@ export function MedicineCard({ item, top, onSelect }: MedicineCardProps) {
         style={{ left: item.contentLeft }}
       >
         <div className="absolute left-0 top-0 flex h-[43px] items-start">
-          <h2 className="h-[43px] max-w-[135px] whitespace-nowrap px-[10px] pt-[10px] text-[17px] font-bold leading-[23px] text-[#111827]">
+          <h2 className="h-[43px] max-w-[135px] whitespace-nowrap px-[10px] pt-[10px] text-[17px] font-semibold leading-[23px] text-[#111827]">
             {item.name}
           </h2>
           <span className="mt-[13px] h-[17px] whitespace-nowrap rounded-[8px] border border-[#c8d0dc] px-[6px] text-[10px] font-medium leading-[15px] text-[#6b7280]">
@@ -48,7 +48,7 @@ export function MedicineCard({ item, top, onSelect }: MedicineCardProps) {
           <span className="pt-[5px] text-[10px] font-medium leading-[13px] text-[#6b7280]">
             처방 진료비
           </span>
-          <strong className="text-[18px] font-extrabold leading-[23px] text-[#1c6cff]">
+          <strong className="text-[18px] font-bold leading-[23px] text-[#1c6cff]">
             {item.price}
           </strong>
         </div>

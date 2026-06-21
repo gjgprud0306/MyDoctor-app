@@ -31,7 +31,7 @@ export function HospitalDetailScreen() {
             />
           </svg>
         </button>
-        <h1 className="absolute left-[107px] top-4 w-[180px] text-center text-[18px] font-extrabold leading-7">
+        <h1 className="absolute left-[107px] top-4 w-[180px] text-center text-[18px] font-bold leading-7">
           병원 세부 정보
         </h1>
       </header>
@@ -48,7 +48,7 @@ export function HospitalDetailScreen() {
             className="absolute left-3 top-2 h-[72px] w-[62px] rounded-[6px] object-cover"
           />
           <div className="absolute left-[98px] top-2">
-            <h2 className="text-[20px] font-extrabold leading-7">
+            <h2 className="text-[20px] font-bold leading-7">
               {selectedHospital.name}
             </h2>
             <p className="mt-[3px] text-[13px] font-medium leading-[19px] text-[#6b7280]">
@@ -64,7 +64,7 @@ export function HospitalDetailScreen() {
       </section>
 
       <section className="mx-4 mt-[14px] w-[361px]">
-        <h2 className="text-[20px] font-extrabold leading-[26px]">
+        <h2 className="text-[20px] font-bold leading-[26px]">
           진료 가능 시간
         </h2>
         <p className="mt-3 text-[14px] font-semibold leading-5 text-[#6b7280]">
@@ -102,11 +102,11 @@ export function HospitalDetailScreen() {
             <p className="text-[10px] font-medium leading-[15px] text-[#6b7280]">
               나만의닥터 전용가
             </p>
-            <h2 className="text-[14px] font-extrabold leading-[21px]">
+            <h2 className="text-[14px] font-bold leading-[21px]">
               진료비 + 약제비
             </h2>
           </div>
-          <strong className="absolute right-3 top-4 text-[22px] font-extrabold leading-[26px] text-[#1268ff]">
+          <strong className="absolute right-3 top-4 text-[22px] font-bold leading-[26px] text-[#1268ff]">
             315,000원
           </strong>
         </div>
@@ -114,7 +114,7 @@ export function HospitalDetailScreen() {
 
       <section className="mx-4 mt-3 h-[54px] w-[361px] rounded-[10px] border border-[#e5eaf3] bg-white">
         <div className="px-3 py-[9px]">
-          <h2 className="text-[13px] font-bold leading-[18px] text-[#4b5563]">
+          <h2 className="text-[13px] font-semibold leading-[18px] text-[#4b5563]">
             예약 변경 · 취소는 마이페이지에서 가능해요
           </h2>
           <p className="text-[11px] font-medium leading-4 text-[#8a94a6]">
@@ -129,7 +129,7 @@ export function HospitalDetailScreen() {
             <p className="text-[10px] font-medium leading-[15px] text-[#6b7280]">
               선택한 시간
             </p>
-            <p className="text-[16px] font-extrabold leading-[22px]">
+            <p className="text-[16px] font-bold leading-[22px]">
               06.24 (화) 13:30
             </p>
           </div>
@@ -137,14 +137,14 @@ export function HospitalDetailScreen() {
             <p className="text-[10px] font-medium leading-[15px] text-[#6b7280]">
               총 결제 예상 금액
             </p>
-            <p className="text-[22px] font-extrabold leading-6 text-[#1268ff]">
+            <p className="text-[22px] font-bold leading-6 text-[#1268ff]">
               315,000원
             </p>
           </div>
         </div>
         <button
           type="button"
-          className="mt-4 h-12 w-[361px] rounded-[8px] bg-[#2f70ff] text-[16px] font-extrabold leading-6 text-white"
+          className="mt-4 h-12 w-[361px] rounded-[8px] bg-[#2f70ff] text-[16px] font-bold leading-6 text-white"
         >
           예약하기
         </button>

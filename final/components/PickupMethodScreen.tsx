@@ -32,11 +32,11 @@ function MethodCard({
     >
       <div className="absolute left-4 top-[11px]">
         <div className="flex h-6 items-center gap-2">
-          <h3 className="text-[16px] font-extrabold leading-6 text-[#111827]">
+          <h3 className="text-[16px] font-bold leading-6 text-[#111827]">
             {title}
           </h3>
           {recommended ? (
-            <span className="inline-flex h-6 items-center gap-1 rounded-[12px] bg-[#edf4ff] px-[10px] text-[11px] font-bold leading-4 text-[#2f70ff]">
+            <span className="inline-flex h-6 items-center gap-1 rounded-[12px] bg-[#edf4ff] px-[10px] text-[11px] font-semibold leading-4 text-[#2f70ff]">
               <svg
                 aria-hidden="true"
                 viewBox="0 0 24 24"
@@ -54,7 +54,7 @@ function MethodCard({
               추천
             </span>
           ) : (
-            <span className="inline-flex h-6 items-center rounded-[12px] bg-[#f1f4f8] px-[10px] text-[11px] font-bold leading-4 text-[#8a94a6]">
+            <span className="inline-flex h-6 items-center rounded-[12px] bg-[#f1f4f8] px-[10px] text-[11px] font-semibold leading-4 text-[#8a94a6]">
               비교 가능
             </span>
           )}
@@ -118,7 +118,7 @@ export function PickupMethodScreen() {
             />
           </svg>
         </button>
-        <h1 className="absolute left-[138px] top-4 text-[16px] font-bold leading-6">
+        <h1 className="absolute left-[138px] top-4 text-[16px] font-semibold leading-6">
           다이어트 주사 예약
         </h1>
       </header>
@@ -126,7 +126,7 @@ export function PickupMethodScreen() {
       <section className="relative h-[650px]">
         <section className="absolute left-4 top-4 h-[118px] w-[361px]">
           <div className="absolute left-3 top-[11px]">
-            <h2 className="whitespace-pre-line text-[23px] font-extrabold leading-[30px]">
+            <h2 className="whitespace-pre-line text-[23px] font-bold leading-[30px]">
               {"어디서 약을\n"}
               <span className="text-[#2f70ff]">받을까요?</span>
             </h2>
@@ -147,7 +147,7 @@ export function PickupMethodScreen() {
 
         <section className="absolute left-5 top-[156px] h-[168px] w-[353px]">
           <div className="flex h-[22px] items-center justify-between">
-            <h2 className="text-[16px] font-extrabold leading-[22px]">
+            <h2 className="text-[16px] font-bold leading-[22px]">
               가까운 병원 위치
             </h2>
             <span className="text-[12px] font-medium leading-[18px] text-[#6b7280]">
@@ -165,7 +165,7 @@ export function PickupMethodScreen() {
         </section>
 
         <section className="absolute left-5 top-[346px] h-[257px] w-[353px]">
-          <h2 className="text-[16px] font-extrabold leading-[22px]">
+          <h2 className="text-[16px] font-bold leading-[22px]">
             수령 방법 선택
           </h2>
           <div className="absolute left-[5px] top-[38px] h-24 w-[344px]">
@@ -194,7 +194,7 @@ export function PickupMethodScreen() {
         <button
           type="button"
           onClick={() => router.push("/hospital-list")}
-          className="mx-5 h-14 w-[353px] rounded-[8px] bg-[#2f70ff] text-[16px] font-extrabold leading-6 text-white"
+          className="mx-5 h-14 w-[353px] rounded-[8px] bg-[#2f70ff] text-[16px] font-bold leading-6 text-white"
         >
           선택 완료
         </button>

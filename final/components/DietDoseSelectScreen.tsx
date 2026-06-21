@@ -31,17 +31,17 @@ function DoseStepper({
       <button
         type="button"
         onClick={onDecrease}
-        className="absolute left-0 top-0 h-[30px] w-[32px] text-[18px] font-bold leading-[30px] text-[#2f70ff]"
+        className="absolute left-0 top-0 h-[30px] w-[32px] text-[18px] font-semibold leading-[30px] text-[#2f70ff]"
       >
         -
       </button>
-      <span className="absolute left-[45px] top-0 h-[30px] w-4 text-center text-[16px] font-bold leading-[30px] text-[#111827]">
+      <span className="absolute left-[45px] top-0 h-[30px] w-4 text-center text-[16px] font-semibold leading-[30px] text-[#111827]">
         {value}
       </span>
       <button
         type="button"
         onClick={onIncrease}
-        className="absolute right-0 top-0 h-[30px] w-[32px] text-[18px] font-bold leading-[30px] text-[#2f70ff]"
+        className="absolute right-0 top-0 h-[30px] w-[32px] text-[18px] font-semibold leading-[30px] text-[#2f70ff]"
       >
         +
       </button>
@@ -99,14 +99,14 @@ export function DietDoseSelectScreen() {
             />
           </svg>
         </button>
-        <h1 className="absolute left-[158px] top-4 text-[16px] font-bold leading-6">
+        <h1 className="absolute left-[158px] top-4 text-[16px] font-semibold leading-6">
           주사제 선택
         </h1>
       </header>
 
       <section className="relative h-[650px]">
         <div className="absolute left-5 top-[16px] h-[132px] w-[353px]">
-          <h2 className="whitespace-pre-line text-[23px] font-extrabold leading-[30px]">
+          <h2 className="whitespace-pre-line text-[23px] font-bold leading-[30px]">
             {"처방을 희망하는\n"}
             <span className="text-[#2f70ff]">주사제 종류를</span>
             {"\n선택해 주세요"}
@@ -143,13 +143,13 @@ export function DietDoseSelectScreen() {
             </svg>
           </div>
           <div className="absolute left-12 top-[13px]">
-            <p className="text-[16px] font-extrabold leading-[22px]">
+            <p className="text-[16px] font-bold leading-[22px]">
               마OOO{" "}
               <span className="text-[13px] font-medium text-[#4b5563]">
                 (티제파타이드)
               </span>
             </p>
-            <p className="mt-[2px] text-[11px] font-bold leading-4 text-[#2f70ff]">
+            <p className="mt-[2px] text-[11px] font-semibold leading-4 text-[#2f70ff]">
               선택됨
             </p>
           </div>
@@ -181,7 +181,7 @@ export function DietDoseSelectScreen() {
 
         {isDoseExpanded ? (
           <section className="absolute left-5 top-[232px] h-[284px] w-[353px] rounded-[14px] border border-[#dce3ee] bg-white">
-            <h2 className="absolute left-4 top-[13px] text-[14px] font-bold leading-[22px]">
+            <h2 className="absolute left-4 top-[13px] text-[14px] font-semibold leading-[22px]">
               용량 선택
             </h2>
             {doses.map((dose, index) => (
@@ -195,7 +195,7 @@ export function DietDoseSelectScreen() {
                 style={{ top: 48 + index * 58 }}
               >
                 <span
-                  className={`absolute left-[14px] top-[10px] text-[16px] font-extrabold leading-6 ${
+                  className={`absolute left-[14px] top-[10px] text-[16px] font-bold leading-6 ${
                     index === 0 && !isUnknownSelected
                       ? "text-[#2f70ff]"
                       : "text-[#111827]"
@@ -249,7 +249,7 @@ export function DietDoseSelectScreen() {
             ) : null}
           </span>
           <div className="absolute left-[49px] top-[14px]">
-            <h2 className="text-[14px] font-extrabold leading-[19px]">
+            <h2 className="text-[14px] font-bold leading-[19px]">
               잘 모르겠어요 (진료 후 결정할게요)
             </h2>
             <p className="mt-[2px] text-[10px] font-medium leading-4 text-[#8a94a6]">
@@ -277,7 +277,7 @@ export function DietDoseSelectScreen() {
         <button
           type="button"
           onClick={() => router.push("/pickup-method")}
-          className="mx-5 h-14 w-[353px] rounded-[8px] bg-[#2f70ff] text-[16px] font-extrabold leading-6 text-white"
+          className="mx-5 h-14 w-[353px] rounded-[8px] bg-[#2f70ff] text-[16px] font-bold leading-6 text-white"
         >
           병원 · 약국 선택하기
         </button>

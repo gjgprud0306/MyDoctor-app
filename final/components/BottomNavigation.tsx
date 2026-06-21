@@ -60,7 +60,7 @@ export function BottomNavigation() {
             <span
               className={`whitespace-nowrap text-[11px] leading-[17px] ${
                 item.active
-                  ? "font-bold text-[#21242c]"
+                  ? "font-semibold text-[#21242c]"
                   : "font-medium text-[#c4c4c4]"
               }`}
             >

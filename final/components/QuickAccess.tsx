@@ -27,7 +27,7 @@ export function QuickAccess({ actions }: QuickAccessProps) {
               unoptimized
               className={`h-12 w-12 object-contain ${index === 0 ? "mt-0" : ""}`}
             />
-            <span className="mt-1 whitespace-pre-line text-center text-sm font-semibold leading-[18px] text-textPrimary">
+            <span className="mt-1 whitespace-pre-line text-center text-sm font-medium leading-[18px] text-textPrimary">
               {action.title}
             </span>
           </button>

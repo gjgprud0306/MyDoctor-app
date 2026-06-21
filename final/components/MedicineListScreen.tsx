@@ -17,7 +17,7 @@ export function MedicineListScreen({ onMounjaroSelect }: MedicineListScreenProps
         </div>
 
         <section className="absolute left-0 top-[46px] h-[116px] w-full px-5">
-          <h1 className="h-16 whitespace-pre-line text-[23px] font-extrabold leading-8 text-[#111827]">
+          <h1 className="h-16 whitespace-pre-line text-[23px] font-bold leading-8 text-[#111827]">
             {"다이어트 진료는\n'최저가 병원예약'만 가능해요"}
           </h1>
           <p className="mt-2 text-[13px] font-medium leading-5 text-[#6b7280]">
@@ -44,7 +44,7 @@ export function MedicineListScreen({ onMounjaroSelect }: MedicineListScreenProps
             className="absolute left-3 top-1 h-[52px] w-[52px] object-contain"
           />
           <div className="absolute left-[82px] top-[14px]">
-            <h2 className="text-[12px] font-bold leading-4 text-[#374151]">
+            <h2 className="text-[12px] font-semibold leading-4 text-[#374151]">
               약에 대해 궁금하신가요?
             </h2>
             <p className="mt-1 text-[10px] font-medium leading-[13px] text-[#6b7280]">

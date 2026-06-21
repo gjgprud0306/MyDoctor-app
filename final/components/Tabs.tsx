@@ -8,7 +8,7 @@ export function Tabs() {
           <button
             key={tab}
             type="button"
-            className="flex flex-col items-center justify-between px-3 pt-2 text-lg font-semibold leading-[23px] tracking-[-0.02em] text-black"
+            className="flex flex-col items-center justify-between px-3 pt-2 text-lg font-medium leading-[23px] tracking-[-0.02em] text-black"
           >
             <span>{tab}</span>
             <span

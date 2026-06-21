@@ -43,11 +43,11 @@ function HospitalCard({
         className="absolute left-3 top-3 h-[92px] w-20 rounded-[8px] object-cover"
       />
       <div className="absolute left-[104px] top-4">
-        <h2 className="text-[14px] font-extrabold leading-[18px] text-[#111827]">
+        <h2 className="text-[14px] font-bold leading-[18px] text-[#111827]">
           {item.name}
         </h2>
         <div className="mt-[7px] flex items-center gap-[6px]">
-          <span className="rounded-[8px] bg-[#e8fff2] px-[6px] text-[9px] font-bold leading-[16px] text-[#0bbf72]">
+          <span className="rounded-[8px] bg-[#e8fff2] px-[6px] text-[9px] font-semibold leading-[16px] text-[#0bbf72]">
             가격 인증
           </span>
           <span className="text-[10px] font-medium leading-[16px] text-[#6b7280]">
@@ -61,10 +61,10 @@ function HospitalCard({
           {item.wait}
         </p>
       </div>
-      <div className="absolute right-4 top-[50px] rounded-[12px] bg-[#dcfce7] px-[10px] text-[10px] font-bold leading-6 text-[#00a866]">
+      <div className="absolute right-4 top-[50px] rounded-[12px] bg-[#dcfce7] px-[10px] text-[10px] font-semibold leading-6 text-[#00a866]">
         {item.saving}
       </div>
-      <strong className="absolute bottom-[13px] right-4 text-[17px] font-extrabold leading-[22px] text-[#1268ff]">
+      <strong className="absolute bottom-[13px] right-4 text-[17px] font-bold leading-[22px] text-[#1268ff]">
         {item.price}
       </strong>
     </button>
@@ -115,7 +115,7 @@ export function HospitalListScreen() {
             />
           </svg>
         </button>
-        <h1 className="absolute left-[134px] top-4 text-[16px] font-bold leading-6">
+        <h1 className="absolute left-[134px] top-4 text-[16px] font-semibold leading-6">
           다이어트 주사 예약
         </h1>
         <button
@@ -152,7 +152,7 @@ export function HospitalListScreen() {
           <button
             type="button"
             onClick={() => setSortOption("recommended")}
-            className={`h-8 w-[78px] rounded-[16px] text-[12px] font-bold leading-4 ${
+            className={`h-8 w-[78px] rounded-[16px] text-[12px] font-semibold leading-4 ${
               isRecommendedSort
                 ? "bg-[#2f70ff] text-white"
                 : "border border-[#dce3ee] bg-white text-[#111827]"
@@ -163,7 +163,7 @@ export function HospitalListScreen() {
           <button
             type="button"
             onClick={() => setSortOption("price")}
-            className={`h-8 w-[78px] rounded-[16px] text-[12px] font-bold leading-4 ${
+            className={`h-8 w-[78px] rounded-[16px] text-[12px] font-semibold leading-4 ${
               isPriceSort
                 ? "bg-[#2f70ff] text-white"
                 : "border border-[#dce3ee] bg-white text-[#111827]"
@@ -174,7 +174,7 @@ export function HospitalListScreen() {
           <button
             type="button"
             onClick={() => setSortOption("wait")}
-            className={`h-8 w-[90px] rounded-[16px] text-[12px] font-bold leading-4 ${
+            className={`h-8 w-[90px] rounded-[16px] text-[12px] font-semibold leading-4 ${
               isWaitSort
                 ? "bg-[#2f70ff] text-white"
                 : "border border-[#dce3ee] bg-white text-[#111827]"
@@ -205,7 +205,7 @@ export function HospitalListScreen() {
       <div className="fixed bottom-0 left-0 right-0 mx-auto h-20 w-full max-w-[393px] bg-white pt-[10px] shadow-[0_-8px_24px_rgba(17,24,39,0.08)]">
         <button
           type="button"
-          className="mx-[22px] h-14 w-[349px] rounded-[8px] bg-[#2f70ff] text-[16px] font-extrabold leading-6 text-white"
+          className="mx-[22px] h-14 w-[349px] rounded-[8px] bg-[#2f70ff] text-[16px] font-bold leading-6 text-white"
         >
           병원 선택하기
         </button>

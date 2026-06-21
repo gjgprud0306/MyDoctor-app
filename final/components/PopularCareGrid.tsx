@@ -21,14 +21,14 @@ export function PopularCareGrid({ items, onDietClick }: PopularCareGridProps) {
             className="flex h-[110px] items-end justify-between overflow-hidden rounded-[14px] bg-white px-1 py-[11px] text-left"
           >
             <div className="flex h-[88px] w-[81px] flex-col justify-between rounded-[14px]">
-              <span className="grid h-5 w-[37px] place-items-center rounded-[14px] bg-primary text-xs font-semibold leading-none tracking-[-0.02em] text-white">
+              <span className="grid h-5 w-[37px] place-items-center rounded-[14px] bg-primary text-xs font-medium leading-none tracking-[-0.02em] text-white">
                 HOT
               </span>
               <div className="pl-2">
-                <h3 className="text-sm font-semibold leading-[18px] tracking-[-0.02em] text-black">
+                <h3 className="text-sm font-medium leading-[18px] tracking-[-0.02em] text-black">
                   {item.title}
                 </h3>
-                <p className="mt-0.5 whitespace-nowrap text-[10px] font-semibold leading-[13px] tracking-[-0.02em] text-figmaMuted">
+                <p className="mt-0.5 whitespace-nowrap text-[10px] font-medium leading-[13px] tracking-[-0.02em] text-figmaMuted">
                   {item.subtitle}
                 </p>
               </div>
@@ -51,10 +51,10 @@ export function PopularCareGrid({ items, onDietClick }: PopularCareGridProps) {
             className="flex h-16 items-center justify-between overflow-hidden rounded-xl bg-white px-3 py-1.5"
           >
             <div>
-              <h3 className="text-sm font-semibold leading-[18px] tracking-[-0.02em] text-black">
+              <h3 className="text-sm font-medium leading-[18px] tracking-[-0.02em] text-black">
                 {item.title}
               </h3>
-              <p className="mt-0.5 text-[10px] font-semibold leading-[13px] tracking-[-0.02em] text-figmaMuted">
+              <p className="mt-0.5 text-[10px] font-medium leading-[13px] tracking-[-0.02em] text-figmaMuted">
                 {item.subtitle}
               </p>
             </div>
