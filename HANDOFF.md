@@ -46,6 +46,7 @@
 - 2026-06-21 Figma wireframe `526:465` `Screen/HospitalDetail` 구현: `/hospital-detail` 페이지 추가, HospitalList 병원 카드 클릭 라우팅 연결, 뒤로가기 `/hospital-list` 이동, 병원 정보/시간 선택/가격/예약 안내/하단 고정 CTA 구현
 - 2026-06-21 전체 iOS 상단바 수정: Figma StatusBar 노드 `52:296`을 3x 1179x150 PNG로 추출하여 `IosStatusBar` 공통 컴포넌트로 적용, 홈/주사제 선택/수령 방법/병원 리스트/병원 상세 화면의 CSS 상태바 중복 구현 제거
 - 2026-06-21 홈 iOS 상단바 배경 수정: 3x 상단바 에셋 기반으로 홈 배경색 `#f3f4f7` 전용 `ios-status-bar-home.png`를 추가하고 홈 헤더에서만 적용
+- 2026-06-21 홈 인기 진료 아이콘 화질 수정: Figma 홈 노드 `24:165`, `24:175`, `24:102`, `24:107`을 3x 임시 복제 후 `diet-injection.png`, `hair-loss.png`, `mask.png`, `eye.png`로 재추출하여 교체
 
 ### 검증 결과
 
@@ -87,6 +88,8 @@
 - 2026-06-21 ios-status-bar-build: 공통 iOS 상단바 적용 후 `final/`에서 `npm run build` 성공
 - 2026-06-21 home-ios-status-bar-assets: `ios-status-bar-home.png`가 3x 기준 1179x150 PNG임을 `sips`로 확인
 - 2026-06-21 home-ios-status-bar-build: 홈 전용 iOS 상단바 적용 후 `final/`에서 `npm run build` 성공
+- 2026-06-21 home-care-icon-assets: `diet-injection.png`, `hair-loss.png` 234x234, `mask.png`, `eye.png` 156x156 확인. 홈 헤더/퀵메뉴/하단 탭 아이콘도 렌더 크기 대비 3x 이상 확인
+- 2026-06-21 home-care-icon-build: 홈 인기 진료 아이콘 교체 후 `final/`에서 `npm run build` 성공
 
 ### 남은 작업
 
