@@ -6,7 +6,7 @@ import { useMemo, useState } from "react";
 import { IosStatusBar } from "@/components/IosStatusBar";
 import { hospitalList } from "@/lib/hospital-list-data";
 
-type SortOption = "recommended" | "price";
+type SortOption = "recommended" | "price" | "wait";
 
 function FilterIcon() {
   return (
@@ -82,10 +82,18 @@ export function HospitalListScreen() {
       );
     }
 
+    if (sortOption === "wait") {
+      return [...hospitalList].sort(
+        (a, b) => Number(a.wait.replace(/\D/g, "")) - Number(b.wait.replace(/\D/g, "")),
+      );
+    }
+
     return hospitalList;
   }, [sortOption]);
 
   const isPriceSort = sortOption === "price";
+  const isWaitSort = sortOption === "wait";
+  const isRecommendedSort = sortOption === "recommended";
 
   return (
     <main className="mx-auto h-screen w-full max-w-[393px] overflow-hidden bg-white text-[#111827]">
@@ -145,9 +153,9 @@ export function HospitalListScreen() {
             type="button"
             onClick={() => setSortOption("recommended")}
             className={`h-8 w-[78px] rounded-[16px] text-[12px] font-bold leading-4 ${
-              isPriceSort
-                ? "border border-[#dce3ee] bg-white text-[#111827]"
-                : "bg-[#2f70ff] text-white"
+              isRecommendedSort
+                ? "bg-[#2f70ff] text-white"
+                : "border border-[#dce3ee] bg-white text-[#111827]"
             }`}
           >
             추천순
@@ -165,7 +173,12 @@ export function HospitalListScreen() {
           </button>
           <button
             type="button"
-            className="h-8 w-[90px] rounded-[16px] border border-[#dce3ee] bg-white text-[12px] font-bold leading-4 text-[#111827]"
+            onClick={() => setSortOption("wait")}
+            className={`h-8 w-[90px] rounded-[16px] text-[12px] font-bold leading-4 ${
+              isWaitSort
+                ? "bg-[#2f70ff] text-white"
+                : "border border-[#dce3ee] bg-white text-[#111827]"
+            }`}
           >
             대기 짧은순
           </button>
