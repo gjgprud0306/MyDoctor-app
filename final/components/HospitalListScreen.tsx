@@ -48,9 +48,19 @@ function FilterIcon() {
   );
 }
 
-function HospitalCard({ item }: { item: (typeof hospitalList)[number] }) {
+function HospitalCard({
+  item,
+  onSelect,
+}: {
+  item: (typeof hospitalList)[number];
+  onSelect: () => void;
+}) {
   return (
-    <article className="relative h-[116px] w-[349px] rounded-[12px] border border-[#d7e3ff] bg-white shadow-[0_6px_18px_rgba(47,112,255,0.08)]">
+    <button
+      type="button"
+      onClick={onSelect}
+      className="relative h-[116px] w-[349px] rounded-[12px] border border-[#d7e3ff] bg-white text-left shadow-[0_6px_18px_rgba(47,112,255,0.08)]"
+    >
       <Image
         src={item.image}
         alt=""
@@ -84,7 +94,7 @@ function HospitalCard({ item }: { item: (typeof hospitalList)[number] }) {
       <strong className="absolute bottom-[13px] right-4 text-[17px] font-extrabold leading-[22px] text-[#1268ff]">
         {item.price}
       </strong>
-    </article>
+    </button>
   );
 }
 
@@ -164,7 +174,11 @@ export function HospitalListScreen() {
 
         <section className="mx-[22px] mt-4 flex w-[349px] flex-col gap-4">
           {hospitalList.map((item) => (
-            <HospitalCard key={item.name} item={item} />
+            <HospitalCard
+              key={item.name}
+              item={item}
+              onSelect={() => router.push("/hospital-detail")}
+            />
           ))}
         </section>
       </div>
