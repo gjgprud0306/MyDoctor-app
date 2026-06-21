@@ -10,7 +10,7 @@ const headerIcons = [
 export function AppHeader() {
   return (
     <header data-section="header" className="app-header h-[98px] bg-appBg">
-      <IosStatusBar />
+      <IosStatusBar variant="home" />
       <div className="relative h-12">
         <Image
           src="/assets/logos/brand-logo.png"
