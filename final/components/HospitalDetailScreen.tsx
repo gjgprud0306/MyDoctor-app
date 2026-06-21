@@ -2,14 +2,32 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { IosStatusBar } from "@/components/IosStatusBar";
 import { hospitalList } from "@/lib/hospital-list-data";
 
 const selectedHospital = hospitalList[0];
-const timeSlots = ["13:00", "13:30", "14:00", "14:30", "15:00"];
+const timeSlots = [
+  "13:00",
+  "13:30",
+  "14:00",
+  "14:30",
+  "15:00",
+  "15:30",
+  "16:00",
+  "16:30",
+  "17:00",
+  "17:30",
+  "18:00",
+  "18:30",
+  "19:00",
+  "19:30",
+  "20:00",
+];
 
 export function HospitalDetailScreen() {
   const router = useRouter();
+  const [selectedTime, setSelectedTime] = useState("13:30");
 
   return (
     <main className="mx-auto min-h-screen w-full max-w-[393px] bg-white text-[#111827]">
@@ -31,7 +49,7 @@ export function HospitalDetailScreen() {
             />
           </svg>
         </button>
-        <h1 className="absolute left-[107px] top-4 w-[180px] text-center text-[18px] font-bold leading-7">
+        <h1 className="absolute left-[107px] top-4 w-[180px] text-center text-[18px] font-semibold leading-7">
           병원 세부 정보
         </h1>
       </header>
@@ -48,7 +66,7 @@ export function HospitalDetailScreen() {
             className="absolute left-3 top-2 h-[72px] w-[62px] rounded-[6px] object-cover"
           />
           <div className="absolute left-[98px] top-2">
-            <h2 className="text-[20px] font-bold leading-7">
+            <h2 className="text-[20px] font-semibold leading-7">
               {selectedHospital.name}
             </h2>
             <p className="mt-[3px] text-[13px] font-medium leading-[19px] text-[#6b7280]">
@@ -63,21 +81,22 @@ export function HospitalDetailScreen() {
         </div>
       </section>
 
-      <section className="mx-4 mt-[14px] w-[361px]">
-        <h2 className="text-[20px] font-bold leading-[26px]">
+      <section className="mx-4 mt-3 w-[361px]">
+        <h2 className="text-[20px] font-semibold leading-6">
           진료 가능 시간
         </h2>
-        <p className="mt-3 text-[14px] font-semibold leading-5 text-[#6b7280]">
+        <p className="mt-2 text-[14px] font-medium leading-[18px] text-[#6b7280]">
           오늘 06.24 (화)
         </p>
-        <div className="mt-2 flex h-12 gap-2">
+        <div className="mt-2 flex h-12 gap-2 overflow-x-auto pb-1 mobile-scrollbar">
           {timeSlots.map((time) => {
-            const selected = time === "13:30";
+            const selected = time === selectedTime;
             return (
               <button
                 key={time}
                 type="button"
-                className={`h-12 w-[63px] rounded-[6px] border text-[14px] font-semibold leading-5 ${
+                onClick={() => setSelectedTime(time)}
+                className={`h-12 w-[63px] shrink-0 rounded-[6px] border text-[14px] font-medium leading-5 ${
                   selected
                     ? "border-[#2f70ff] bg-[#f0f6ff] text-[#2f70ff]"
                     : "border-[#dce3ee] bg-white text-[#111827]"
@@ -90,23 +109,23 @@ export function HospitalDetailScreen() {
         </div>
         <button
           type="button"
-          className="mt-2 h-[38px] w-[361px] rounded-[8px] border border-[#dce3ee] bg-white text-[13px] font-semibold leading-[18px] text-[#4b5563]"
+          className="mt-2 h-[38px] w-[361px] rounded-[8px] border border-[#dce3ee] bg-white text-[13px] font-medium leading-[18px] text-[#4b5563]"
         >
           다른 날짜 보기
         </button>
       </section>
 
-      <section className="mx-4 mt-6 h-[58px] w-[361px] rounded-[10px] bg-[#f6f9ff]">
+      <section className="mx-4 mt-5 h-[58px] w-[361px] rounded-[10px] bg-[#f6f9ff]">
         <div className="relative h-full">
           <div className="absolute left-3 top-[11px]">
             <p className="text-[10px] font-medium leading-[15px] text-[#6b7280]">
               나만의닥터 전용가
             </p>
-            <h2 className="text-[14px] font-bold leading-[21px]">
+            <h2 className="text-[14px] font-semibold leading-[19px]">
               진료비 + 약제비
             </h2>
           </div>
-          <strong className="absolute right-3 top-4 text-[22px] font-bold leading-[26px] text-[#1268ff]">
+          <strong className="absolute right-3 top-4 text-[22px] font-semibold leading-[26px] text-[#1268ff]">
             315,000원
           </strong>
         </div>
@@ -114,7 +133,7 @@ export function HospitalDetailScreen() {
 
       <section className="mx-4 mt-3 h-[54px] w-[361px] rounded-[10px] border border-[#e5eaf3] bg-white">
         <div className="px-3 py-[9px]">
-          <h2 className="text-[13px] font-semibold leading-[18px] text-[#4b5563]">
+          <h2 className="text-[13px] font-medium leading-[18px] text-[#4b5563]">
             예약 변경 · 취소는 마이페이지에서 가능해요
           </h2>
           <p className="text-[11px] font-medium leading-4 text-[#8a94a6]">
@@ -129,22 +148,22 @@ export function HospitalDetailScreen() {
             <p className="text-[10px] font-medium leading-[15px] text-[#6b7280]">
               선택한 시간
             </p>
-            <p className="text-[16px] font-bold leading-[22px]">
-              06.24 (화) 13:30
+            <p className="text-[16px] font-semibold leading-[22px]">
+              06.24 (화) {selectedTime}
             </p>
           </div>
           <div className="text-right">
             <p className="text-[10px] font-medium leading-[15px] text-[#6b7280]">
               총 결제 예상 금액
             </p>
-            <p className="text-[22px] font-bold leading-6 text-[#1268ff]">
+            <p className="text-[22px] font-semibold leading-6 text-[#1268ff]">
               315,000원
             </p>
           </div>
         </div>
         <button
           type="button"
-          className="mt-4 h-12 w-[361px] rounded-[8px] bg-[#2f70ff] text-[16px] font-bold leading-6 text-white"
+          className="mt-4 h-12 w-[361px] rounded-[8px] bg-[#2f70ff] text-[16px] font-semibold leading-6 text-white"
         >
           예약하기
         </button>
