@@ -2,38 +2,8 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { IosStatusBar } from "@/components/IosStatusBar";
 import { hospitalList } from "@/lib/hospital-list-data";
-
-function StatusBar() {
-  return (
-    <div className="relative h-[50px] text-black">
-      <span className="absolute left-[55px] top-[21px] text-[17px] font-bold leading-[22px]">
-        9:41
-      </span>
-      <div className="absolute right-[34px] top-[25px] flex h-[13px] items-start gap-[7px]">
-        <span className="grid h-[13px] w-[19px] grid-cols-4 items-end gap-[2px]">
-          <span className="h-[5px] rounded-[1px] bg-black" />
-          <span className="h-[8px] rounded-[1px] bg-black" />
-          <span className="h-[11px] rounded-[1px] bg-black" />
-          <span className="h-[13px] rounded-[1px] bg-black" />
-        </span>
-        <span className="relative h-[13px] w-[18px]">
-          <span className="absolute left-0 top-0 h-[8px] w-[18px] overflow-hidden">
-            <span className="absolute left-0 top-0 h-[17px] w-[18px] rounded-t-full border-[4px] border-black border-b-0" />
-          </span>
-          <span className="absolute left-[4px] top-[5px] h-[6px] w-[10px] overflow-hidden">
-            <span className="absolute left-0 top-0 h-[10px] w-[10px] rounded-t-full border-[4px] border-b-0" />
-          </span>
-          <span className="absolute bottom-0 left-[7px] h-[4px] w-[4px] rounded-full bg-black" />
-        </span>
-        <span className="relative h-[13px] w-[27px] rounded-[4px] border border-black p-[2px]">
-          <span className="absolute -right-[3px] top-[4px] h-[5px] w-[2px] rounded-r bg-black/40" />
-          <span className="block h-full w-full rounded-[2px] bg-black" />
-        </span>
-      </div>
-    </div>
-  );
-}
 
 function FilterIcon() {
   return (
@@ -103,7 +73,7 @@ export function HospitalListScreen() {
 
   return (
     <main className="mx-auto h-screen w-full max-w-[393px] overflow-hidden bg-white text-[#111827]">
-      <StatusBar />
+      <IosStatusBar />
       <header className="relative h-14">
         <button
           type="button"

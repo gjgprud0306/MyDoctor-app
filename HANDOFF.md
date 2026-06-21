@@ -44,6 +44,7 @@
 - 2026-06-20 Figma `52:393` `Screen_HospitalList` 구현: `/hospital-list` 페이지 추가, PickupMethod 하단 CTA에서 라우팅 이동, 뒤로가기 버튼 `/pickup-method` 이동, 지도 3x export 및 필터 칩/병원 카드 5개/하단 고정 CTA 구현
 - 2026-06-20 HospitalList 병원 썸네일 화질 수정: Figma 카드 썸네일 프레임 5개를 3x 240x276 PNG로 재추출하여 `final/public/assets/images/hospitals/`에 저장하고 병원 리스트 데이터 연결
 - 2026-06-21 Figma wireframe `526:465` `Screen/HospitalDetail` 구현: `/hospital-detail` 페이지 추가, HospitalList 병원 카드 클릭 라우팅 연결, 뒤로가기 `/hospital-list` 이동, 병원 정보/시간 선택/가격/예약 안내/하단 고정 CTA 구현
+- 2026-06-21 전체 iOS 상단바 수정: Figma StatusBar 노드 `52:296`을 3x 1179x150 PNG로 추출하여 `IosStatusBar` 공통 컴포넌트로 적용, 홈/주사제 선택/수령 방법/병원 리스트/병원 상세 화면의 CSS 상태바 중복 구현 제거
 
 ### 검증 결과
 
@@ -81,6 +82,8 @@
 - 2026-06-20 hospital-list-thumbnail-assets: `hospital-list-01.png`~`hospital-list-05.png`가 모두 240x276 PNG임을 `sips`/`file`로 확인
 - 2026-06-20 hospital-list-thumbnail-build: 병원 썸네일 교체 후 `final/`에서 `npm run build` 성공
 - 2026-06-21 hospital-detail-build: `final/`에서 `npm run build` 성공, `/hospital-detail` static route 생성 확인
+- 2026-06-21 ios-status-bar-assets: `ios-status-bar.png`가 Figma 3x export 기반 1179x150 PNG임을 `sips`로 확인
+- 2026-06-21 ios-status-bar-build: 공통 iOS 상단바 적용 후 `final/`에서 `npm run build` 성공
 
 ### 남은 작업
 
