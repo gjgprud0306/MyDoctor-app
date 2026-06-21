@@ -2,9 +2,9 @@
 
 ### 현재 상태
 
-- GitHub (브랜치/커밋): main, `92f7838 fix: resolve home screen issues` push 완료
+- GitHub (브랜치/커밋): main, 홈 iOS 상단바 배경 수정 변경사항 push 완료
 - Vercel 배포 상태: 확인하지 않음
-- 현재 진행 중인 작업: GitHub 이슈 #1~#4 대응 변경사항 push 완료, Vercel 배포 확인 대기
+- 현재 진행 중인 작업: 홈 화면 iOS 상단바 배경색 수정 완료, Vercel 배포 확인 대기
 
 ### 완료된 작업
 
