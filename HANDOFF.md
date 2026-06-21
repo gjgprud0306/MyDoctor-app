@@ -2,9 +2,9 @@
 
 ### 현재 상태
 
-- GitHub (브랜치/커밋): main, 홈 인기 진료 아이콘 3x 교체 변경사항 push 완료
+- GitHub (브랜치/커밋): main, 홈 병원 추천 썸네일 3x 교체 변경사항 push 완료
 - Vercel 배포 상태: 확인하지 않음
-- 현재 진행 중인 작업: 홈 병원 추천 썸네일 3x 교체 진행 중
+- 현재 진행 중인 작업: 병원 리스트 가격순 정렬 인터랙션 구현 진행 중
 
 ### 완료된 작업
 
@@ -48,6 +48,7 @@
 - 2026-06-21 홈 iOS 상단바 배경 수정: 3x 상단바 에셋 기반으로 홈 배경색 `#f3f4f7` 전용 `ios-status-bar-home.png`를 추가하고 홈 헤더에서만 적용
 - 2026-06-21 홈 인기 진료 아이콘 화질 수정: Figma 홈 노드 `24:165`, `24:175`, `24:102`, `24:107`을 3x 임시 복제 후 `diet-injection.png`, `hair-loss.png`, `mask.png`, `eye.png`로 재추출하여 교체
 - 2026-06-21 홈 병원 추천 썸네일 화질 수정: Figma 홈 노드 `24:218`, `24:235`, `24:250`을 3x 임시 복제 후 `hospital-rank-01.png`~`hospital-rank-03.png`로 재추출하여 교체
+- 2026-06-21 병원 리스트 필터 인터랙션 구현: `가격순` 클릭 시 병원 카드가 가격 낮은 순으로 정렬되고, `추천순` 클릭 시 기존 추천 순서로 복귀하도록 연결
 
 ### 검증 결과
 
@@ -93,6 +94,8 @@
 - 2026-06-21 home-care-icon-build: 홈 인기 진료 아이콘 교체 후 `final/`에서 `npm run build` 성공
 - 2026-06-21 home-hospital-thumbnail-assets: `hospital-rank-01.png`~`hospital-rank-03.png`가 Figma 3x export 기반 132x132 PNG임을 `sips`로 확인
 - 2026-06-21 home-hospital-thumbnail-build: 홈 병원 추천 썸네일 교체 후 `final/`에서 `npm run build` 성공
+- 2026-06-21 hospital-list-price-sort-logic: 현재 병원 데이터 기준 가격순 정렬 결과가 `240000`, `300000`, `310000`, `315000`, `325000` 순서임을 코드 로직으로 확인
+- 2026-06-21 hospital-list-price-sort-build: 병원 리스트 가격순 정렬 인터랙션 구현 후 `final/`에서 `npm run build` 성공
 
 ### 남은 작업
 

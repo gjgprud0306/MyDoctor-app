@@ -2,8 +2,11 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useMemo, useState } from "react";
 import { IosStatusBar } from "@/components/IosStatusBar";
 import { hospitalList } from "@/lib/hospital-list-data";
+
+type SortOption = "recommended" | "price";
 
 function FilterIcon() {
   return (
@@ -70,6 +73,19 @@ function HospitalCard({
 
 export function HospitalListScreen() {
   const router = useRouter();
+  const [sortOption, setSortOption] = useState<SortOption>("recommended");
+
+  const sortedHospitals = useMemo(() => {
+    if (sortOption === "price") {
+      return [...hospitalList].sort(
+        (a, b) => Number(a.price.replace(/\D/g, "")) - Number(b.price.replace(/\D/g, "")),
+      );
+    }
+
+    return hospitalList;
+  }, [sortOption]);
+
+  const isPriceSort = sortOption === "price";
 
   return (
     <main className="mx-auto h-screen w-full max-w-[393px] overflow-hidden bg-white text-[#111827]">
@@ -125,16 +141,36 @@ export function HospitalListScreen() {
         </section>
 
         <section className="mx-[22px] mt-4 flex h-[38px] w-[349px] items-center gap-[10px]">
-          <button className="h-8 w-[78px] rounded-[16px] bg-[#2f70ff] text-[12px] font-bold leading-4 text-white">
+          <button
+            type="button"
+            onClick={() => setSortOption("recommended")}
+            className={`h-8 w-[78px] rounded-[16px] text-[12px] font-bold leading-4 ${
+              isPriceSort
+                ? "border border-[#dce3ee] bg-white text-[#111827]"
+                : "bg-[#2f70ff] text-white"
+            }`}
+          >
             추천순
           </button>
-          <button className="h-8 w-[78px] rounded-[16px] border border-[#dce3ee] bg-white text-[12px] font-bold leading-4 text-[#111827]">
+          <button
+            type="button"
+            onClick={() => setSortOption("price")}
+            className={`h-8 w-[78px] rounded-[16px] text-[12px] font-bold leading-4 ${
+              isPriceSort
+                ? "bg-[#2f70ff] text-white"
+                : "border border-[#dce3ee] bg-white text-[#111827]"
+            }`}
+          >
             가격순
           </button>
-          <button className="h-8 w-[90px] rounded-[16px] border border-[#dce3ee] bg-white text-[12px] font-bold leading-4 text-[#111827]">
+          <button
+            type="button"
+            className="h-8 w-[90px] rounded-[16px] border border-[#dce3ee] bg-white text-[12px] font-bold leading-4 text-[#111827]"
+          >
             대기 짧은순
           </button>
           <button
+            type="button"
             aria-label="필터"
             className="grid h-8 w-[33px] place-items-center rounded-[16px] border border-[#dce3ee] bg-white text-[#6b7280]"
           >
@@ -143,7 +179,7 @@ export function HospitalListScreen() {
         </section>
 
         <section className="mx-[22px] mt-4 flex w-[349px] flex-col gap-4">
-          {hospitalList.map((item) => (
+          {sortedHospitals.map((item) => (
             <HospitalCard
               key={item.name}
               item={item}
