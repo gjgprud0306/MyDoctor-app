@@ -3,7 +3,7 @@
 ### 현재 상태
 
 - GitHub (브랜치/커밋): main, 병원 상세 시간 선택 UI 개선 변경사항 push 완료
-- Vercel 배포 상태: 확인하지 않음. GitHub push 후 Vercel 배포/화면 업데이트 확인을 함께 진행해야 함
+- Vercel 배포 상태: `https://my-doctor-app-hg800.vercel.app` 사용. 현재 HTTP 401 보호 페이지 응답 확인됨. GitHub push 후 Vercel 배포/화면 업데이트 확인을 함께 진행해야 함
 - 현재 진행 중인 작업: 병원 상세 시간 선택 시작 시간 조정 진행 중
 
 ### 완료된 작업
@@ -114,5 +114,5 @@
 - 프로모션 배너 좌우 화살표 개별 export 필요 여부 확인
 - PWA 앱 아이콘이 필요하면 Figma에서 별도 export 후 `final/public/assets/pwa/` 저장
 - 로컬 포트 실행 가능한 환경 또는 실기기에서 모바일/PWA 시각 QA
-- 변경사항 push 후 Vercel 배포/화면 업데이트 확인. Vercel 배포 URL 확인 필요
+- 변경사항 push 후 Vercel 배포/화면 업데이트 확인. 기준 URL: `https://my-doctor-app-hg800.vercel.app`
 - 변경사항 push 후 관련 이슈에 변경사항, 검증 결과, 배포 URL 댓글 작성 및 완료 조건 충족 시 close
