@@ -7,6 +7,20 @@ type BeforeInstallPromptEvent = Event & {
   userChoice: Promise<{ outcome: "accepted" | "dismissed"; platform: string }>;
 };
 
+type PromptMode = "android" | "ios";
+
+function isIosDevice() {
+  if (typeof window === "undefined") {
+    return false;
+  }
+
+  const userAgent = window.navigator.userAgent.toLowerCase();
+  const isIpadDesktopMode =
+    window.navigator.platform === "MacIntel" && window.navigator.maxTouchPoints > 1;
+
+  return /iphone|ipad|ipod/.test(userAgent) || isIpadDesktopMode;
+}
+
 function isIosStandalone() {
   return (
     typeof window !== "undefined" &&
@@ -17,6 +31,7 @@ function isIosStandalone() {
 
 export function InstallPrompt() {
   const [installEvent, setInstallEvent] = useState<BeforeInstallPromptEvent | null>(null);
+  const [promptMode, setPromptMode] = useState<PromptMode | null>(null);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -24,9 +39,16 @@ export function InstallPrompt() {
       return;
     }
 
+    if (isIosDevice()) {
+      setPromptMode("ios");
+      setIsVisible(true);
+      return;
+    }
+
     const handleBeforeInstallPrompt = (event: Event) => {
       event.preventDefault();
       setInstallEvent(event as BeforeInstallPromptEvent);
+      setPromptMode("android");
       setIsVisible(true);
     };
 
@@ -52,10 +74,11 @@ export function InstallPrompt() {
     await installEvent.prompt();
     await installEvent.userChoice.catch(() => undefined);
     setInstallEvent(null);
+    setPromptMode(null);
     setIsVisible(false);
   };
 
-  if (!isVisible || !installEvent) {
+  if (!isVisible || !promptMode) {
     return null;
   }
 
@@ -67,16 +90,24 @@ export function InstallPrompt() {
             나만의닥터를 홈 화면에 추가
           </p>
           <p className="mt-1 text-[11px] font-medium leading-4 text-[#6b7280]">
-            더 빠르게 진료 예약을 시작할 수 있어요.
+            {promptMode === "ios"
+              ? "공유 버튼을 누른 뒤 홈 화면에 추가를 선택해주세요."
+              : "더 빠르게 진료 예약을 시작할 수 있어요."}
           </p>
         </div>
-        <button
-          type="button"
-          onClick={install}
-          className="h-9 w-[76px] shrink-0 rounded-[8px] bg-[#2f70ff] text-[13px] font-semibold leading-5 text-white"
-        >
-          설치
-        </button>
+        {promptMode === "android" ? (
+          <button
+            type="button"
+            onClick={install}
+            className="h-9 w-[76px] shrink-0 rounded-[8px] bg-[#2f70ff] text-[13px] font-semibold leading-5 text-white"
+          >
+            설치
+          </button>
+        ) : (
+          <div className="grid h-9 w-[76px] shrink-0 place-items-center rounded-[8px] bg-[#f0f6ff] text-[13px] font-semibold leading-5 text-[#2f70ff]">
+            공유
+          </div>
+        )}
       </div>
       <button
         type="button"

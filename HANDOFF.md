@@ -56,6 +56,7 @@
 - 2026-06-22 Vercel 연결 및 Production 배포: Vercel CLI 로그인 계정 `gjgprud0306`, 프로젝트 `hg800/my-doctor-app` 연결 후 `final` 앱을 Production 배포. Deployment `dpl_4DkHn1C5DL3MhWqkZT7bsVywsF1z`, alias `https://my-doctor-app-mocha.vercel.app`
 - 2026-06-22 GitHub 이슈 #5 대응: PWA 설치 조건 보강을 위해 Figma export 로고 기반 PWA 아이콘 192x192/512x512/apple 180x180 생성, manifest icons 배열 추가, apple-touch-icon metadata 추가, `/sw.js` 기본 서비스 워커와 `ServiceWorkerRegister` 등록 컴포넌트 추가
 - 2026-06-22 GitHub 이슈 #6 대응: Android Chrome용 설치 배너 `InstallPrompt` 추가, `beforeinstallprompt` 이벤트 저장 및 사용자 버튼 클릭 시 `event.prompt()` 호출 구현, iOS standalone 미표시 처리. 실제 터치 기기에서 가짜 `IosStatusBar`가 숨겨지도록 `ios-status-bar` 클래스와 CSS 규칙 추가
+- 2026-06-22 iOS Safari PWA 안내 개선: iOS Safari는 자동 설치 prompt가 불가능하므로 non-standalone iOS 접속 시 `InstallPrompt`에서 공유 버튼 → 홈 화면에 추가 안내 배너를 표시하도록 추가
 
 ### 검증 결과
 
@@ -116,6 +117,7 @@
 - 2026-06-22 pwa-icon-assets: `icon-192.png` 192x192, `icon-512.png` 512x512, `apple-touch-icon.png` 180x180 확인
 - 2026-06-22 pwa-install-build: manifest icons, apple-touch-icon, 서비스 워커 등록 추가 후 `final/`에서 `npm run build` 성공
 - 2026-06-22 pwa-install-prompt-build: `InstallPrompt` 및 실제 터치 기기 가짜 iOS 상태바 숨김 처리 후 `final/`에서 `npm run build` 성공
+- 2026-06-22 ios-safari-install-guide-build: iOS Safari 설치 안내 배너 추가 후 `final/`에서 `npm run build` 성공
 
 ### 남은 작업
 
