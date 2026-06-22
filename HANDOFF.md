@@ -54,6 +54,7 @@
 - 2026-06-21 병원 상세 시간 선택 UI 조정: 병원 상세 화면 텍스트 굵기와 시간 영역 세로 간격을 추가 완화하고, 13:00~20:00 시간대를 30분 단위 가로 스크롤 리스트로 확장. 시간 버튼 클릭 시 선택 상태와 하단 선택 시간 표시가 함께 갱신되도록 구현
 - 2026-06-21 병원 상세 시간 선택 범위 확장: 시간 선택 가로 스크롤 리스트를 09:00~20:00 30분 단위로 확장하고, 선택 시간 state가 하단 날짜 옆 예약시간 표기와 연동되는 구조 유지
 - 2026-06-22 Vercel 연결 및 Production 배포: Vercel CLI 로그인 계정 `gjgprud0306`, 프로젝트 `hg800/my-doctor-app` 연결 후 `final` 앱을 Production 배포. Deployment `dpl_4DkHn1C5DL3MhWqkZT7bsVywsF1z`, alias `https://my-doctor-app-mocha.vercel.app`
+- 2026-06-22 GitHub 이슈 #5 대응: PWA 설치 조건 보강을 위해 Figma export 로고 기반 PWA 아이콘 192x192/512x512/apple 180x180 생성, manifest icons 배열 추가, apple-touch-icon metadata 추가, `/sw.js` 기본 서비스 워커와 `ServiceWorkerRegister` 등록 컴포넌트 추가
 
 ### 검증 결과
 
@@ -111,6 +112,8 @@
 - 2026-06-21 hospital-detail-time-range-build: 병원 상세 시간 선택 범위 확장 후 `final/`에서 `npm run build` 성공
 - 2026-06-22 vercel-production-deploy: `npx vercel@latest deploy --prod --yes` 성공, Vercel 빌드에서 `npm run build` 성공 및 READY 상태 확인
 - 2026-06-22 vercel-url-check: `https://my-doctor-app-mocha.vercel.app` HTTP 200 확인, `https://my-doctor-app-hg800.vercel.app` 및 deployment URL은 HTTP 401 보호 페이지 응답 확인
+- 2026-06-22 pwa-icon-assets: `icon-192.png` 192x192, `icon-512.png` 512x512, `apple-touch-icon.png` 180x180 확인
+- 2026-06-22 pwa-install-build: manifest icons, apple-touch-icon, 서비스 워커 등록 추가 후 `final/`에서 `npm run build` 성공
 
 ### 남은 작업
 
