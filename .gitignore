@@ -7,3 +7,4 @@ dist/
 
 final/node_modules/
 final/.next/
+.vercel

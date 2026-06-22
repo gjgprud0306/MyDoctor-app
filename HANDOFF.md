@@ -3,7 +3,7 @@
 ### 현재 상태
 
 - GitHub (브랜치/커밋): main, 병원 상세 시간 선택 UI 개선 변경사항 push 완료
-- Vercel 배포 상태: `https://my-doctor-app-hg800.vercel.app` 사용. 현재 HTTP 401 보호 페이지 응답 확인됨. GitHub push 후 Vercel 배포/화면 업데이트 확인을 함께 진행해야 함
+- Vercel 배포 상태: Vercel CLI 연결 완료 (`hg800/my-doctor-app`, Root Directory `final`). 최신 Production 배포 완료, 실제 공개 alias `https://my-doctor-app-mocha.vercel.app` HTTP 200 확인. 기존 전달 URL `https://my-doctor-app-hg800.vercel.app`는 HTTP 401 보호 페이지 응답
 - 현재 진행 중인 작업: 병원 상세 시간 선택 시작 시간 조정 진행 중
 
 ### 완료된 작업
@@ -53,6 +53,7 @@
 - 2026-06-21 전체 화면 텍스트 굵기 조정: `font-extrabold` 사용을 제거하고 큰 제목/가격/CTA는 `bold`, 카드/칩/섹션/보조 텍스트는 `semibold` 또는 `medium` 중심으로 낮춰 피그마 대비 과한 볼드감을 완화
 - 2026-06-21 병원 상세 시간 선택 UI 조정: 병원 상세 화면 텍스트 굵기와 시간 영역 세로 간격을 추가 완화하고, 13:00~20:00 시간대를 30분 단위 가로 스크롤 리스트로 확장. 시간 버튼 클릭 시 선택 상태와 하단 선택 시간 표시가 함께 갱신되도록 구현
 - 2026-06-21 병원 상세 시간 선택 범위 확장: 시간 선택 가로 스크롤 리스트를 09:00~20:00 30분 단위로 확장하고, 선택 시간 state가 하단 날짜 옆 예약시간 표기와 연동되는 구조 유지
+- 2026-06-22 Vercel 연결 및 Production 배포: Vercel CLI 로그인 계정 `gjgprud0306`, 프로젝트 `hg800/my-doctor-app` 연결 후 `final` 앱을 Production 배포. Deployment `dpl_4DkHn1C5DL3MhWqkZT7bsVywsF1z`, alias `https://my-doctor-app-mocha.vercel.app`
 
 ### 검증 결과
 
@@ -108,11 +109,13 @@
 - 2026-06-21 hospital-detail-time-slot-build: 병원 상세 시간 선택/텍스트 굵기 조정 후 `final/`에서 `npm run build` 성공
 - 2026-06-21 hospital-detail-time-range-check: 시간 선택 배열이 총 23개이며 첫 시간 `09:00`, 마지막 시간 `20:00`임을 확인
 - 2026-06-21 hospital-detail-time-range-build: 병원 상세 시간 선택 범위 확장 후 `final/`에서 `npm run build` 성공
+- 2026-06-22 vercel-production-deploy: `npx vercel@latest deploy --prod --yes` 성공, Vercel 빌드에서 `npm run build` 성공 및 READY 상태 확인
+- 2026-06-22 vercel-url-check: `https://my-doctor-app-mocha.vercel.app` HTTP 200 확인, `https://my-doctor-app-hg800.vercel.app` 및 deployment URL은 HTTP 401 보호 페이지 응답 확인
 
 ### 남은 작업
 
 - 프로모션 배너 좌우 화살표 개별 export 필요 여부 확인
 - PWA 앱 아이콘이 필요하면 Figma에서 별도 export 후 `final/public/assets/pwa/` 저장
 - 로컬 포트 실행 가능한 환경 또는 실기기에서 모바일/PWA 시각 QA
-- 변경사항 push 후 Vercel 배포/화면 업데이트 확인. 기준 URL: `https://my-doctor-app-hg800.vercel.app`
+- 변경사항 push 후 Vercel Production 배포/화면 업데이트 확인. 기준 공개 URL: `https://my-doctor-app-mocha.vercel.app`
 - 변경사항 push 후 관련 이슈에 변경사항, 검증 결과, 배포 URL 댓글 작성 및 완료 조건 충족 시 close
