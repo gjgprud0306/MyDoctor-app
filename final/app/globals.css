@@ -88,4 +88,8 @@ img {
   .home-indicator {
     display: none;
   }
+
+  .ios-status-bar {
+    display: none;
+  }
 }

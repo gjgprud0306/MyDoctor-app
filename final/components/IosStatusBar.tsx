@@ -12,7 +12,7 @@ const statusBarSources = {
 export function IosStatusBar({ variant = "default" }: IosStatusBarProps) {
   return (
     <div
-      className={`relative h-[50px] w-full overflow-hidden ${
+      className={`ios-status-bar relative h-[50px] w-full overflow-hidden ${
         variant === "home" ? "bg-appBg" : "bg-white"
       }`}
     >

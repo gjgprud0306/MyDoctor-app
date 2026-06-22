@@ -55,6 +55,7 @@
 - 2026-06-21 병원 상세 시간 선택 범위 확장: 시간 선택 가로 스크롤 리스트를 09:00~20:00 30분 단위로 확장하고, 선택 시간 state가 하단 날짜 옆 예약시간 표기와 연동되는 구조 유지
 - 2026-06-22 Vercel 연결 및 Production 배포: Vercel CLI 로그인 계정 `gjgprud0306`, 프로젝트 `hg800/my-doctor-app` 연결 후 `final` 앱을 Production 배포. Deployment `dpl_4DkHn1C5DL3MhWqkZT7bsVywsF1z`, alias `https://my-doctor-app-mocha.vercel.app`
 - 2026-06-22 GitHub 이슈 #5 대응: PWA 설치 조건 보강을 위해 Figma export 로고 기반 PWA 아이콘 192x192/512x512/apple 180x180 생성, manifest icons 배열 추가, apple-touch-icon metadata 추가, `/sw.js` 기본 서비스 워커와 `ServiceWorkerRegister` 등록 컴포넌트 추가
+- 2026-06-22 GitHub 이슈 #6 대응: Android Chrome용 설치 배너 `InstallPrompt` 추가, `beforeinstallprompt` 이벤트 저장 및 사용자 버튼 클릭 시 `event.prompt()` 호출 구현, iOS standalone 미표시 처리. 실제 터치 기기에서 가짜 `IosStatusBar`가 숨겨지도록 `ios-status-bar` 클래스와 CSS 규칙 추가
 
 ### 검증 결과
 
@@ -114,6 +115,7 @@
 - 2026-06-22 vercel-url-check: `https://my-doctor-app-mocha.vercel.app` HTTP 200 확인, `https://my-doctor-app-hg800.vercel.app` 및 deployment URL은 HTTP 401 보호 페이지 응답 확인
 - 2026-06-22 pwa-icon-assets: `icon-192.png` 192x192, `icon-512.png` 512x512, `apple-touch-icon.png` 180x180 확인
 - 2026-06-22 pwa-install-build: manifest icons, apple-touch-icon, 서비스 워커 등록 추가 후 `final/`에서 `npm run build` 성공
+- 2026-06-22 pwa-install-prompt-build: `InstallPrompt` 및 실제 터치 기기 가짜 iOS 상태바 숨김 처리 후 `final/`에서 `npm run build` 성공
 
 ### 남은 작업
 
