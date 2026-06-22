@@ -59,6 +59,7 @@
 - 2026-06-22 iOS Safari PWA 안내 개선: iOS Safari는 자동 설치 prompt가 불가능하므로 non-standalone iOS 접속 시 `InstallPrompt`에서 공유 버튼 → 홈 화면에 추가 안내 배너를 표시하도록 추가
 - 2026-06-22 GA4 추적 코드 적용: 측정 ID `G-58KL1SR9DG`를 `next/script` 기반으로 루트 레이아웃에 추가
 - 2026-06-22 Microsoft Clarity 추적 코드 적용: 프로젝트 ID `xaseo5k0rg`를 `next/script` 기반으로 루트 레이아웃에 추가
+- 2026-06-22 Google Tag Manager 적용: 컨테이너 ID `GTM-WXQFTF5W`를 `next/script`와 `noscript` iframe fallback으로 루트 레이아웃에 추가
 
 ### 검증 결과
 
@@ -122,6 +123,7 @@
 - 2026-06-22 ios-safari-install-guide-build: iOS Safari 설치 안내 배너 추가 후 `final/`에서 `npm run build` 성공
 - 2026-06-22 ga4-script-build: GA4 측정 스크립트 추가 후 `final/`에서 `npm run build` 성공
 - 2026-06-22 clarity-script-build: Microsoft Clarity 추적 스크립트 추가 후 `final/`에서 `npm run build` 성공
+- 2026-06-22 gtm-script-build: Google Tag Manager 스크립트 및 noscript fallback 추가 후 `final/`에서 `npm run build` 성공
 
 ### 남은 작업
 
