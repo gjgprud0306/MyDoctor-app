@@ -27,6 +27,7 @@ export const noExtraFeeHospitals: NoExtraFeeHospital[] = [
     rating: "4.9",
     extraFeeBadge: "추가 비용 없음",
     bestLabel: "BEST",
+    address: "서울 강남구 논현로 85",
   },
   {
     id: "mediline-clinic",
@@ -48,6 +49,7 @@ export const noExtraFeeHospitals: NoExtraFeeHospital[] = [
     rating: "4.7",
     extraFeeBadge: "추가 비용 없음",
     bestLabel: "BEST",
+    address: "서울 마포구 양화로 45",
   },
   {
     id: "seoul-well-ent",
@@ -69,5 +71,6 @@ export const noExtraFeeHospitals: NoExtraFeeHospital[] = [
     rating: "4.6",
     extraFeeBadge: "추가 비용 없음",
     bestLabel: "BEST",
+    address: "서울 송파구 백제고분로 120",
   },
 ];

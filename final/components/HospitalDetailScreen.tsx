@@ -6,6 +6,7 @@ import { useMemo, useState } from "react";
 import { IosStatusBar } from "@/components/IosStatusBar";
 import { hospitalList } from "@/lib/hospital-list-data";
 import { noExtraFeeHospitals } from "@/lib/no-extra-fee-hospital-data";
+import { findReservationHospital } from "@/lib/reservation-data";
 
 const timeSlots = [
   "09:00",
@@ -65,8 +66,7 @@ export function HospitalDetailScreen() {
   const searchParams = useSearchParams();
   const selectedHospital = useMemo(() => {
     const hospitalId = searchParams.get("hospital");
-    const detailHospitals = [...hospitalList, ...noExtraFeeHospitals];
-    return detailHospitals.find((hospital) => hospital.id === hospitalId) ?? hospitalList[0];
+    return findReservationHospital(hospitalId);
   }, [searchParams]);
   const backPath =
     searchParams.get("from") === "high-return"
@@ -77,6 +77,7 @@ export function HospitalDetailScreen() {
   const [selectedDate, setSelectedDate] = useState(dateOptions[0]);
   const [selectedTime, setSelectedTime] = useState("13:30");
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
+  const completePath = `/reservation-complete?hospital=${selectedHospital.id}&date=${encodeURIComponent(selectedDate)}&time=${encodeURIComponent(selectedTime)}`;
 
   return (
     <main className="mx-auto min-h-screen w-full max-w-[393px] bg-white text-[#111827]">
@@ -237,6 +238,7 @@ export function HospitalDetailScreen() {
         </div>
         <button
           type="button"
+          onClick={() => router.push(completePath)}
           className="mt-4 h-12 w-[361px] rounded-[8px] bg-[#2f70ff] text-[16px] font-semibold leading-6 text-white"
         >
           예약하기
