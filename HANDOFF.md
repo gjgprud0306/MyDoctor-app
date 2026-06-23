@@ -4,7 +4,7 @@
 
 - GitHub (브랜치/커밋): main, Screen_ReservationComplete 작업 커밋 `ea1731af feat: add reservation complete flow` push 완료
 - Vercel 배포 상태: Vercel CLI 연결 완료 (`hg800/my-doctor-app`, Root Directory `final`). Screen_ReservationComplete 포함 최신 Production 배포 완료, deployment `dpl_6JPkNrv2hxKxemtU6YwbMgqQg264`, 실제 공개 alias `https://my-doctor-app-mocha.vercel.app` HTTP 200 확인, `/reservation-complete` 및 `/my-reservation` HTTP 200 확인. 기존 전달 URL `https://my-doctor-app-hg800.vercel.app`는 HTTP 401 보호 페이지 응답
-- 현재 진행 중인 작업: 없음. Screen_ReservationComplete 페이지 생성 및 HospitalDetail 예약하기 CTA 연결 완료, 검증/배포 완료
+- 현재 진행 중인 작업: 없음. Screen_ReservationComplete Figma 반영 완료
 
 ### 완료된 작업
 
@@ -83,6 +83,7 @@
 - 2026-06-23 Screen_MyReservation 최소 구현: `/my-reservation` 라우트와 `MyReservationScreen` 추가, 예약 완료 화면의 `예약 내역 보기` 버튼이 선택 병원 예약 내역으로 이동하도록 연결
 - 2026-06-23 예약 완료 데이터 연동: `reservation-data` 공통 조회 유틸 추가, 병원 리스트/추가 비용 없는 병원 데이터를 함께 조회해 완료 화면과 예약 내역 화면에 선택 병원명/이미지/진료과목/대기시간/진료비/약제비/총액 자동 반영. 병원 주소 임시 데이터 추가
 - 2026-06-23 Screen_ReservationComplete GitHub/Vercel 반영: `ea1731af feat: add reservation complete flow` 커밋을 `origin/main`에 push하고 Vercel Production 배포 완료
+- 2026-06-23 Screen_ReservationComplete Figma 반영: Figma 파일 `허혜경 나만의닥터 APP HANDOFF`의 `Screens (최종 화면)` 페이지에 `Screen_ReservationComplete` 프레임 생성. 기존 파일 내 병원 이미지 해시를 재사용하고 예약 완료/예약 정보/결제 정보/예약 안내/하단 CTA UI를 구현
 
 ### 검증 결과
 
@@ -169,6 +170,7 @@
 - 2026-06-23 reservation-complete-integer-check: 새 예약 완료/예약 내역 화면 파일 기준 소수점 숫자 사용 없음 확인. 예약 완료 화면 날짜 표기는 `06월 24일` 형식으로 변환
 - 2026-06-23 reservation-complete-assets: 병원 리스트 이미지 `hospital-list-01.png`~`hospital-list-05.png`가 240x276이며 완료 화면에서 62x72로 렌더링되어 3x 이상 조건 충족 확인
 - 2026-06-23 reservation-complete-production-check: Vercel Production 배포 READY 확인, `https://my-doctor-app-mocha.vercel.app`, `/reservation-complete?hospital=asan-immune-plus...`, `/my-reservation?hospital=asan-immune-plus...`, `/hospital-detail?hospital=suwon-the-cell` 모두 HTTP 200 확인
+- 2026-06-23 reservation-complete-figma-check: Figma 생성 프레임 `Screen_ReservationComplete`(95:158) 스크린샷 검수 완료. 완료 아이콘 선명도와 예약 안내 카드 본문 가림 문제를 보정 후 재검수 완료
 
 ### 남은 작업
 
