@@ -2,9 +2,9 @@
 
 ### 현재 상태
 
-- GitHub (브랜치/커밋): main, Screen_MedicineInfo 작업 커밋 `f6af0743 feat: add medicine info screen` push 완료. 생성 화면 바탕색 통일 작업은 검증 완료, GitHub/Vercel 반영 전
-- Vercel 배포 상태: Vercel CLI 연결 완료 (`hg800/my-doctor-app`, Root Directory `final`). Screen_MedicineInfo 포함 최신 Production 배포 완료, deployment `dpl_35pvD1ojzc734SHLcxutouFEJ5yR`, 실제 공개 alias `https://my-doctor-app-mocha.vercel.app` HTTP 200 확인, `/medicine-info` 및 `/medicine-list` HTTP 200 확인
-- 현재 진행 중인 작업: 검색 화면 제외 생성 화면 바탕색 흰색 통일 완료, GitHub/Vercel 반영 필요
+- GitHub (브랜치/커밋): main, 생성 화면 바탕색 통일 커밋 `24f05f48 style: unify generated screen backgrounds` push 완료
+- Vercel 배포 상태: Vercel CLI 연결 완료 (`hg800/my-doctor-app`, Root Directory `final`). 생성 화면 바탕색 통일 포함 최신 Production 배포 완료, deployment `dpl_Dq9D6YB6hMRBCXWEfqqo94GQLGdW`, 실제 공개 alias `https://my-doctor-app-mocha.vercel.app` HTTP 200 확인, `/high-return-hospital-list`, `/no-extra-fee-hospital-list`, `/reservation-complete`, `/medicine-info` HTTP 200 확인
+- 현재 진행 중인 작업: 없음. 검색 화면 제외 생성 화면 바탕색 흰색 통일 및 배포 완료
 
 ### 완료된 작업
 
@@ -90,6 +90,7 @@
 - 2026-06-23 Screen_MedicineList 약 정보 보기 연결: 기존 하단 `약 정보 보기` 버튼에 `/medicine-info` 라우팅만 추가. Screen_MedicineInfo 뒤로가기는 `/medicine-list` 복귀로 연결
 - 2026-06-23 Screen_MedicineInfo GitHub/Vercel 반영: `f6af0743 feat: add medicine info screen` 커밋을 `origin/main`에 push하고 Vercel Production 배포 완료
 - 2026-06-23 생성 화면 바탕색 통일: 검색 화면을 제외하고 `Screen_HighReturnHospitalList`, `Screen_NoExtraFeeHospitalList`, `Screen_ReservationComplete`, `Screen_MyReservation`, `Screen_MedicineInfo`의 메인 바탕색을 흰색으로 변경. 홈 화면과 검색 화면은 유지
+- 2026-06-23 생성 화면 바탕색 통일 GitHub/Vercel 반영: `24f05f48 style: unify generated screen backgrounds` 커밋을 `origin/main`에 push하고 Vercel Production 배포 완료
 
 ### 검증 결과
 
@@ -185,6 +186,7 @@
 - 2026-06-23 medicine-info-assets: 기존 약 이미지 `mounjaro.png`, `wegovy.png`, `saxenda.png` 204x204, `oral-diet.png` 186x186 확인. 새 이미지 생성 없이 기존 에셋을 각각 68px/62px 렌더링해 3x 해상도 조건 충족
 - 2026-06-23 medicine-info-production-check: Vercel Production 배포 READY 확인, `https://my-doctor-app-mocha.vercel.app/medicine-info`, `/medicine-list` 모두 HTTP 200 확인
 - 2026-06-23 generated-screen-white-bg-build: `final/`에서 `npm run build` 성공. 메인 배경 `bg-appBg` 스캔 결과 홈과 `Screen_Search`에만 남아 요청 범위 준수 확인
+- 2026-06-23 generated-screen-white-bg-production-check: Vercel Production 배포 READY 확인, `https://my-doctor-app-mocha.vercel.app/high-return-hospital-list`, `/no-extra-fee-hospital-list`, `/reservation-complete`, `/medicine-info` 모두 HTTP 200 확인
 
 ### 남은 작업
 
