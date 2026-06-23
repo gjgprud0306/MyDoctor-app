@@ -39,6 +39,18 @@ const dateOptions = [
   "06.28 (토)",
 ];
 
+function getReviewText(distance: string) {
+  return distance.split("·")[0]?.replace(/[()]/g, "").trim() || "리뷰 0";
+}
+
+function getRevisitRate(saving: string) {
+  return saving.replace("제진", "").trim();
+}
+
+function getWaitText(wait: string) {
+  return wait.replace("평균 대기", "평균대기").trim();
+}
+
 export function HospitalDetailScreen() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -94,9 +106,11 @@ export function HospitalDetailScreen() {
               내과 · 비만클리닉
             </p>
             <div className="mt-[3px] flex h-[18px] items-center text-[12px] font-medium leading-[18px] text-[#6b7280]">
-              <span>95% (리뷰 999+)</span>
+              <span>
+                {getRevisitRate(selectedHospital.saving)} ({getReviewText(selectedHospital.distance)})
+              </span>
               <span className="mx-[6px] h-[10px] w-px bg-[#dce3ee]" />
-              <span>평균대기 7분</span>
+              <span>{getWaitText(selectedHospital.wait)}</span>
             </div>
           </div>
         </div>

@@ -61,6 +61,7 @@
 - 2026-06-22 Microsoft Clarity 추적 코드 적용: 프로젝트 ID `xaseo5k0rg`를 `next/script` 기반으로 루트 레이아웃에 추가
 - 2026-06-22 Google Tag Manager 적용: 컨테이너 ID `GTM-WXQFTF5W`를 `next/script`와 `noscript` iframe fallback으로 루트 레이아웃에 추가
 - 2026-06-23 병원 상세 연동 개선: 병원 리스트 카드 클릭 시 병원 ID를 상세 화면으로 전달하고, 예약 화면의 병원명/썸네일/진료비+약제비/하단 결제 예상 금액이 선택 병원 기준으로 바뀌도록 수정. 다른 날짜 선택 칩과 시간 스크롤 좌우 고정 처리 추가
+- 2026-06-23 병원 상세 병원별 지표 연동: 예약 화면의 재진률, 리뷰 수, 평균대기 문구가 병원 리스트의 각 병원 데이터 기준으로 표시되도록 수정
 
 ### 검증 결과
 
@@ -126,6 +127,7 @@
 - 2026-06-22 clarity-script-build: Microsoft Clarity 추적 스크립트 추가 후 `final/`에서 `npm run build` 성공
 - 2026-06-22 gtm-script-build: Google Tag Manager 스크립트 및 noscript fallback 추가 후 `final/`에서 `npm run build` 성공
 - 2026-06-23 hospital-detail-selection-build: 병원 상세 데이터 연동, 날짜 선택, 시간 가로 스크롤 고정 처리 후 `final/`에서 `npm run build` 성공
+- 2026-06-23 hospital-detail-metrics-build: 병원별 재진률/리뷰 수/평균대기 연동 후 `final/`에서 `npm run build` 성공
 
 ### 남은 작업
 
