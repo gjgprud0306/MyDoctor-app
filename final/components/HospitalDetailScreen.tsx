@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import { IosStatusBar } from "@/components/IosStatusBar";
 import { hospitalList } from "@/lib/hospital-list-data";
+import { noExtraFeeHospitals } from "@/lib/no-extra-fee-hospital-data";
 
 const timeSlots = [
   "09:00",
@@ -51,15 +52,28 @@ function getWaitText(wait: string) {
   return wait.replace("평균 대기", "평균대기").trim();
 }
 
+function getMetricText(hospital: (typeof hospitalList)[number] | (typeof noExtraFeeHospitals)[number]) {
+  if ("rating" in hospital) {
+    return `평점 ${hospital.rating} (${hospital.reviewCount})`;
+  }
+
+  return `${hospital.revisitRate || getRevisitRate(hospital.saving)} (${hospital.reviewCount || getReviewText(hospital.distance)})`;
+}
+
 export function HospitalDetailScreen() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const selectedHospital = useMemo(() => {
     const hospitalId = searchParams.get("hospital");
-    return hospitalList.find((hospital) => hospital.id === hospitalId) ?? hospitalList[0];
+    const detailHospitals = [...hospitalList, ...noExtraFeeHospitals];
+    return detailHospitals.find((hospital) => hospital.id === hospitalId) ?? hospitalList[0];
   }, [searchParams]);
   const backPath =
-    searchParams.get("from") === "high-return" ? "/high-return-hospital-list" : "/hospital-list";
+    searchParams.get("from") === "high-return"
+      ? "/high-return-hospital-list"
+      : searchParams.get("from") === "no-extra-fee"
+        ? "/no-extra-fee-hospital-list"
+        : "/hospital-list";
   const [selectedDate, setSelectedDate] = useState(dateOptions[0]);
   const [selectedTime, setSelectedTime] = useState("13:30");
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
@@ -108,9 +122,7 @@ export function HospitalDetailScreen() {
               {selectedHospital.department}
             </p>
             <div className="mt-[3px] flex h-[18px] items-center text-[12px] font-medium leading-[18px] text-[#6b7280]">
-              <span>
-                {selectedHospital.revisitRate || getRevisitRate(selectedHospital.saving)} ({selectedHospital.reviewCount || getReviewText(selectedHospital.distance)})
-              </span>
+              <span>{getMetricText(selectedHospital)}</span>
               <span className="mx-[6px] h-[10px] w-px bg-[#dce3ee]" />
               <span>{getWaitText(selectedHospital.wait)}</span>
             </div>

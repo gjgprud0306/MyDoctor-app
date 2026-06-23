@@ -4,7 +4,7 @@
 
 - GitHub (브랜치/커밋): main, 홈 모바일 헤더 여백 수정 커밋 `397b794 fix: reduce home header gap on mobile` push 완료
 - Vercel 배포 상태: Vercel CLI 연결 완료 (`hg800/my-doctor-app`, Root Directory `final`). 홈 모바일 헤더 여백 수정 포함 최신 Production 배포 완료, deployment `dpl_CHVHk1qr36xF911qytXoUJ6Wzf8k`, 실제 공개 alias `https://my-doctor-app-mocha.vercel.app` HTTP 200 확인. 기존 전달 URL `https://my-doctor-app-hg800.vercel.app`는 HTTP 401 보호 페이지 응답
-- 현재 진행 중인 작업: 없음. 홈 모바일/PWA 상태바 숨김 시 헤더 여백 수정 완료, 검증/배포 완료
+- 현재 진행 중인 작업: Screen_NoExtraFeeHospitalList 페이지 생성 및 Home 전체보기 진입 연결 완료, GitHub/Vercel 반영 전
 
 ### 완료된 작업
 
@@ -73,6 +73,9 @@
 - 2026-06-23 Screen_HighReturnHospitalList GitHub/Vercel 반영: `5677ea3 feat: add high return hospital list` 커밋을 `origin/main`에 push하고 Vercel Production 배포 완료
 - 2026-06-23 홈 모바일 헤더 여백 수정: 터치 기기에서 `.ios-status-bar`가 숨겨질 때 홈 `app-header` 높이가 98px로 남아 로고와 퀵카드 사이 여백이 커지는 문제를 CSS media rule로 보정
 - 2026-06-23 홈 모바일 헤더 여백 수정 GitHub/Vercel 반영: `397b794 fix: reduce home header gap on mobile` 커밋을 `origin/main`에 push하고 Vercel Production 배포 완료
+- 2026-06-23 Screen_NoExtraFeeHospitalList 구현: `/no-extra-fee-hospital-list` 라우트와 `NoExtraFeeHospitalListScreen` 컴포넌트 추가, 추가 비용 없는 병원 3개 카드/BEST 배지/평점/리뷰/진료비/추가 비용 없음 배지/상세 이동 구현
+- 2026-06-23 Home TOP 3 전체보기 연결: `추가 비용 없는 병원 TOP 3` 섹션의 `전체보기`만 `/no-extra-fee-hospital-list` 링크로 연결하고 기존 홈 레이아웃 유지
+- 2026-06-23 병원 상세 추가비용 없는 병원 연동: `no-extra-fee-hospital-data` 추가 후 상세 화면에서 선택한 병원명, 이미지, 평점, 리뷰 수, 진료비, 총 결제 예상 금액이 반영되도록 연결. `from=no-extra-fee` 진입 시 상세 뒤로가기는 추가 비용 없는 병원 리스트로 복귀
 
 ### 검증 결과
 
@@ -149,6 +152,9 @@
 - 2026-06-23 high-return-hospital-list-production-check: Vercel Production 배포 READY 확인, `https://my-doctor-app-mocha.vercel.app`, `/high-return-hospital-list`, `/hospital-detail?hospital=asan-immune-plus&from=high-return` 모두 HTTP 200 확인
 - 2026-06-23 home-mobile-header-spacing-build: 홈 모바일 헤더 높이 보정 후 `final/`에서 `npm run build` 성공
 - 2026-06-23 home-mobile-header-spacing-production-check: Vercel Production 배포 READY 확인, `https://my-doctor-app-mocha.vercel.app` HTTP 200 확인
+- 2026-06-23 no-extra-fee-hospital-list-build: `final/`에서 `npm run build` 성공, `/no-extra-fee-hospital-list` static route 생성 확인
+- 2026-06-23 no-extra-fee-hospital-list-assets: 홈 TOP 3 병원 이미지 `hospital-rank-01.png`~`hospital-rank-03.png`가 132x132이며 새 카드에서 44x44로 렌더링되어 3x 해상도 조건 충족 확인
+- 2026-06-23 no-extra-fee-hospital-list-integer-check: 새 리스트 화면의 x/y/width/height/padding/gap/radius/font-size 값은 정수 기준으로 작성. 스캔상 기존 SectionHeader 스타일 소수 값, 상세 날짜 표기, 사용자 지정 평점 값은 잔존
 
 ### 남은 작업
 

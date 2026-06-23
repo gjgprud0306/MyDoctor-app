@@ -1,0 +1,73 @@
+import type { HospitalListItem } from "@/lib/hospital-list-data";
+
+export type NoExtraFeeHospital = HospitalListItem & {
+  rating: string;
+  extraFeeBadge: string;
+  bestLabel: string;
+};
+
+export const noExtraFeeHospitals: NoExtraFeeHospital[] = [
+  {
+    id: "mydoctor-internal",
+    name: "나만의내과",
+    department: "다이어트 진료 상담",
+    hours: "영업 중",
+    distance: "(리뷰 1,234) · 2 km",
+    reviewCount: "리뷰 1,234",
+    distanceText: "2 km",
+    wait: "평균 대기 10분",
+    waitTime: "평균 대기 10분",
+    price: "39,000원",
+    consultationFee: "39,000원",
+    medicinePrice: "0원",
+    totalPrice: "39,000원",
+    saving: "추가 비용 없음",
+    revisitRate: "추가 비용 없음",
+    image: "/assets/images/thumbnails/hospital-rank-01.png",
+    rating: "4.9",
+    extraFeeBadge: "추가 비용 없음",
+    bestLabel: "BEST",
+  },
+  {
+    id: "mediline-clinic",
+    name: "메디라인의원",
+    department: "탈모 진료 야간 진료 가능",
+    hours: "영업 중",
+    distance: "(리뷰 934) · 3 km",
+    reviewCount: "리뷰 934",
+    distanceText: "3 km",
+    wait: "평균 대기 15분",
+    waitTime: "평균 대기 15분",
+    price: "24,000원",
+    consultationFee: "24,000원",
+    medicinePrice: "0원",
+    totalPrice: "24,000원",
+    saving: "추가 비용 없음",
+    revisitRate: "추가 비용 없음",
+    image: "/assets/images/thumbnails/hospital-rank-02.png",
+    rating: "4.7",
+    extraFeeBadge: "추가 비용 없음",
+    bestLabel: "BEST",
+  },
+  {
+    id: "seoul-well-ent",
+    name: "서울웰이비인후과",
+    department: "감기 · 비염 진료 당일 진료 가능",
+    hours: "영업 중",
+    distance: "(리뷰 1,014) · 4 km",
+    reviewCount: "리뷰 1,014",
+    distanceText: "4 km",
+    wait: "평균 대기 12분",
+    waitTime: "평균 대기 12분",
+    price: "19,000원",
+    consultationFee: "19,000원",
+    medicinePrice: "0원",
+    totalPrice: "19,000원",
+    saving: "추가 비용 없음",
+    revisitRate: "추가 비용 없음",
+    image: "/assets/images/thumbnails/hospital-rank-03.png",
+    rating: "4.6",
+    extraFeeBadge: "추가 비용 없음",
+    bestLabel: "BEST",
+  },
+];

@@ -33,7 +33,10 @@ export function HomeScreen() {
         items={popularCare}
         onDietClick={() => setIsMedicineSheetOpen(true)}
       />
-      <SectionHeader title="추가 비용 없는 병원 TOP 3" />
+      <SectionHeader
+        title="추가 비용 없는 병원 TOP 3"
+        viewAllHref="/no-extra-fee-hospital-list"
+      />
       <HospitalTopList hospitals={hospitals} />
       <BottomNavigation />
       {isMedicineSheetOpen ? (
