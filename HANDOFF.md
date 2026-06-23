@@ -2,9 +2,9 @@
 
 ### 현재 상태
 
-- GitHub (브랜치/커밋): main, Screen_Search 작업 커밋 `6286258 feat: add search screen` push 완료
-- Vercel 배포 상태: Vercel CLI 연결 완료 (`hg800/my-doctor-app`, Root Directory `final`). Screen_Search 포함 최신 Production 배포 완료, deployment `dpl_35fmvMu43EcP7NifToEP2BzKZyP3`, 실제 공개 alias `https://my-doctor-app-mocha.vercel.app` HTTP 200 확인, `/search` HTTP 200 확인. 기존 전달 URL `https://my-doctor-app-hg800.vercel.app`는 HTTP 401 보호 페이지 응답
-- 현재 진행 중인 작업: Screen_HighReturnHospitalList 페이지 생성 및 Home 배너 진입 연결 완료, GitHub/Vercel 반영 전
+- GitHub (브랜치/커밋): main, Screen_HighReturnHospitalList 작업 커밋 `5677ea3 feat: add high return hospital list` push 완료
+- Vercel 배포 상태: Vercel CLI 연결 완료 (`hg800/my-doctor-app`, Root Directory `final`). Screen_HighReturnHospitalList 포함 최신 Production 배포 완료, deployment `dpl_8z8UdQeL6mtoJd2emGneTE9bxgDB`, 실제 공개 alias `https://my-doctor-app-mocha.vercel.app` HTTP 200 확인, `/high-return-hospital-list` HTTP 200 확인. 기존 전달 URL `https://my-doctor-app-hg800.vercel.app`는 HTTP 401 보호 페이지 응답
+- 현재 진행 중인 작업: 없음. Screen_HighReturnHospitalList 페이지 생성 및 Home 배너 진입 연결 완료, 검증/배포 완료
 
 ### 완료된 작업
 
@@ -70,6 +70,7 @@
 - 2026-06-23 Screen_HighReturnHospitalList 구현: `/high-return-hospital-list` 라우트와 `HighReturnHospitalListScreen` 컴포넌트 추가, 재진율 높은 병원 3개 비교 카드/진료비/약값/총 예상 금액/상세 이동 구현
 - 2026-06-23 Home 배너 클릭 연결: 홈 상단 프로모션 배너 이미지를 `/high-return-hospital-list` 링크로 감싸 기존 배너 디자인 변경 없이 라우팅 연결
 - 2026-06-23 병원 상세 데이터 연동 보강: 병원 데이터에 진료과목, 리뷰 수, 정수 거리 표기, 평균 대기시간, 진료비, 약값, 총 예상 금액, 재진율 필드를 추가하고 상세 화면 가격/지표가 선택 병원 기준으로 반영되도록 연결. `from=high-return` 진입 시 상세 뒤로가기는 재진율 리스트로 복귀
+- 2026-06-23 Screen_HighReturnHospitalList GitHub/Vercel 반영: `5677ea3 feat: add high return hospital list` 커밋을 `origin/main`에 push하고 Vercel Production 배포 완료
 
 ### 검증 결과
 
@@ -143,11 +144,12 @@
 - 2026-06-23 screen-search-production-check: Vercel Production 배포 READY 확인, `https://my-doctor-app-mocha.vercel.app` HTTP 200 및 `https://my-doctor-app-mocha.vercel.app/search` HTTP 200 확인
 - 2026-06-23 high-return-hospital-list-build: `final/`에서 `npm run build` 성공, `/high-return-hospital-list` static route 생성 확인
 - 2026-06-23 high-return-hospital-list-integer-check: 새 리스트 화면의 x/y/width/height/padding/gap/radius/font-size 값과 거리 표기를 정수 기준으로 작성. 스캔상 기존 상세 화면 날짜 표기(`06.24`)와 기존 그림자 RGBA 소수 값은 잔존
+- 2026-06-23 high-return-hospital-list-production-check: Vercel Production 배포 READY 확인, `https://my-doctor-app-mocha.vercel.app`, `/high-return-hospital-list`, `/hospital-detail?hospital=asan-immune-plus&from=high-return` 모두 HTTP 200 확인
 
 ### 남은 작업
 
 - 프로모션 배너 좌우 화살표 개별 export 필요 여부 확인
 - PWA 앱 아이콘이 필요하면 Figma에서 별도 export 후 `final/public/assets/pwa/` 저장
 - 로컬 포트 실행 가능한 환경 또는 실기기에서 모바일/PWA 시각 QA
-- Screen_HighReturnHospitalList 변경사항 push 후 Vercel Production 배포/화면 업데이트 확인. 기준 공개 URL: `https://my-doctor-app-mocha.vercel.app`
+- 변경사항 발생 시 GitHub push 후 Vercel Production 배포/화면 업데이트 확인. 기준 공개 URL: `https://my-doctor-app-mocha.vercel.app`
 - 변경사항 push 후 관련 이슈에 변경사항, 검증 결과, 배포 URL 댓글 작성 및 완료 조건 충족 시 close
