@@ -2,9 +2,9 @@
 
 ### 현재 상태
 
-- GitHub (브랜치/커밋): main, 생성 화면 바탕색 통일 커밋 `24f05f48 style: unify generated screen backgrounds` push 완료
+- GitHub (브랜치/커밋): main, 생성 화면 바탕색 통일 커밋 `24f05f48 style: unify generated screen backgrounds` push 완료. Figma 생성 화면 바탕색 통일 작업은 완료, HANDOFF 반영 전
 - Vercel 배포 상태: Vercel CLI 연결 완료 (`hg800/my-doctor-app`, Root Directory `final`). 생성 화면 바탕색 통일 포함 최신 Production 배포 완료, deployment `dpl_Dq9D6YB6hMRBCXWEfqqo94GQLGdW`, 실제 공개 alias `https://my-doctor-app-mocha.vercel.app` HTTP 200 확인, `/high-return-hospital-list`, `/no-extra-fee-hospital-list`, `/reservation-complete`, `/medicine-info` HTTP 200 확인
-- 현재 진행 중인 작업: 없음. 검색 화면 제외 생성 화면 바탕색 흰색 통일 및 배포 완료
+- 현재 진행 중인 작업: Figma 검색 화면 제외 생성 화면 바탕색 흰색 통일 완료, HANDOFF 반영 필요
 
 ### 완료된 작업
 
@@ -91,6 +91,7 @@
 - 2026-06-23 Screen_MedicineInfo GitHub/Vercel 반영: `f6af0743 feat: add medicine info screen` 커밋을 `origin/main`에 push하고 Vercel Production 배포 완료
 - 2026-06-23 생성 화면 바탕색 통일: 검색 화면을 제외하고 `Screen_HighReturnHospitalList`, `Screen_NoExtraFeeHospitalList`, `Screen_ReservationComplete`, `Screen_MyReservation`, `Screen_MedicineInfo`의 메인 바탕색을 흰색으로 변경. 홈 화면과 검색 화면은 유지
 - 2026-06-23 생성 화면 바탕색 통일 GitHub/Vercel 반영: `24f05f48 style: unify generated screen backgrounds` 커밋을 `origin/main`에 push하고 Vercel Production 배포 완료
+- 2026-06-23 Figma 생성 화면 바탕색 통일: Figma 파일 `허혜경 나만의닥터 APP HANDOFF`의 `Screen_HighReturnHospitalList`, `Screen_NoExtraFeeHospitalList`, `Screen_ReservationComplete` 프레임 최상위 배경을 흰색으로 변경. `Screen_Search`는 기존 회색 배경 유지
 
 ### 검증 결과
 
@@ -187,6 +188,7 @@
 - 2026-06-23 medicine-info-production-check: Vercel Production 배포 READY 확인, `https://my-doctor-app-mocha.vercel.app/medicine-info`, `/medicine-list` 모두 HTTP 200 확인
 - 2026-06-23 generated-screen-white-bg-build: `final/`에서 `npm run build` 성공. 메인 배경 `bg-appBg` 스캔 결과 홈과 `Screen_Search`에만 남아 요청 범위 준수 확인
 - 2026-06-23 generated-screen-white-bg-production-check: Vercel Production 배포 READY 확인, `https://my-doctor-app-mocha.vercel.app/high-return-hospital-list`, `/no-extra-fee-hospital-list`, `/reservation-complete`, `/medicine-info` 모두 HTTP 200 확인
+- 2026-06-23 figma-generated-screen-white-bg-check: Figma 검증 결과 `Screen_Search`는 RGB 243/244/247 유지, `Screen_HighReturnHospitalList`, `Screen_NoExtraFeeHospitalList`, `Screen_ReservationComplete`는 RGB 255/255/255 확인. Figma 내 `Screen_MyReservation`, `Screen_MedicineInfo` 프레임은 아직 생성되어 있지 않아 수정 대상 없음
 
 ### 남은 작업
 
