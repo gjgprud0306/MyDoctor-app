@@ -88,7 +88,7 @@ export function NoExtraFeeHospitalListScreen() {
   const router = useRouter();
 
   return (
-    <main className="mx-auto min-h-screen w-full max-w-[393px] bg-appBg text-[#111827]">
+    <main className="mx-auto min-h-screen w-full max-w-[393px] bg-white text-[#111827]">
       <IosStatusBar />
       <header className="relative h-14 bg-white">
         <button

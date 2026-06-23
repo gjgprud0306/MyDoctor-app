@@ -51,7 +51,7 @@ export function ReservationCompleteScreen() {
   const reservationQuery = `hospital=${hospital.id}&date=${encodeURIComponent(date)}&time=${encodeURIComponent(time)}`;
 
   return (
-    <main className="mx-auto min-h-screen w-full max-w-[393px] bg-appBg text-[#111827]">
+    <main className="mx-auto min-h-screen w-full max-w-[393px] bg-white text-[#111827]">
       <IosStatusBar />
       <header className="relative h-14 bg-white">
         <h1 className="absolute left-[126px] top-4 w-[141px] text-center text-[18px] font-bold leading-6">
