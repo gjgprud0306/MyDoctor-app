@@ -4,7 +4,7 @@
 
 - GitHub (브랜치/커밋): main, Screen_NoExtraFeeHospitalList 작업 커밋 `808e95d5 feat: add no extra fee hospital list` push 완료
 - Vercel 배포 상태: Vercel CLI 연결 완료 (`hg800/my-doctor-app`, Root Directory `final`). Screen_NoExtraFeeHospitalList 포함 최신 Production 배포 완료, deployment `dpl_D1Sr1cxzqp7ibP7GRURJ5aph463t`, 실제 공개 alias `https://my-doctor-app-mocha.vercel.app` HTTP 200 확인, `/no-extra-fee-hospital-list` HTTP 200 확인. 기존 전달 URL `https://my-doctor-app-hg800.vercel.app`는 HTTP 401 보호 페이지 응답
-- 현재 진행 중인 작업: 없음. Screen_NoExtraFeeHospitalList 페이지 생성 및 Home 전체보기 진입 연결 완료, 검증/배포 완료
+- 현재 진행 중인 작업: 없음. 검색/이벤트 배너/Top3 이동 화면 3종 Figma 반영 완료
 
 ### 완료된 작업
 
@@ -77,6 +77,7 @@
 - 2026-06-23 Home TOP 3 전체보기 연결: `추가 비용 없는 병원 TOP 3` 섹션의 `전체보기`만 `/no-extra-fee-hospital-list` 링크로 연결하고 기존 홈 레이아웃 유지
 - 2026-06-23 병원 상세 추가비용 없는 병원 연동: `no-extra-fee-hospital-data` 추가 후 상세 화면에서 선택한 병원명, 이미지, 평점, 리뷰 수, 진료비, 총 결제 예상 금액이 반영되도록 연결. `from=no-extra-fee` 진입 시 상세 뒤로가기는 추가 비용 없는 병원 리스트로 복귀
 - 2026-06-23 Screen_NoExtraFeeHospitalList GitHub/Vercel 반영: `808e95d5 feat: add no extra fee hospital list` 커밋을 `origin/main`에 push하고 Vercel Production 배포 완료
+- 2026-06-23 Figma 화면 반영: Figma 파일 `허혜경 나만의닥터 APP HANDOFF`의 `Screens (최종 화면)` 페이지에 `Screen_Search`, `Screen_HighReturnHospitalList`, `Screen_NoExtraFeeHospitalList` 프레임 생성. 기존 파일 내 홈 배너/병원 이미지 해시를 재사용해 검색 화면, 재진율 높은 병원 리스트, 추가 비용 없는 병원 리스트 UI를 구현
 
 ### 검증 결과
 
@@ -157,6 +158,8 @@
 - 2026-06-23 no-extra-fee-hospital-list-assets: 홈 TOP 3 병원 이미지 `hospital-rank-01.png`~`hospital-rank-03.png`가 132x132이며 새 카드에서 44x44로 렌더링되어 3x 해상도 조건 충족 확인
 - 2026-06-23 no-extra-fee-hospital-list-integer-check: 새 리스트 화면의 x/y/width/height/padding/gap/radius/font-size 값은 정수 기준으로 작성. 스캔상 기존 SectionHeader 스타일 소수 값, 상세 날짜 표기, 사용자 지정 평점 값은 잔존
 - 2026-06-23 no-extra-fee-hospital-list-production-check: Vercel Production 배포 READY 확인, `https://my-doctor-app-mocha.vercel.app`, `/no-extra-fee-hospital-list`, `/hospital-detail?hospital=mydoctor-internal&from=no-extra-fee` 모두 HTTP 200 확인
+- 2026-06-23 figma-generated-screens-check: Figma 생성 프레임 `Screen_Search`(90:158), `Screen_HighReturnHospitalList`(91:158), `Screen_NoExtraFeeHospitalList`(90:283) 스크린샷 검수 완료. 재진율 리스트 금액 영역 겹침과 Top3 금액 줄바꿈을 보정 후 재검수 완료
+- 2026-06-23 figma-version-history-note: Figma `saveVersionHistoryAsync` 호출은 현재 MCP 도구에서 지원되지 않아 실패. 화면 노드 생성/수정 자체는 완료됨
 
 ### 남은 작업
 
