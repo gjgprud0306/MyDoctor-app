@@ -66,6 +66,7 @@ export function MedicineListScreen({ onMedicineSelect }: MedicineListScreenProps
           </div>
           <button
             type="button"
+            onClick={() => router.push("/medicine-info")}
             className="absolute left-[258px] top-[18px] h-6 w-[77px] rounded-[12px] bg-white text-[11px] font-semibold leading-4 text-[#4b5563]"
           >
             약 정보 보기

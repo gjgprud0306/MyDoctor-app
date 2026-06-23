@@ -2,9 +2,9 @@
 
 ### 현재 상태
 
-- GitHub (브랜치/커밋): main, 약 선택 플로우 확장 커밋 `a6f80c92 feat: support multiple injectable dose selections` push 완료
+- GitHub (브랜치/커밋): main, 약 선택 플로우 확장 커밋 `a6f80c92 feat: support multiple injectable dose selections` push 완료. Screen_MedicineInfo 작업은 검증 완료, GitHub/Vercel 반영 전
 - Vercel 배포 상태: Vercel CLI 연결 완료 (`hg800/my-doctor-app`, Root Directory `final`). 약 선택 플로우 확장 포함 최신 Production 배포 완료, deployment `dpl_ADLfgjnqfq2wm673URxUUwHjQorw`, 실제 공개 alias `https://my-doctor-app-mocha.vercel.app` HTTP 200 확인, `/medicine-list`, `/diet-dose-select?medicine=wegovy`, `/diet-dose-select?medicine=saxenda` HTTP 200 확인
-- 현재 진행 중인 작업: 없음. 약 선택 화면 위OO/삭OO 용량 선택 연결 및 배포 완료
+- 현재 진행 중인 작업: Screen_MedicineInfo 구현 완료, GitHub/Vercel 반영 필요
 
 ### 완료된 작업
 
@@ -86,6 +86,8 @@
 - 2026-06-23 Screen_ReservationComplete Figma 반영: Figma 파일 `허혜경 나만의닥터 APP HANDOFF`의 `Screens (최종 화면)` 페이지에 `Screen_ReservationComplete` 프레임 생성. 기존 파일 내 병원 이미지 해시를 재사용하고 예약 완료/예약 정보/결제 정보/예약 안내/하단 CTA UI를 구현
 - 2026-06-23 약 선택 플로우 확장: 홈 다이어트 바텀시트와 `/medicine-list`에서 마OOO 외 위OO/삭OO 클릭 시 `/diet-dose-select?medicine=...`로 이동하도록 연결. 용량 선택 화면은 기존 레이아웃 구조를 유지하고 선택 약 이름, 성분, 용량 배열만 선택 약 기준으로 반영
 - 2026-06-23 약 선택 플로우 확장 GitHub/Vercel 반영: `a6f80c92 feat: support multiple injectable dose selections` 커밋을 `origin/main`에 push하고 Vercel Production 배포 완료
+- 2026-06-23 Screen_MedicineInfo 구현: `/medicine-info` 라우트와 `MedicineInfoScreen` 추가, iOS 상태바/뒤로가기/약 정보 타이틀/소개 영역/마OOO·위OO·삭OO·먹는 다이어트 약 정보 카드 구현
+- 2026-06-23 Screen_MedicineList 약 정보 보기 연결: 기존 하단 `약 정보 보기` 버튼에 `/medicine-info` 라우팅만 추가. Screen_MedicineInfo 뒤로가기는 `/medicine-list` 복귀로 연결
 
 ### 검증 결과
 
@@ -176,6 +178,9 @@
 - 2026-06-23 medicine-dose-selection-build: `final/`에서 `npm run build` 성공, `/medicine-list` 및 `/diet-dose-select` static route 생성 확인
 - 2026-06-23 medicine-dose-selection-decimal-check: 이번 변경 파일 스캔 결과 레이아웃 수치 소수점 사용 없음. 약 용량 라벨의 `2.5mg`, `0.25mg`, `1.7mg`, `2.4mg`, `0.6mg`, `1.2mg`, `1.8mg`은 약별 용량 데이터로만 사용
 - 2026-06-23 medicine-dose-selection-production-check: Vercel Production 배포 READY 확인, `https://my-doctor-app-mocha.vercel.app/medicine-list`, `/diet-dose-select?medicine=wegovy`, `/diet-dose-select?medicine=saxenda` 모두 HTTP 200 확인
+- 2026-06-23 medicine-info-build: `final/`에서 `npm run build` 성공, `/medicine-info` static route 생성 확인
+- 2026-06-23 medicine-info-integer-check: 새 `MedicineInfoScreen`, `/medicine-info` page, `MedicineListScreen` 변경분 기준 소수점 숫자 사용 없음 확인
+- 2026-06-23 medicine-info-assets: 기존 약 이미지 `mounjaro.png`, `wegovy.png`, `saxenda.png` 204x204, `oral-diet.png` 186x186 확인. 새 이미지 생성 없이 기존 에셋을 각각 68px/62px 렌더링해 3x 해상도 조건 충족
 
 ### 남은 작업
 
