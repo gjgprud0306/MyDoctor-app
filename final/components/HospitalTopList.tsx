@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import type { Hospital } from "@/lib/home-data";
 import { SystemIcon } from "@/components/SystemIcon";
 
@@ -11,8 +12,9 @@ export function HospitalTopList({ hospitals }: HospitalTopListProps) {
     <section className="px-[18px] pt-2">
       <div className="grid grid-cols-3 gap-4">
         {hospitals.map((hospital) => (
-          <article
+          <Link
             key={hospital.name}
+            href={`/hospital-detail?hospital=${hospital.id}&from=no-extra-fee`}
             className="relative h-[132px] overflow-hidden rounded-[14px] bg-white px-2.5 pb-2 pt-2.5"
           >
             <span className="absolute left-1.5 top-2 grid h-3.5 w-8 place-items-center rounded-[14px] bg-primary text-[8px] font-medium leading-none text-white">
@@ -45,7 +47,7 @@ export function HospitalTopList({ hospitals }: HospitalTopListProps) {
                 {hospital.price}
               </p>
             </div>
-          </article>
+          </Link>
         ))}
       </div>
     </section>

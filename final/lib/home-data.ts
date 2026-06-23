@@ -12,6 +12,7 @@ export type CareItem = {
 };
 
 export type Hospital = {
+  id: string;
   rank: number;
   name: string;
   description: string;
@@ -64,6 +65,7 @@ export const popularCare: CareItem[] = [
 
 export const hospitals: Hospital[] = [
   {
+    id: "mydoctor-internal",
     rank: 1,
     name: "나만의내과",
     description: "다이어트 진료 상담",
@@ -72,6 +74,7 @@ export const hospitals: Hospital[] = [
     image: "/assets/images/thumbnails/hospital-rank-01.png",
   },
   {
+    id: "mediline-clinic",
     rank: 2,
     name: "메디라인의원",
     description: "탈모 진료 야간 진료 가능",
@@ -80,6 +83,7 @@ export const hospitals: Hospital[] = [
     image: "/assets/images/thumbnails/hospital-rank-02.png",
   },
   {
+    id: "seoul-well-ent",
     rank: 3,
     name: "서울웰이비인후과",
     description: "감기 · 비염 진료 당일 진료 가능",

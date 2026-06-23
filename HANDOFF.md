@@ -2,9 +2,9 @@
 
 ### 현재 상태
 
-- GitHub (브랜치/커밋): main, 생성 화면 바탕색 통일 커밋 `24f05f48 style: unify generated screen backgrounds` push 완료. Figma 생성 화면 바탕색 통일 작업은 완료, HANDOFF 반영 전
+- GitHub (브랜치/커밋): main, Figma 배경 업데이트 기록 커밋 `e2f0f1e5 docs: record figma background update` push 완료. 홈 TOP 3 카드 클릭 연결 작업은 검증 완료, GitHub/Vercel 반영 전
 - Vercel 배포 상태: Vercel CLI 연결 완료 (`hg800/my-doctor-app`, Root Directory `final`). 생성 화면 바탕색 통일 포함 최신 Production 배포 완료, deployment `dpl_Dq9D6YB6hMRBCXWEfqqo94GQLGdW`, 실제 공개 alias `https://my-doctor-app-mocha.vercel.app` HTTP 200 확인, `/high-return-hospital-list`, `/no-extra-fee-hospital-list`, `/reservation-complete`, `/medicine-info` HTTP 200 확인
-- 현재 진행 중인 작업: Figma 검색 화면 제외 생성 화면 바탕색 흰색 통일 완료, HANDOFF 반영 필요
+- 현재 진행 중인 작업: 홈 TOP 3 카드 클릭 연결 완료, GitHub/Vercel 반영 필요
 
 ### 완료된 작업
 
@@ -92,6 +92,7 @@
 - 2026-06-23 생성 화면 바탕색 통일: 검색 화면을 제외하고 `Screen_HighReturnHospitalList`, `Screen_NoExtraFeeHospitalList`, `Screen_ReservationComplete`, `Screen_MyReservation`, `Screen_MedicineInfo`의 메인 바탕색을 흰색으로 변경. 홈 화면과 검색 화면은 유지
 - 2026-06-23 생성 화면 바탕색 통일 GitHub/Vercel 반영: `24f05f48 style: unify generated screen backgrounds` 커밋을 `origin/main`에 push하고 Vercel Production 배포 완료
 - 2026-06-23 Figma 생성 화면 바탕색 통일: Figma 파일 `허혜경 나만의닥터 APP HANDOFF`의 `Screen_HighReturnHospitalList`, `Screen_NoExtraFeeHospitalList`, `Screen_ReservationComplete` 프레임 최상위 배경을 흰색으로 변경. `Screen_Search`는 기존 회색 배경 유지
+- 2026-06-23 홈 TOP 3 카드 클릭 연결: `추가 비용 없는 병원 TOP 3`의 각 병원 카드 전체를 클릭 가능한 링크로 변경하고, 홈 병원 데이터에 상세 연동 ID를 추가해 `/hospital-detail?hospital=...&from=no-extra-fee`로 이동하도록 연결. `전체보기` 링크는 기존 `/no-extra-fee-hospital-list` 유지
 
 ### 검증 결과
 
@@ -189,6 +190,7 @@
 - 2026-06-23 generated-screen-white-bg-build: `final/`에서 `npm run build` 성공. 메인 배경 `bg-appBg` 스캔 결과 홈과 `Screen_Search`에만 남아 요청 범위 준수 확인
 - 2026-06-23 generated-screen-white-bg-production-check: Vercel Production 배포 READY 확인, `https://my-doctor-app-mocha.vercel.app/high-return-hospital-list`, `/no-extra-fee-hospital-list`, `/reservation-complete`, `/medicine-info` 모두 HTTP 200 확인
 - 2026-06-23 figma-generated-screen-white-bg-check: Figma 검증 결과 `Screen_Search`는 RGB 243/244/247 유지, `Screen_HighReturnHospitalList`, `Screen_NoExtraFeeHospitalList`, `Screen_ReservationComplete`는 RGB 255/255/255 확인. Figma 내 `Screen_MyReservation`, `Screen_MedicineInfo` 프레임은 아직 생성되어 있지 않아 수정 대상 없음
+- 2026-06-23 home-top3-card-link-build: `final/`에서 `npm run build` 성공. 홈 TOP 3 카드 href가 `mydoctor-internal`, `mediline-clinic`, `seoul-well-ent` 병원 상세 ID와 `from=no-extra-fee`로 연결됨 확인
 
 ### 남은 작업
 
