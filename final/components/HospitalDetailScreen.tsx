@@ -1,12 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useMemo, useState } from "react";
 import { IosStatusBar } from "@/components/IosStatusBar";
 import { hospitalList } from "@/lib/hospital-list-data";
 
-const selectedHospital = hospitalList[0];
 const timeSlots = [
   "09:00",
   "09:30",
@@ -32,10 +31,24 @@ const timeSlots = [
   "19:30",
   "20:00",
 ];
+const dateOptions = [
+  "06.24 (화)",
+  "06.25 (수)",
+  "06.26 (목)",
+  "06.27 (금)",
+  "06.28 (토)",
+];
 
 export function HospitalDetailScreen() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const selectedHospital = useMemo(() => {
+    const hospitalId = searchParams.get("hospital");
+    return hospitalList.find((hospital) => hospital.id === hospitalId) ?? hospitalList[0];
+  }, [searchParams]);
+  const [selectedDate, setSelectedDate] = useState(dateOptions[0]);
   const [selectedTime, setSelectedTime] = useState("13:30");
+  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
 
   return (
     <main className="mx-auto min-h-screen w-full max-w-[393px] bg-white text-[#111827]">
@@ -94,9 +107,9 @@ export function HospitalDetailScreen() {
           진료 가능 시간
         </h2>
         <p className="mt-2 text-[14px] font-medium leading-[18px] text-[#6b7280]">
-          오늘 06.24 (화)
+          {selectedDate === dateOptions[0] ? `오늘 ${selectedDate}` : selectedDate}
         </p>
-        <div className="mt-2 flex h-12 gap-2 overflow-x-auto pb-1 mobile-scrollbar">
+        <div className="mt-2 flex h-12 touch-pan-x gap-2 overflow-x-auto overflow-y-hidden overscroll-x-contain pb-1 mobile-scrollbar">
           {timeSlots.map((time) => {
             const selected = time === selectedTime;
             return (
@@ -117,10 +130,35 @@ export function HospitalDetailScreen() {
         </div>
         <button
           type="button"
+          onClick={() => setIsDatePickerOpen((isOpen) => !isOpen)}
           className="mt-2 h-[38px] w-[361px] rounded-[8px] border border-[#dce3ee] bg-white text-[13px] font-medium leading-[18px] text-[#4b5563]"
         >
-          다른 날짜 보기
+          {isDatePickerOpen ? "날짜 접기" : "다른 날짜 보기"}
         </button>
+        {isDatePickerOpen ? (
+          <div className="mt-2 flex h-[38px] w-[361px] touch-pan-x gap-2 overflow-x-auto overflow-y-hidden overscroll-x-contain mobile-scrollbar">
+            {dateOptions.map((date) => {
+              const selected = date === selectedDate;
+              return (
+                <button
+                  key={date}
+                  type="button"
+                  onClick={() => {
+                    setSelectedDate(date);
+                    setIsDatePickerOpen(false);
+                  }}
+                  className={`h-9 w-[86px] shrink-0 rounded-[8px] border text-[12px] font-medium leading-4 ${
+                    selected
+                      ? "border-[#2f70ff] bg-[#f0f6ff] text-[#2f70ff]"
+                      : "border-[#dce3ee] bg-white text-[#4b5563]"
+                  }`}
+                >
+                  {date}
+                </button>
+              );
+            })}
+          </div>
+        ) : null}
       </section>
 
       <section className="mx-4 mt-5 h-[58px] w-[361px] rounded-[10px] bg-[#f6f9ff]">
@@ -134,7 +172,7 @@ export function HospitalDetailScreen() {
             </h2>
           </div>
           <strong className="absolute right-3 top-4 text-[22px] font-semibold leading-[26px] text-[#1268ff]">
-            315,000원
+            {selectedHospital.price}
           </strong>
         </div>
       </section>
@@ -157,7 +195,7 @@ export function HospitalDetailScreen() {
               선택한 시간
             </p>
             <p className="text-[16px] font-semibold leading-[22px]">
-              06.24 (화) {selectedTime}
+              {selectedDate} {selectedTime}
             </p>
           </div>
           <div className="text-right">
@@ -165,7 +203,7 @@ export function HospitalDetailScreen() {
               총 결제 예상 금액
             </p>
             <p className="text-[22px] font-semibold leading-6 text-[#1268ff]">
-              315,000원
+              {selectedHospital.price}
             </p>
           </div>
         </div>

@@ -194,9 +194,9 @@ export function HospitalListScreen() {
         <section className="mx-[22px] mt-4 flex w-[349px] flex-col gap-4">
           {sortedHospitals.map((item) => (
             <HospitalCard
-              key={item.name}
+              key={item.id}
               item={item}
-              onSelect={() => router.push("/hospital-detail")}
+              onSelect={() => router.push(`/hospital-detail?hospital=${item.id}`)}
             />
           ))}
         </section>
