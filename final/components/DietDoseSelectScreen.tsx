@@ -1,16 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
 import { IosStatusBar } from "@/components/IosStatusBar";
-
-const doses = [
-  { label: "2.5mg", stepperLeft: 207 },
-  { label: "5mg", stepperLeft: 203 },
-  { label: "7.5mg", stepperLeft: 203 },
-  { label: "10mg", stepperLeft: 203 },
-];
+import { medicines } from "@/lib/medicine-data";
 
 function DoseStepper({
   left,
@@ -51,9 +45,23 @@ function DoseStepper({
 
 export function DietDoseSelectScreen() {
   const router = useRouter();
-  const [doseCounts, setDoseCounts] = useState([0, 0, 0, 0]);
+  const searchParams = useSearchParams();
+  const medicineId = searchParams.get("medicine");
+  const selectedMedicine = useMemo(() => {
+    return medicines.find((medicine) => medicine.id === medicineId && medicine.doses) ?? medicines[0];
+  }, [medicineId]);
+  const doses = selectedMedicine.doses ?? [];
+  const [doseCounts, setDoseCounts] = useState<number[]>(() => doses.map(() => 0));
   const [isUnknownSelected, setIsUnknownSelected] = useState(false);
   const [isDoseExpanded, setIsDoseExpanded] = useState(true);
+  const doseSectionHeight = 52 + doses.length * 58;
+  const unknownDoseTop = isDoseExpanded ? 232 + doseSectionHeight + 14 : 240;
+
+  useEffect(() => {
+    setDoseCounts(doses.map(() => 0));
+    setIsUnknownSelected(false);
+    setIsDoseExpanded(true);
+  }, [doses]);
 
   const updateDoseCount = (index: number, delta: number) => {
     setIsUnknownSelected(false);
@@ -71,7 +79,7 @@ export function DietDoseSelectScreen() {
   const selectUnknownDose = () => {
     setIsUnknownSelected(true);
     setIsDoseExpanded(false);
-    setDoseCounts([0, 0, 0, 0]);
+    setDoseCounts(doses.map(() => 0));
   };
 
   return (
@@ -144,9 +152,9 @@ export function DietDoseSelectScreen() {
           </div>
           <div className="absolute left-12 top-[13px]">
             <p className="text-[16px] font-bold leading-[22px]">
-              마OOO{" "}
+              {selectedMedicine.name}{" "}
               <span className="text-[13px] font-medium text-[#4b5563]">
-                (티제파타이드)
+                ({selectedMedicine.ingredient})
               </span>
             </p>
             <p className="mt-[2px] text-[11px] font-semibold leading-4 text-[#2f70ff]">
@@ -180,13 +188,16 @@ export function DietDoseSelectScreen() {
         </section>
 
         {isDoseExpanded ? (
-          <section className="absolute left-5 top-[232px] h-[284px] w-[353px] rounded-[14px] border border-[#dce3ee] bg-white">
+          <section
+            className="absolute left-5 top-[232px] w-[353px] rounded-[14px] border border-[#dce3ee] bg-white"
+            style={{ height: doseSectionHeight }}
+          >
             <h2 className="absolute left-4 top-[13px] text-[14px] font-semibold leading-[22px]">
               용량 선택
             </h2>
             {doses.map((dose, index) => (
               <div
-                key={dose.label}
+                key={dose}
                 className={`absolute left-4 h-11 w-[321px] rounded-[14px] border ${
                   index === 0 && !isUnknownSelected
                     ? "border-[#2f70ff] bg-[#f6f9ff]"
@@ -201,10 +212,10 @@ export function DietDoseSelectScreen() {
                       : "text-[#111827]"
                   }`}
                 >
-                  {dose.label}
+                  {dose}
                 </span>
                 <DoseStepper
-                  left={dose.stepperLeft}
+                  left={203}
                   value={doseCounts[index]}
                   onDecrease={() => updateDoseCount(index, -1)}
                   onIncrease={() => updateDoseCount(index, 1)}
@@ -222,7 +233,7 @@ export function DietDoseSelectScreen() {
               ? "border-[#2f70ff]"
               : "border-[#dce3ee]"
           }`}
-          style={{ top: isDoseExpanded ? 530 : 240 }}
+          style={{ top: unknownDoseTop }}
         >
           <span
             className={`absolute left-4 top-[21px] grid h-[22px] w-[22px] place-items-center rounded-full border-2 ${

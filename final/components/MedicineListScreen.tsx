@@ -1,14 +1,27 @@
+"use client";
+
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { MedicineCard } from "@/components/MedicineCard";
 import { medicines } from "@/lib/medicine-data";
 
 const cardTops = [160, 270, 390, 510];
 
 type MedicineListScreenProps = {
-  onMounjaroSelect?: () => void;
+  onMedicineSelect?: (medicineId: string) => void;
 };
 
-export function MedicineListScreen({ onMounjaroSelect }: MedicineListScreenProps) {
+export function MedicineListScreen({ onMedicineSelect }: MedicineListScreenProps) {
+  const router = useRouter();
+  const selectMedicine = (medicineId: string) => {
+    if (onMedicineSelect) {
+      onMedicineSelect(medicineId);
+      return;
+    }
+
+    router.push(`/diet-dose-select?medicine=${medicineId}`);
+  };
+
   return (
     <main className="mx-auto h-[747px] w-full max-w-[393px] bg-white">
       <div className="relative h-full overflow-hidden">
@@ -30,7 +43,7 @@ export function MedicineListScreen({ onMounjaroSelect }: MedicineListScreenProps
             key={item.name}
             item={item}
             top={cardTops[index]}
-            onSelect={index === 0 ? onMounjaroSelect : undefined}
+            onSelect={item.doses ? () => selectMedicine(item.id) : undefined}
           />
         ))}
 

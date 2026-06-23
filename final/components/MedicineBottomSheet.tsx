@@ -4,12 +4,12 @@ import { MedicineListScreen } from "@/components/MedicineListScreen";
 
 type MedicineBottomSheetProps = {
   onClose: () => void;
-  onMounjaroSelect: () => void;
+  onMedicineSelect: (medicineId: string) => void;
 };
 
 export function MedicineBottomSheet({
   onClose,
-  onMounjaroSelect,
+  onMedicineSelect,
 }: MedicineBottomSheetProps) {
   return (
     <div
@@ -24,7 +24,7 @@ export function MedicineBottomSheet({
         onClick={(event) => event.stopPropagation()}
       >
         <div className="h-full overflow-y-auto mobile-scrollbar">
-          <MedicineListScreen onMounjaroSelect={onMounjaroSelect} />
+          <MedicineListScreen onMedicineSelect={onMedicineSelect} />
         </div>
       </section>
     </div>

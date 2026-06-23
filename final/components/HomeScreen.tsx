@@ -17,9 +17,9 @@ export function HomeScreen() {
   const [isMedicineSheetOpen, setIsMedicineSheetOpen] = useState(false);
   const router = useRouter();
 
-  const handleMounjaroSelect = () => {
+  const handleMedicineSelect = (medicineId: string) => {
     setIsMedicineSheetOpen(false);
-    router.push("/diet-dose-select");
+    router.push(`/diet-dose-select?medicine=${medicineId}`);
   };
 
   return (
@@ -42,7 +42,7 @@ export function HomeScreen() {
       {isMedicineSheetOpen ? (
         <MedicineBottomSheet
           onClose={() => setIsMedicineSheetOpen(false)}
-          onMounjaroSelect={handleMounjaroSelect}
+          onMedicineSelect={handleMedicineSelect}
         />
       ) : null}
     </main>
