@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export function PromoBanner() {
   return (
@@ -6,9 +7,11 @@ export function PromoBanner() {
       data-section="promo-banner"
       className="-mt-[3px] h-[226px] bg-[#f4f4f4] px-5 pt-3"
     >
-      <div
+      <Link
+        href="/high-return-hospital-list"
         data-section="promo-image"
-        className="h-[202px] w-[352px] overflow-hidden rounded-[14px]"
+        className="block h-[202px] w-[352px] overflow-hidden rounded-[14px]"
+        aria-label="재진율 높은 병원 리스트 보기"
       >
         <Image
           src="/assets/images/banners/promo-diet-compare.png"
@@ -19,7 +22,7 @@ export function PromoBanner() {
           unoptimized
           className="h-[202px] w-full object-cover"
         />
-      </div>
+      </Link>
     </section>
   );
 }

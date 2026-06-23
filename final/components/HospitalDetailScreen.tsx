@@ -58,6 +58,8 @@ export function HospitalDetailScreen() {
     const hospitalId = searchParams.get("hospital");
     return hospitalList.find((hospital) => hospital.id === hospitalId) ?? hospitalList[0];
   }, [searchParams]);
+  const backPath =
+    searchParams.get("from") === "high-return" ? "/high-return-hospital-list" : "/hospital-list";
   const [selectedDate, setSelectedDate] = useState(dateOptions[0]);
   const [selectedTime, setSelectedTime] = useState("13:30");
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
@@ -69,7 +71,7 @@ export function HospitalDetailScreen() {
         <button
           type="button"
           aria-label="병원 리스트로 돌아가기"
-          onClick={() => router.push("/hospital-list")}
+          onClick={() => router.push(backPath)}
           className="absolute left-[16px] top-3 grid h-10 w-10 place-items-center"
         >
           <svg aria-hidden="true" viewBox="0 0 24 24" className="h-6 w-6" fill="none">
@@ -103,11 +105,11 @@ export function HospitalDetailScreen() {
               {selectedHospital.name}
             </h2>
             <p className="mt-[3px] text-[13px] font-medium leading-[19px] text-[#6b7280]">
-              내과 · 비만클리닉
+              {selectedHospital.department}
             </p>
             <div className="mt-[3px] flex h-[18px] items-center text-[12px] font-medium leading-[18px] text-[#6b7280]">
               <span>
-                {getRevisitRate(selectedHospital.saving)} ({getReviewText(selectedHospital.distance)})
+                {selectedHospital.revisitRate || getRevisitRate(selectedHospital.saving)} ({selectedHospital.reviewCount || getReviewText(selectedHospital.distance)})
               </span>
               <span className="mx-[6px] h-[10px] w-px bg-[#dce3ee]" />
               <span>{getWaitText(selectedHospital.wait)}</span>
@@ -179,14 +181,14 @@ export function HospitalDetailScreen() {
         <div className="relative h-full">
           <div className="absolute left-3 top-[11px]">
             <p className="text-[10px] font-medium leading-[15px] text-[#6b7280]">
-              나만의닥터 전용가
+              진료비 {selectedHospital.consultationFee}
             </p>
             <h2 className="text-[14px] font-semibold leading-[19px]">
-              진료비 + 약제비
+              약값 {selectedHospital.medicinePrice}
             </h2>
           </div>
           <strong className="absolute right-3 top-4 text-[22px] font-semibold leading-[26px] text-[#1268ff]">
-            {selectedHospital.price}
+            {selectedHospital.totalPrice || selectedHospital.price}
           </strong>
         </div>
       </section>
@@ -217,7 +219,7 @@ export function HospitalDetailScreen() {
               총 결제 예상 금액
             </p>
             <p className="text-[22px] font-semibold leading-6 text-[#1268ff]">
-              {selectedHospital.price}
+              {selectedHospital.totalPrice || selectedHospital.price}
             </p>
           </div>
         </div>
