@@ -2,9 +2,9 @@
 
 ### 현재 상태
 
-- GitHub (브랜치/커밋): main, 병원 상세 시간 선택 UI 개선 변경사항 push 완료
+- GitHub (브랜치/커밋): main, 병원 상세 시간 선택 UI 개선 변경사항 push 완료. Screen_Search 작업은 로컬 변경 상태이며 아직 commit/push 전
 - Vercel 배포 상태: Vercel CLI 연결 완료 (`hg800/my-doctor-app`, Root Directory `final`). 최신 Production 배포 완료, 실제 공개 alias `https://my-doctor-app-mocha.vercel.app` HTTP 200 확인. 기존 전달 URL `https://my-doctor-app-hg800.vercel.app`는 HTTP 401 보호 페이지 응답
-- 현재 진행 중인 작업: 병원 상세 시간 선택 시작 시간 조정 진행 중
+- 현재 진행 중인 작업: 없음. Screen_Search 페이지 생성 및 Home 검색 진입 연결 완료, 검증 완료
 
 ### 완료된 작업
 
@@ -62,6 +62,10 @@
 - 2026-06-22 Google Tag Manager 적용: 컨테이너 ID `GTM-WXQFTF5W`를 `next/script`와 `noscript` iframe fallback으로 루트 레이아웃에 추가
 - 2026-06-23 병원 상세 연동 개선: 병원 리스트 카드 클릭 시 병원 ID를 상세 화면으로 전달하고, 예약 화면의 병원명/썸네일/진료비+약제비/하단 결제 예상 금액이 선택 병원 기준으로 바뀌도록 수정. 다른 날짜 선택 칩과 시간 스크롤 좌우 고정 처리 추가
 - 2026-06-23 병원 상세 병원별 지표 연동: 예약 화면의 재진률, 리뷰 수, 평균대기 문구가 병원 리스트의 각 병원 데이터 기준으로 표시되도록 수정
+- 2026-06-23 Screen_Search 구현: `/search` 라우트와 `ScreenSearch` 컴포넌트 추가, iOS 상태바/뒤로가기/검색 입력창/최근 검색어/추천 검색어/인기 진료 카테고리/검색 전·결과 있음·결과 없음 상태/검색 결과 카드 구현
+- 2026-06-23 Home 검색 진입 연결: 홈 검색창과 상단 돋보기 아이콘 클릭 시 동일하게 `/search`로 이동하도록 이벤트만 추가
+- 2026-06-23 Screen_Search 변경 파일: `final/app/search/page.tsx`, `final/components/ScreenSearch.tsx`, `final/components/AppHeader.tsx`, `final/components/HomeScreen.tsx`, `final/components/QuickAccess.tsx`
+- 2026-06-23 Home 검색 클릭 수정: 검색창과 상단 돋보기 연결을 `router.push` 클릭 이벤트에서 실제 `/search` 링크로 변경해 터치/클릭 시 즉시 라우팅되도록 보강
 
 ### 검증 결과
 
@@ -128,6 +132,10 @@
 - 2026-06-22 gtm-script-build: Google Tag Manager 스크립트 및 noscript fallback 추가 후 `final/`에서 `npm run build` 성공
 - 2026-06-23 hospital-detail-selection-build: 병원 상세 데이터 연동, 날짜 선택, 시간 가로 스크롤 고정 처리 후 `final/`에서 `npm run build` 성공
 - 2026-06-23 hospital-detail-metrics-build: 병원별 재진률/리뷰 수/평균대기 연동 후 `final/`에서 `npm run build` 성공
+- 2026-06-23 screen-search-build: `final/`에서 `npm run build` 성공, `/search` static route 생성 확인
+- 2026-06-23 screen-search-integer-scan: 이번 변경 파일(`ScreenSearch`, `/search` page, Home 검색 연결 파일)에서 소수 숫자 사용 없음 확인
+- 2026-06-23 screen-search-dev-server: `npm run dev -- --hostname 127.0.0.1 --port 3000/3001` 실행 시 현재 환경에서 `listen EPERM`으로 포트 바인딩 실패. 브라우저 렌더링 QA는 이번 턴에서 미실행
+- 2026-06-23 screen-search-link-build: 홈 검색창/상단 돋보기 `/search` 링크 전환 후 `final/`에서 `npm run build` 성공, 두 진입점 모두 `href="/search"` 확인
 
 ### 남은 작업
 

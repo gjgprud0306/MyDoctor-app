@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { IosStatusBar } from "@/components/IosStatusBar";
 
 const headerIcons = [
@@ -22,29 +23,51 @@ export function AppHeader() {
           className="absolute left-5 top-1 h-[39px] w-[109px] object-contain"
         />
         <div className="absolute left-0 top-0 h-12 w-full">
-          {headerIcons.map((icon) => (
-            <button
-              key={icon.label}
-              type="button"
-              aria-label={icon.label}
-              className="absolute top-3 grid h-6 w-6 place-items-center"
-              style={{ left: icon.left }}
-            >
-              <Image
-                src={icon.src}
-                alt=""
-                width={24}
-                height={24}
-                unoptimized
-                className="h-6 w-6 object-contain"
-              />
-              {icon.badge ? (
-                <span className="absolute left-3 -top-1 grid h-4 min-w-4 place-items-center rounded-full bg-[#f04242] px-1 text-[10px] font-bold leading-none text-white">
-                  N
-                </span>
-              ) : null}
-            </button>
-          ))}
+          {headerIcons.map((icon) => {
+            const content = (
+              <>
+                <Image
+                  src={icon.src}
+                  alt=""
+                  width={24}
+                  height={24}
+                  unoptimized
+                  className="h-6 w-6 object-contain"
+                />
+                {icon.badge ? (
+                  <span className="absolute left-3 -top-1 grid h-4 min-w-4 place-items-center rounded-full bg-[#f04242] px-1 text-[10px] font-bold leading-none text-white">
+                    N
+                  </span>
+                ) : null}
+              </>
+            );
+
+            if (icon.label === "검색") {
+              return (
+                <Link
+                  key={icon.label}
+                  href="/search"
+                  aria-label={icon.label}
+                  className="absolute top-3 grid h-6 w-6 place-items-center"
+                  style={{ left: icon.left }}
+                >
+                  {content}
+                </Link>
+              );
+            }
+
+            return (
+              <button
+                key={icon.label}
+                type="button"
+                aria-label={icon.label}
+                className="absolute top-3 grid h-6 w-6 place-items-center"
+                style={{ left: icon.left }}
+              >
+                {content}
+              </button>
+            );
+          })}
         </div>
       </div>
     </header>
