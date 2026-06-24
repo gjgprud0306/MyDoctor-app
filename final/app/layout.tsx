@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
+import { GtmRouteEvents } from "@/components/GtmRouteEvents";
 import { InstallPrompt } from "@/components/InstallPrompt";
 import { ServiceWorkerRegister } from "@/components/ServiceWorkerRegister";
 import "./globals.css";
@@ -56,7 +57,7 @@ export default function RootLayout({
             className="hidden invisible"
           />
         </noscript>
-        <Script id="google-tag-manager" strategy="afterInteractive">
+        <Script id="google-tag-manager" strategy="beforeInteractive">
           {`
             (function(w,d,s,l,i){
               w[l]=w[l]||[];
@@ -68,6 +69,7 @@ export default function RootLayout({
             })(window,document,'script','dataLayer','${GTM_CONTAINER_ID}');
           `}
         </Script>
+        <GtmRouteEvents measurementId={GA_MEASUREMENT_ID} />
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
           strategy="afterInteractive"
