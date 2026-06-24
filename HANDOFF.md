@@ -4,7 +4,7 @@
 
 - GitHub (브랜치/커밋): main, 홈 TOP 3 카드 클릭 연결 커밋 `b17de5b2 fix: link home top hospital cards` push 완료
 - Vercel 배포 상태: Vercel CLI 연결 완료 (`hg800/my-doctor-app`, Root Directory `final`). 홈 TOP 3 카드 클릭 연결 포함 최신 Production 배포 완료, deployment `dpl_8iGKMAyVWm4yiYuxHWCjbdESmz18`, 실제 공개 alias `https://my-doctor-app-mocha.vercel.app` HTTP 200 확인, 홈 및 TOP 3 병원별 상세 URL HTTP 200 확인
-- 현재 진행 중인 작업: 없음. 홈 TOP 3 카드 클릭 연결 및 배포 완료
+- 현재 진행 중인 작업: GA4/GTM/Clarity 사용자 테스트 태깅 로컬 적용 완료, GitHub push 및 Vercel 배포 전
 
 ### 완료된 작업
 
@@ -94,6 +94,9 @@
 - 2026-06-23 Figma 생성 화면 바탕색 통일: Figma 파일 `허혜경 나만의닥터 APP HANDOFF`의 `Screen_HighReturnHospitalList`, `Screen_NoExtraFeeHospitalList`, `Screen_ReservationComplete` 프레임 최상위 배경을 흰색으로 변경. `Screen_Search`는 기존 회색 배경 유지
 - 2026-06-23 홈 TOP 3 카드 클릭 연결: `추가 비용 없는 병원 TOP 3`의 각 병원 카드 전체를 클릭 가능한 링크로 변경하고, 홈 병원 데이터에 상세 연동 ID를 추가해 `/hospital-detail?hospital=...&from=no-extra-fee`로 이동하도록 연결. `전체보기` 링크는 기존 `/no-extra-fee-hospital-list` 유지
 - 2026-06-23 홈 TOP 3 카드 클릭 연결 GitHub/Vercel 반영: `b17de5b2 fix: link home top hospital cards` 커밋을 `origin/main`에 push하고 Vercel Production 배포 완료
+- 2026-06-23 GA4/GTM/Clarity 이벤트 태깅 로컬 적용: `final/lib/analytics.ts` 공통 `trackEvent` 유틸 추가, 홈/검색/다이어트 약 선택/수령 방식/병원 리스트/병원 상세/예약 완료 주요 이벤트 전송 및 `data-gtm-id`/`aria-label` 추가
+- 2026-06-23 분석용 플로우 파라미터 보강: 기존 화면 디자인과 이동 흐름은 유지하고, 약 선택 이후 `medicine`, `entry_point`, `receive_method` 값을 URL에 이어 전달해 후속 화면 이벤트 파라미터에 반영
+- 2026-06-23 GTM 태깅 구조 보정: 새 요청 기준으로 홈 검색창/다이어트 배너/섹션 전체보기 `aria-label`을 명시값으로 조정, 병원 리스트 카드는 `data-gtm-id="hospital-card"` 공통 트리거와 `data-gtm-rank` 보조값으로 변경, 허용 목록 밖 검색어 칩은 원문/임의 코드 전송 없이 파라미터 제외 처리
 
 ### 검증 결과
 
@@ -193,9 +196,20 @@
 - 2026-06-23 figma-generated-screen-white-bg-check: Figma 검증 결과 `Screen_Search`는 RGB 243/244/247 유지, `Screen_HighReturnHospitalList`, `Screen_NoExtraFeeHospitalList`, `Screen_ReservationComplete`는 RGB 255/255/255 확인. Figma 내 `Screen_MyReservation`, `Screen_MedicineInfo` 프레임은 아직 생성되어 있지 않아 수정 대상 없음
 - 2026-06-23 home-top3-card-link-build: `final/`에서 `npm run build` 성공. 홈 TOP 3 카드 href가 `mydoctor-internal`, `mediline-clinic`, `seoul-well-ent` 병원 상세 ID와 `from=no-extra-fee`로 연결됨 확인
 - 2026-06-23 home-top3-card-link-production-check: Vercel Production 배포 READY 확인, `https://my-doctor-app-mocha.vercel.app/`, `/hospital-detail?hospital=mydoctor-internal&from=no-extra-fee`, `/hospital-detail?hospital=mediline-clinic&from=no-extra-fee`, `/hospital-detail?hospital=seoul-well-ent&from=no-extra-fee` 모두 HTTP 200 확인
+- 2026-06-23 analytics-tagging-build: `final/`에서 `npm run build` 성공, `/`, `/search`, `/diet-dose-select`, `/pickup-method`, `/hospital-list`, `/hospital-detail`, `/reservation-complete` 포함 15개 static route 생성 확인
+- 2026-06-23 analytics-tagging-scan: `rg`로 홈 검색/배너/인기진료/하단탭, 검색 입력/결과/칩, 약 선택/용량 버튼, 수령 방식, 병원 필터/카드, 예약 시간/예약하기, 예약 완료 CTA의 `trackEvent` 및 주요 `data-gtm-id` 추가 확인
+- 2026-06-23 analytics-tagging-refine-build: 새 GTM 구조 보정 후 `final/`에서 `npm run build` 재성공
+- 2026-06-23 analytics-tagging-refine-scan: `home-search-bar`, `home-banner-diet-compare`, `home-service-*`, `home-section-*`, `bottom-nav-*`, `search-*`, `medicine-option-*`, `dose-*`, `receive-method-*`, `hospital-filter-*`, `hospital-card`, `reservation-time-chip`, `reservation-submit-button`, `reservation-complete-home-button` 식별값 스캔 확인
+- 2026-06-24 gtm-route-events-build: GTM 태그 적용 범위 보강을 위해 `GtmRouteEvents`를 추가하고 Next.js 내부 라우팅마다 `dataLayer`/GA4 `page_view`를 전송하도록 수정. `final/`에서 `npm run build` 성공
+- 2026-06-24 gtm-coverage-html-check: `https://my-doctor-app-mocha.vercel.app/diet-dose-select`, `/hospital-list` HTML에 `GTM-WXQFTF5W`와 `gtm.js` 스크립트가 포함되어 있음을 확인
+- 2026-06-24 ut-analytics-structure: 방식 A 기준으로 `final/lib/analytics.ts`에 `trackUtEvent()`/`trackPageView()` 공통 유틸을 구현. 모든 이벤트에 `screen_name`, `tester_id`, `utm_source`, `utm_content`, `timestamp` 자동 포함, `utm_content` 없을 때 `tester_id=dev` 기본 처리, 개발 콘솔 `[UT Analytics]` 로그 출력 추가
+- 2026-06-24 ut-analytics-events: 라우트 진입 `page_view` 자동 전송을 공통 유틸로 연결하고 GA 기본 `send_page_view`는 비활성화. 홈/검색/상세/예약흐름/마이페이지 화면을 `home`, `search`, `detail`, `cart`, `mypage`로 매핑하고 `cta_click`, `back_click`, `search_click`, `filter_click`, `sort_click`, `tab_click` 필수 이벤트명으로 주요 클릭 이벤트 정리
+- 2026-06-24 ut-analytics-build: `final/`에서 `npm run build` 성공, 15개 static route 생성 확인. `rg`로 필수 이벤트명과 공통 파라미터 자동 주입 코드 스캔 확인
 
 ### 남은 작업
 
+- GA4 DebugView 또는 GTM Preview, Clarity 실 세션에서 이벤트 수신 확인
+- 요청 시 변경사항 GitHub push 및 Vercel Production 배포 후 공개 URL HTTP 200 확인
 - 프로모션 배너 좌우 화살표 개별 export 필요 여부 확인
 - PWA 앱 아이콘이 필요하면 Figma에서 별도 export 후 `final/public/assets/pwa/` 저장
 - 로컬 포트 실행 가능한 환경 또는 실기기에서 모바일/PWA 시각 QA

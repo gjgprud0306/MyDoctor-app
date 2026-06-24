@@ -2,8 +2,9 @@
 
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { IosStatusBar } from "@/components/IosStatusBar";
+import { trackEvent } from "@/lib/analytics";
 import { hospitalList } from "@/lib/hospital-list-data";
 import { noExtraFeeHospitals } from "@/lib/no-extra-fee-hospital-data";
 import { findReservationHospital } from "@/lib/reservation-data";
@@ -77,7 +78,21 @@ export function HospitalDetailScreen() {
   const [selectedDate, setSelectedDate] = useState(dateOptions[0]);
   const [selectedTime, setSelectedTime] = useState("13:30");
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
-  const completePath = `/reservation-complete?hospital=${selectedHospital.id}&date=${encodeURIComponent(selectedDate)}&time=${encodeURIComponent(selectedTime)}`;
+  const medicineName = searchParams.get("medicine") ?? "mounjaro";
+  const entryPoint =
+    searchParams.get("entry_point") ??
+    (searchParams.get("from") === "no-extra-fee" ? "home_nearby_top3" : "hospital_list");
+  const detailEntryPoint = entryPoint === "home_nearby_top3" ? "home_nearby_top3" : "hospital_list";
+  const completePath = `/reservation-complete?hospital=${selectedHospital.id}&date=${encodeURIComponent(selectedDate)}&time=${encodeURIComponent(selectedTime)}&medicine=${medicineName}`;
+
+  useEffect(() => {
+    trackEvent("hospital_detail_view", {
+      page_name: "hospital_detail",
+      hospital_name: selectedHospital.name,
+      price: selectedHospital.totalPrice || selectedHospital.price,
+      entry_point: detailEntryPoint,
+    });
+  }, [detailEntryPoint, selectedHospital.name, selectedHospital.price, selectedHospital.totalPrice]);
 
   return (
     <main className="mx-auto min-h-screen w-full max-w-[393px] bg-white text-[#111827]">
@@ -86,7 +101,13 @@ export function HospitalDetailScreen() {
         <button
           type="button"
           aria-label="병원 리스트로 돌아가기"
-          onClick={() => router.push(backPath)}
+          onClick={() => {
+            trackEvent("back_click", {
+              screen_name: "detail",
+              destination: backPath,
+            });
+            router.push(backPath);
+          }}
           className="absolute left-[16px] top-3 grid h-10 w-10 place-items-center"
         >
           <svg aria-hidden="true" viewBox="0 0 24 24" className="h-6 w-6" fill="none">
@@ -145,7 +166,16 @@ export function HospitalDetailScreen() {
               <button
                 key={time}
                 type="button"
-                onClick={() => setSelectedTime(time)}
+                data-gtm-id="reservation-time-chip"
+                aria-label={`${time} 예약 시간 선택`}
+                onClick={() => {
+                  setSelectedTime(time);
+                  trackEvent("reservation_time_select", {
+                    hospital_name: selectedHospital.name,
+                    date: selectedDate,
+                    time,
+                  });
+                }}
                 className={`h-12 w-[63px] shrink-0 rounded-[6px] border text-[14px] font-medium leading-5 ${
                   selected
                     ? "border-[#2f70ff] bg-[#f0f6ff] text-[#2f70ff]"
@@ -159,7 +189,14 @@ export function HospitalDetailScreen() {
         </div>
         <button
           type="button"
-          onClick={() => setIsDatePickerOpen((isOpen) => !isOpen)}
+          data-gtm-id="reservation-date-more"
+          aria-label="다른 날짜 보기"
+          onClick={() => {
+            setIsDatePickerOpen((isOpen) => !isOpen);
+            trackEvent("reservation_date_more_click", {
+              hospital_name: selectedHospital.name,
+            });
+          }}
           className="mt-2 h-[38px] w-[361px] rounded-[8px] border border-[#dce3ee] bg-white text-[13px] font-medium leading-[18px] text-[#4b5563]"
         >
           {isDatePickerOpen ? "날짜 접기" : "다른 날짜 보기"}
@@ -238,7 +275,19 @@ export function HospitalDetailScreen() {
         </div>
         <button
           type="button"
-          onClick={() => router.push(completePath)}
+          data-gtm-id="reservation-submit-button"
+          aria-label="예약하기"
+          onClick={() => {
+            trackEvent("cta_click", {
+              screen_name: "detail",
+              button_name: "reservation_submit",
+              hospital_name: selectedHospital.name,
+              price: selectedHospital.totalPrice || selectedHospital.price,
+              medicine_name: medicineName,
+              selected_time: selectedTime,
+            });
+            router.push(completePath);
+          }}
           className="mt-4 h-12 w-[361px] rounded-[8px] bg-[#2f70ff] text-[16px] font-semibold leading-6 text-white"
         >
           예약하기

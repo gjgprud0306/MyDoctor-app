@@ -1,7 +1,10 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import type { Hospital } from "@/lib/home-data";
 import { SystemIcon } from "@/components/SystemIcon";
+import { trackEvent } from "@/lib/analytics";
 
 type HospitalTopListProps = {
   hospitals: Hospital[];
@@ -15,6 +18,19 @@ export function HospitalTopList({ hospitals }: HospitalTopListProps) {
           <Link
             key={hospital.name}
             href={`/hospital-detail?hospital=${hospital.id}&from=no-extra-fee`}
+            data-gtm-id={`home-hospital-card-${hospital.rank}`}
+            aria-label={`${hospital.name} 병원 상세 보기`}
+            onClick={() => {
+              trackEvent("cta_click", {
+                screen_name: "home",
+                button_name: "home_hospital_card",
+                hospital_name: hospital.name,
+                rank: hospital.rank,
+                price: hospital.price,
+                distance: "nearby_top3",
+                entry_point: "home_nearby_top3",
+              });
+            }}
             className="relative h-[132px] overflow-hidden rounded-[14px] bg-white px-2.5 pb-2 pt-2.5"
           >
             <span className="absolute left-1.5 top-2 grid h-3.5 w-8 place-items-center rounded-[14px] bg-primary text-[8px] font-medium leading-none text-white">

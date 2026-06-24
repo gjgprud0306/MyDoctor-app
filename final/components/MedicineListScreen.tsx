@@ -2,24 +2,48 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { MedicineCard } from "@/components/MedicineCard";
+import { trackEvent } from "@/lib/analytics";
 import { medicines } from "@/lib/medicine-data";
 
 const cardTops = [160, 270, 390, 510];
 
 type MedicineListScreenProps = {
   onMedicineSelect?: (medicineId: string) => void;
+  entryPoint?: string;
 };
 
-export function MedicineListScreen({ onMedicineSelect }: MedicineListScreenProps) {
+export function MedicineListScreen({
+  onMedicineSelect,
+  entryPoint = "medicine_list",
+}: MedicineListScreenProps) {
   const router = useRouter();
-  const selectMedicine = (medicineId: string) => {
+
+  useEffect(() => {
+    trackEvent("medicine_select_view", { page_name: "medicine_select" });
+  }, []);
+  const selectMedicine = (medicineId: string, index: number) => {
+    const item = medicines.find((medicine) => medicine.id === medicineId);
+
+    trackEvent("cta_click", {
+      screen_name: "cart",
+      button_name: "diet_price_option",
+      option_name: medicineId,
+      medicine_name: medicineId === "oral-diet" ? "diet_pill" : medicineId,
+      price: item?.price,
+      rank: index + 1,
+    });
+    trackEvent("medicine_select", {
+      medicine_name: medicineId === "oral-diet" ? "diet_pill" : medicineId,
+    });
+
     if (onMedicineSelect) {
       onMedicineSelect(medicineId);
       return;
     }
 
-    router.push(`/diet-dose-select?medicine=${medicineId}`);
+    router.push(`/diet-dose-select?medicine=${medicineId}&entry_point=${entryPoint}`);
   };
 
   return (
@@ -43,7 +67,7 @@ export function MedicineListScreen({ onMedicineSelect }: MedicineListScreenProps
             key={item.name}
             item={item}
             top={cardTops[index]}
-            onSelect={item.doses ? () => selectMedicine(item.id) : undefined}
+            onSelect={item.doses ? () => selectMedicine(item.id, index) : undefined}
           />
         ))}
 
@@ -66,7 +90,13 @@ export function MedicineListScreen({ onMedicineSelect }: MedicineListScreenProps
           </div>
           <button
             type="button"
-            onClick={() => router.push("/medicine-info")}
+            onClick={() => {
+              trackEvent("cta_click", {
+                screen_name: "cart",
+                button_name: "medicine_info",
+              });
+              router.push("/medicine-info");
+            }}
             className="absolute left-[258px] top-[18px] h-6 w-[77px] rounded-[12px] bg-white text-[11px] font-semibold leading-4 text-[#4b5563]"
           >
             약 정보 보기

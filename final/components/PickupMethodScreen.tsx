@@ -1,9 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { IosStatusBar } from "@/components/IosStatusBar";
+import { trackEvent } from "@/lib/analytics";
 
 type MethodCardProps = {
   title: string;
@@ -11,6 +12,8 @@ type MethodCardProps = {
   meta: string[];
   selected?: boolean;
   recommended?: boolean;
+  gtmId: string;
+  ariaLabel: string;
   onSelect: () => void;
 };
 
@@ -20,11 +23,15 @@ function MethodCard({
   meta,
   selected = false,
   recommended = false,
+  gtmId,
+  ariaLabel,
   onSelect,
 }: MethodCardProps) {
   return (
     <button
       type="button"
+      data-gtm-id={gtmId}
+      aria-label={ariaLabel}
       onClick={onSelect}
       className={`absolute left-0 h-24 w-full rounded-[14px] border bg-white text-left ${
         selected ? "border-[#2f70ff]" : "border-[#dce3ee]"
@@ -89,9 +96,18 @@ function MethodCard({
 
 export function PickupMethodScreen() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const medicineName = searchParams.get("medicine") ?? "mounjaro";
+  const entryPoint = searchParams.get("entry_point") ?? "home_service_card";
   const [selectedMethod, setSelectedMethod] = useState<"hospital" | "pharmacy">(
     "hospital",
   );
+  const receiveMethod =
+    selectedMethod === "hospital" ? "hospital_only" : "hospital_pharmacy";
+
+  useEffect(() => {
+    trackEvent("receive_method_view", { page_name: "receive_method" });
+  }, []);
 
   return (
     <main className="mx-auto min-h-screen w-full max-w-[393px] bg-white text-[#111827]">
@@ -100,7 +116,13 @@ export function PickupMethodScreen() {
         <button
           type="button"
           aria-label="주사제 선택으로 돌아가기"
-          onClick={() => router.push("/diet-dose-select")}
+          onClick={() => {
+            trackEvent("back_click", {
+              screen_name: "cart",
+              destination: "diet-dose-select",
+            });
+            router.push("/diet-dose-select");
+          }}
           className="absolute left-[18px] top-2 grid h-10 w-10 place-items-center"
         >
           <svg
@@ -175,7 +197,12 @@ export function PickupMethodScreen() {
               meta={["동선 최소", "가장 빠른 수령"]}
               selected={selectedMethod === "hospital"}
               recommended
-              onSelect={() => setSelectedMethod("hospital")}
+              gtmId="receive-method-hospital-only"
+              ariaLabel="병원만 방문 선택"
+              onSelect={() => {
+                setSelectedMethod("hospital");
+                trackEvent("receive_method_select", { method: "hospital_only" });
+              }}
             />
           </div>
           <div className="absolute left-[5px] top-[150px] h-24 w-[344px]">
@@ -184,7 +211,12 @@ export function PickupMethodScreen() {
               description="진료 후 가까운 약국에서 약을 받아요."
               meta={["약국 선택", "가격 비교"]}
               selected={selectedMethod === "pharmacy"}
-              onSelect={() => setSelectedMethod("pharmacy")}
+              gtmId="receive-method-hospital-pharmacy"
+              ariaLabel="병원과 약국 방문 선택"
+              onSelect={() => {
+                setSelectedMethod("pharmacy");
+                trackEvent("receive_method_select", { method: "hospital_pharmacy" });
+              }}
             />
           </div>
         </section>
@@ -193,7 +225,18 @@ export function PickupMethodScreen() {
       <div className="fixed bottom-0 left-0 right-0 mx-auto h-24 w-full max-w-[393px] bg-white pt-3 shadow-[0_-8px_24px_rgba(17,24,39,0.08)]">
         <button
           type="button"
-          onClick={() => router.push("/hospital-list")}
+          data-gtm-id="receive-method-submit"
+          aria-label="수령 방법 선택 완료"
+          onClick={() => {
+            trackEvent("cta_click", {
+              screen_name: "cart",
+              button_name: "receive_method_submit",
+              method: receiveMethod,
+            });
+            router.push(
+              `/hospital-list?medicine=${medicineName}&receive_method=${receiveMethod}&entry_point=${entryPoint}`,
+            );
+          }}
           className="mx-5 h-14 w-[353px] rounded-[8px] bg-[#2f70ff] text-[16px] font-bold leading-6 text-white"
         >
           선택 완료

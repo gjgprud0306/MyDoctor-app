@@ -1,16 +1,27 @@
 "use client";
 
 import { MedicineListScreen } from "@/components/MedicineListScreen";
+import { useEffect } from "react";
+import { trackEvent } from "@/lib/analytics";
 
 type MedicineBottomSheetProps = {
   onClose: () => void;
   onMedicineSelect: (medicineId: string) => void;
+  entryPoint: string;
 };
 
 export function MedicineBottomSheet({
   onClose,
   onMedicineSelect,
+  entryPoint,
 }: MedicineBottomSheetProps) {
+  useEffect(() => {
+    trackEvent("diet_price_sheet_view", {
+      page_name: "diet_price_sheet",
+      entry_point: entryPoint,
+    });
+  }, [entryPoint]);
+
   return (
     <div
       className="fixed inset-0 z-50 mx-auto max-w-[390px] animate-[dim-fade_160ms_ease-out] bg-black/55"
@@ -24,7 +35,7 @@ export function MedicineBottomSheet({
         onClick={(event) => event.stopPropagation()}
       >
         <div className="h-full overflow-y-auto mobile-scrollbar">
-          <MedicineListScreen onMedicineSelect={onMedicineSelect} />
+          <MedicineListScreen onMedicineSelect={onMedicineSelect} entryPoint={entryPoint} />
         </div>
       </section>
     </div>

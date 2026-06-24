@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { IosStatusBar } from "@/components/IosStatusBar";
 import { SystemIcon } from "@/components/SystemIcon";
+import { trackEvent } from "@/lib/analytics";
 import { noExtraFeeHospitals } from "@/lib/no-extra-fee-hospital-data";
 
 function BackIcon() {
@@ -94,7 +95,13 @@ export function NoExtraFeeHospitalListScreen() {
         <button
           type="button"
           aria-label="홈으로 돌아가기"
-          onClick={() => router.push("/")}
+          onClick={() => {
+            trackEvent("back_click", {
+              screen_name: "cart",
+              destination: "home",
+            });
+            router.push("/");
+          }}
           className="absolute left-4 top-2 grid h-10 w-10 place-items-center"
         >
           <BackIcon />
@@ -113,9 +120,14 @@ export function NoExtraFeeHospitalListScreen() {
             <NoExtraFeeHospitalCard
               key={item.id}
               item={item}
-              onSelect={() =>
-                router.push(`/hospital-detail?hospital=${item.id}&from=no-extra-fee`)
-              }
+              onSelect={() => {
+                trackEvent("cta_click", {
+                  screen_name: "cart",
+                  button_name: "no_extra_fee_hospital",
+                  hospital_name: item.name,
+                });
+                router.push(`/hospital-detail?hospital=${item.id}&from=no-extra-fee`);
+              }}
             />
           ))}
         </div>

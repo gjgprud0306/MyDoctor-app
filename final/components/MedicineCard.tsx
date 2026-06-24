@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import type { MedicineItem } from "@/lib/medicine-data";
 
@@ -8,10 +10,14 @@ type MedicineCardProps = {
 };
 
 export function MedicineCard({ item, top, onSelect }: MedicineCardProps) {
+  const medicineName = item.id === "oral-diet" ? "pill" : item.id;
+
   return (
     <button
       type="button"
       onClick={onSelect}
+      data-gtm-id={`medicine-option-${medicineName}`}
+      aria-label={`${item.name} 선택`}
       className="absolute left-5 w-[353px] rounded-[14px] border border-[#d7dde8] bg-white text-left"
       style={{ top, height: item.cardHeight }}
     >

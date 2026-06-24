@@ -1,9 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { IosStatusBar } from "@/components/IosStatusBar";
 import { SystemIcon } from "@/components/SystemIcon";
+import { trackEvent } from "@/lib/analytics";
 import { hospitalList } from "@/lib/hospital-list-data";
 
 const initialRecentSearches = ["다이어트", "탈모", "감기"];
@@ -26,6 +27,21 @@ const hospitalTags: Record<string, string[]> = {
   "gangnam-bareun": ["탈모", "피부", "남성질환", "여드름"],
   "seoul-slim": ["다이어트", "마운자로", "위고비", "여성질환"],
 };
+
+const keywordAnalyticsNames: Record<string, string> = {
+  "다이어트": "diet",
+  "마운자로": "mounjaro",
+  "위고비": "wegovy",
+  "탈모": "hair_loss",
+  "감기": "cold_rhinitis",
+  "비염": "cold_rhinitis",
+  "소아과": "pediatrics",
+  "약국": "pharmacy",
+};
+
+function getKeywordAnalyticsName(keyword: string) {
+  return keywordAnalyticsNames[keyword];
+}
 
 function BackIcon() {
   return (
@@ -56,10 +72,12 @@ function CloseIcon() {
 
 function Chip({
   label,
+  keywordType,
   onClick,
   onDelete,
 }: {
   label: string;
+  keywordType: "popular" | "recent";
   onClick: () => void;
   onDelete?: () => void;
 }) {
@@ -67,13 +85,15 @@ function Chip({
     <div className="flex h-9 items-center rounded-[18px] border border-[#e5e7eb] bg-white text-[13px] font-semibold leading-[18px] text-[#21242c]">
       <button
         type="button"
+        data-gtm-id={keywordType === "popular" ? "search-popular-keyword" : "search-recent-keyword"}
+        aria-label={`${label} 검색어 선택`}
         onClick={onClick}
         className={`h-full ${onDelete ? "pl-4 pr-2" : "px-4"}`}
       >
         {label}
       </button>
       {onDelete ? (
-        <button
+      <button
           type="button"
           aria-label={`${label} 삭제`}
           onClick={onDelete}
@@ -98,6 +118,8 @@ function SearchResultCard({
   return (
     <button
       type="button"
+      data-gtm-id="search-result-item"
+      aria-label={`${item.name} 검색 결과 보기`}
       onClick={onSelect}
       className="w-full rounded-[14px] border border-[#e5e7eb] bg-white p-4 text-left shadow-soft"
     >
@@ -147,6 +169,22 @@ export function ScreenSearch() {
       return searchableText.includes(keyword);
     });
   }, [submittedQuery]);
+  const getResultCount = (value: string) => {
+    const keyword = value.trim().toLowerCase();
+
+    if (!keyword) {
+      return 0;
+    }
+
+    return hospitalList.filter((item) => {
+      const tags = hospitalTags[item.id] ?? [];
+      const searchableText = [item.name, item.price, item.distance, item.wait, ...tags]
+        .join(" ")
+        .toLowerCase();
+
+      return searchableText.includes(keyword);
+    }).length;
+  };
 
   const submitSearch = (value: string) => {
     const keyword = value.trim();
@@ -165,6 +203,13 @@ export function ScreenSearch() {
   const hasResults = submittedQuery.length > 0 && results.length > 0;
   const isEmpty = submittedQuery.length > 0 && results.length === 0;
 
+  useEffect(() => {
+    trackEvent("search_view", {
+      page_name: "search",
+      entry_point: "home_search_bar",
+    });
+  }, []);
+
   return (
     <main className="mx-auto min-h-screen w-full max-w-[393px] bg-appBg text-[#111827]">
       <IosStatusBar />
@@ -173,7 +218,14 @@ export function ScreenSearch() {
           <button
             type="button"
             aria-label="홈으로 돌아가기"
-            onClick={() => router.push("/")}
+            data-gtm-id="search-back-button"
+            onClick={() => {
+              trackEvent("back_click", {
+                screen_name: "search",
+                destination: "home",
+              });
+              router.push("/");
+            }}
             className="grid h-10 w-10 shrink-0 place-items-center rounded-[20px] text-[#111827]"
           >
             <BackIcon />
@@ -182,6 +234,12 @@ export function ScreenSearch() {
             className="flex h-10 flex-1 items-center rounded-[14px] bg-[#f3f4f7] px-3"
             onSubmit={(event) => {
               event.preventDefault();
+              trackEvent("search_click", {
+                screen_name: "search",
+                action: "submit",
+                keyword_length: query.trim().length,
+                result_count: getResultCount(query),
+              });
               submitSearch(query);
             }}
           >
@@ -192,10 +250,26 @@ export function ScreenSearch() {
             />
             <input
               value={query}
-              onChange={(event) => setQuery(event.target.value)}
+              data-gtm-id="search-input"
+              onClick={() =>
+                trackEvent("search_click", {
+                  screen_name: "search",
+                  action: "input_click",
+                })
+              }
+              onChange={(event) => {
+                const nextQuery = event.target.value;
+
+                setQuery(nextQuery);
+                trackEvent("search_input", {
+                  page_name: "search",
+                  keyword_length: nextQuery.length,
+                  result_count: getResultCount(nextQuery),
+                });
+              }}
               placeholder="병원, 진료, 약, 증상을 검색해보세요"
               className="w-full bg-transparent text-[14px] font-medium leading-5 text-[#111827] outline-none placeholder:text-[#9ca3af]"
-              aria-label="검색어 입력"
+              aria-label="검색어 입력창"
             />
           </form>
         </div>
@@ -221,7 +295,16 @@ export function ScreenSearch() {
                     <Chip
                       key={item}
                       label={item}
-                      onClick={() => submitSearch(item)}
+                      keywordType="recent"
+                      onClick={() => {
+                        trackEvent("search_click", {
+                          screen_name: "search",
+                          action: "keyword_chip_click",
+                          keyword_type: "recent",
+                          keyword_name: getKeywordAnalyticsName(item),
+                        });
+                        submitSearch(item);
+                      }}
                       onDelete={() =>
                         setRecentSearches((items) => items.filter((recent) => recent !== item))
                       }
@@ -239,7 +322,20 @@ export function ScreenSearch() {
               <h2 className="text-[17px] font-bold leading-6">추천 검색어</h2>
               <div className="mt-3 flex flex-wrap gap-2">
                 {recommendedSearches.map((item) => (
-                  <Chip key={item} label={item} onClick={() => submitSearch(item)} />
+                  <Chip
+                    key={item}
+                    label={item}
+                    keywordType="popular"
+                    onClick={() => {
+                      trackEvent("search_click", {
+                        screen_name: "search",
+                        action: "keyword_chip_click",
+                        keyword_type: "popular",
+                        keyword_name: getKeywordAnalyticsName(item),
+                      });
+                      submitSearch(item);
+                    }}
+                  />
                 ))}
               </div>
             </section>
@@ -251,7 +347,17 @@ export function ScreenSearch() {
                   <button
                     key={item}
                     type="button"
-                    onClick={() => submitSearch(item)}
+                    data-gtm-id="search-popular-keyword"
+                    aria-label={`${item} 진료 카테고리 검색`}
+                    onClick={() => {
+                      trackEvent("search_click", {
+                        screen_name: "search",
+                        action: "category_click",
+                        keyword_type: "popular",
+                        keyword_name: getKeywordAnalyticsName(item),
+                      });
+                      submitSearch(item);
+                    }}
                     className="h-12 rounded-[14px] bg-white px-4 text-left text-[14px] font-semibold leading-5 text-[#21242c] shadow-soft"
                   >
                     {item}
@@ -275,7 +381,21 @@ export function ScreenSearch() {
                 <SearchResultCard
                   key={item.id}
                   item={item}
-                  onSelect={() => router.push(`/hospital-detail?hospital=${item.id}`)}
+                  onSelect={() => {
+                    const resultTitle = hospitalTags[item.id]?.includes("다이어트")
+                      ? "diet"
+                      : hospitalTags[item.id]?.includes("탈모")
+                        ? "hair_loss"
+                        : "cold_rhinitis";
+
+                    trackEvent("search_result_click", {
+                      page_name: "search",
+                      result_type: "hospital",
+                      result_title: resultTitle,
+                      destination: "hospital_detail",
+                    });
+                    router.push(`/hospital-detail?hospital=${item.id}&entry_point=search_result`);
+                  }}
                 />
               ))}
             </div>

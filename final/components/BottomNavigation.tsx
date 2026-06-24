@@ -1,35 +1,48 @@
+"use client";
+
 import { SystemIcon } from "@/components/SystemIcon";
+import { trackEvent } from "@/lib/analytics";
 
 const navItems = [
   {
     label: "홈",
     icon: "home" as const,
     active: true,
+    gtmId: "bottom-nav-home",
+    tabName: "home",
   },
   {
     label: "혜택",
     icon: "benefits" as const,
     active: false,
     badge: true,
+    gtmId: "bottom-nav-reservation",
+    tabName: "reservation",
   },
   {
     label: "건강관리",
     icon: "health" as const,
     active: false,
+    gtmId: "bottom-nav-favorite",
+    tabName: "favorite",
   },
   {
     label: "의료기록",
     icon: "records" as const,
     active: false,
+    gtmId: "bottom-nav-my-clinic",
+    tabName: "my_clinic",
   },
   {
     label: "내 정보",
     icon: "profile" as const,
     active: false,
+    gtmId: "bottom-nav-my-page",
+    tabName: "my_page",
   },
 ];
 
-export function BottomNavigation() {
+export function BottomNavigation({ currentPage = "home" }: { currentPage?: string }) {
   return (
     <nav
       data-section="bottom-navigation"
@@ -41,7 +54,16 @@ export function BottomNavigation() {
           <button
             key={item.label}
             type="button"
+            data-gtm-id={item.gtmId}
+            aria-label={`${item.label} 탭`}
             aria-current={item.active ? "page" : undefined}
+            onClick={() =>
+              trackEvent("tab_click", {
+                screen_name: currentPage,
+                tab_name: item.tabName,
+                current_page: currentPage,
+              })
+            }
             className="flex h-[68px] cursor-default flex-col items-center justify-start gap-[7px]"
             tabIndex={-1}
           >

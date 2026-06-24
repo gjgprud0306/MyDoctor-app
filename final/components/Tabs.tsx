@@ -1,3 +1,7 @@
+"use client";
+
+import { trackEvent } from "@/lib/analytics";
+
 const tabs = ["비대면 진료", "최저가 병원"];
 
 export function Tabs() {
@@ -8,6 +12,12 @@ export function Tabs() {
           <button
             key={tab}
             type="button"
+            onClick={() =>
+              trackEvent("tab_click", {
+                screen_name: "home",
+                tab_name: index === 0 ? "telemedicine" : "lowest_price_hospital",
+              })
+            }
             className="flex flex-col items-center justify-between px-3 pt-2 text-lg font-medium leading-[23px] tracking-[-0.02em] text-black"
           >
             <span>{tab}</span>

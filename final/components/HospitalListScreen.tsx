@@ -1,9 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
 import { IosStatusBar } from "@/components/IosStatusBar";
+import { trackEvent } from "@/lib/analytics";
 import { hospitalList } from "@/lib/hospital-list-data";
 
 type SortOption = "recommended" | "price" | "wait";
@@ -23,14 +24,19 @@ function FilterIcon() {
 
 function HospitalCard({
   item,
+  rank,
   onSelect,
 }: {
   item: (typeof hospitalList)[number];
+  rank: number;
   onSelect: () => void;
 }) {
   return (
     <button
       type="button"
+      data-gtm-id="hospital-card"
+      data-gtm-rank={rank}
+      aria-label={`${item.name} 병원 카드`}
       onClick={onSelect}
       className="relative h-[116px] w-[349px] rounded-[12px] border border-[#d7e3ff] bg-white text-left shadow-[0_6px_18px_rgba(47,112,255,0.08)]"
     >
@@ -73,6 +79,10 @@ function HospitalCard({
 
 export function HospitalListScreen() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const medicineName = searchParams.get("medicine") ?? "mounjaro";
+  const receiveMethod = searchParams.get("receive_method") ?? "hospital_only";
+  const entryPoint = searchParams.get("entry_point") ?? "home_service_card";
   const [sortOption, setSortOption] = useState<SortOption>("recommended");
 
   const sortedHospitals = useMemo(() => {
@@ -94,6 +104,26 @@ export function HospitalListScreen() {
   const isPriceSort = sortOption === "price";
   const isWaitSort = sortOption === "wait";
   const isRecommendedSort = sortOption === "recommended";
+  const trackSortClick = (sortType: "recommend" | "price" | "wait") => {
+    trackEvent("sort_click", {
+      screen_name: "cart",
+      sort_type: sortType,
+    });
+  };
+  const trackFilterClick = (filterType: "more") => {
+    trackEvent("filter_click", {
+      screen_name: "cart",
+      filter_type: filterType,
+    });
+  };
+
+  useEffect(() => {
+    trackEvent("hospital_list_view", {
+      page_name: "hospital_list",
+      medicine_name: medicineName,
+      receive_method: receiveMethod,
+    });
+  }, [medicineName, receiveMethod]);
 
   return (
     <main className="mx-auto h-screen w-full max-w-[393px] overflow-hidden bg-white text-[#111827]">
@@ -102,7 +132,13 @@ export function HospitalListScreen() {
         <button
           type="button"
           aria-label="수령 방법 선택으로 돌아가기"
-          onClick={() => router.push("/pickup-method")}
+          onClick={() => {
+            trackEvent("back_click", {
+              screen_name: "cart",
+              destination: "pickup_method",
+            });
+            router.push("/pickup-method");
+          }}
           className="absolute left-5 top-2 grid h-10 w-10 place-items-center"
         >
           <svg aria-hidden="true" viewBox="0 0 24 24" className="h-6 w-6" fill="none">
@@ -151,7 +187,12 @@ export function HospitalListScreen() {
         <section className="mx-[22px] mt-4 flex h-[38px] w-[349px] items-center gap-[10px]">
           <button
             type="button"
-            onClick={() => setSortOption("recommended")}
+            data-gtm-id="hospital-filter-recommend"
+            aria-label="추천순 정렬"
+            onClick={() => {
+              setSortOption("recommended");
+              trackSortClick("recommend");
+            }}
             className={`h-8 w-[78px] rounded-[16px] text-[12px] font-semibold leading-4 ${
               isRecommendedSort
                 ? "bg-[#2f70ff] text-white"
@@ -162,7 +203,12 @@ export function HospitalListScreen() {
           </button>
           <button
             type="button"
-            onClick={() => setSortOption("price")}
+            data-gtm-id="hospital-filter-price"
+            aria-label="가격순 정렬"
+            onClick={() => {
+              setSortOption("price");
+              trackSortClick("price");
+            }}
             className={`h-8 w-[78px] rounded-[16px] text-[12px] font-semibold leading-4 ${
               isPriceSort
                 ? "bg-[#2f70ff] text-white"
@@ -173,7 +219,12 @@ export function HospitalListScreen() {
           </button>
           <button
             type="button"
-            onClick={() => setSortOption("wait")}
+            data-gtm-id="hospital-filter-revisit"
+            aria-label="대기 짧은순 정렬"
+            onClick={() => {
+              setSortOption("wait");
+              trackSortClick("wait");
+            }}
             className={`h-8 w-[90px] rounded-[16px] text-[12px] font-semibold leading-4 ${
               isWaitSort
                 ? "bg-[#2f70ff] text-white"
@@ -185,6 +236,8 @@ export function HospitalListScreen() {
           <button
             type="button"
             aria-label="필터"
+            data-gtm-id="hospital-filter-more"
+            onClick={() => trackFilterClick("more")}
             className="grid h-8 w-[33px] place-items-center rounded-[16px] border border-[#dce3ee] bg-white text-[#6b7280]"
           >
             <FilterIcon />
@@ -192,11 +245,24 @@ export function HospitalListScreen() {
         </section>
 
         <section className="mx-[22px] mt-4 flex w-[349px] flex-col gap-4">
-          {sortedHospitals.map((item) => (
+          {sortedHospitals.map((item, index) => (
             <HospitalCard
               key={item.id}
               item={item}
-              onSelect={() => router.push(`/hospital-detail?hospital=${item.id}`)}
+              rank={index + 1}
+              onSelect={() => {
+                trackEvent("hospital_card_click", {
+                  page_name: "hospital_list",
+                  hospital_name: item.name,
+                  rank: index + 1,
+                  price: item.price,
+                  distance: item.distanceText,
+                  revisit_rate: item.revisitRate,
+                });
+                router.push(
+                  `/hospital-detail?hospital=${item.id}&medicine=${medicineName}&receive_method=${receiveMethod}&entry_point=${entryPoint}`,
+                );
+              }}
             />
           ))}
         </section>
@@ -205,6 +271,16 @@ export function HospitalListScreen() {
       <div className="fixed bottom-0 left-0 right-0 mx-auto h-20 w-full max-w-[393px] bg-white pt-[10px] shadow-[0_-8px_24px_rgba(17,24,39,0.08)]">
         <button
           type="button"
+          data-gtm-id="hospital-select-button"
+          aria-label="병원 선택하기"
+          onClick={() =>
+            trackEvent("cta_click", {
+              screen_name: "cart",
+              button_name: "hospital_select",
+              selected_hospital_count: 1,
+              hospital_name: sortedHospitals[0]?.name,
+            })
+          }
           className="mx-[22px] h-14 w-[349px] rounded-[8px] bg-[#2f70ff] text-[16px] font-bold leading-6 text-white"
         >
           병원 선택하기

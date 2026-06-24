@@ -1,6 +1,9 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { IosStatusBar } from "@/components/IosStatusBar";
+import { trackEvent } from "@/lib/analytics";
 
 const headerIcons = [
   { label: "혜택", src: "/assets/icons/header/gift.png", left: 269 },
@@ -47,7 +50,14 @@ export function AppHeader() {
                 <Link
                   key={icon.label}
                   href="/search"
-                  aria-label={icon.label}
+                  aria-label="홈 검색창"
+                  data-gtm-id="home-search-bar"
+                  onClick={() =>
+                    trackEvent("search_click", {
+                      screen_name: "home",
+                      entry_point: "home_search_bar",
+                    })
+                  }
                   className="absolute top-3 grid h-6 w-6 place-items-center"
                   style={{ left: icon.left }}
                 >

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { IosStatusBar } from "@/components/IosStatusBar";
+import { trackEvent } from "@/lib/analytics";
 import { findReservationHospital } from "@/lib/reservation-data";
 
 export function MyReservationScreen() {
@@ -19,7 +20,13 @@ export function MyReservationScreen() {
         <button
           type="button"
           aria-label="홈으로 돌아가기"
-          onClick={() => router.push("/")}
+          onClick={() => {
+            trackEvent("back_click", {
+              screen_name: "mypage",
+              destination: "home",
+            });
+            router.push("/");
+          }}
           className="absolute left-4 top-2 grid h-10 w-10 place-items-center"
         >
           <svg aria-hidden="true" viewBox="0 0 24 24" className="h-6 w-6" fill="none">

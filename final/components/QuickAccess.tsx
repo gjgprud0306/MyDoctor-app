@@ -1,7 +1,10 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import type { QuickAction } from "@/lib/home-data";
 import { SystemIcon } from "@/components/SystemIcon";
+import { trackEvent } from "@/lib/analytics";
 
 type QuickAccessProps = {
   actions: QuickAction[];
@@ -37,6 +40,14 @@ export function QuickAccess({ actions }: QuickAccessProps) {
       <Link
         href="/search"
         data-section="search-bar"
+        data-gtm-id="home-search-bar"
+        aria-label="홈 검색창"
+        onClick={() =>
+          trackEvent("search_click", {
+            screen_name: "home",
+            entry_point: "home_search_bar",
+          })
+        }
         className="mt-3 flex h-10 w-[353px] items-center rounded-[14px] bg-white px-[15px] text-left shadow-soft"
       >
         <SystemIcon

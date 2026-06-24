@@ -4,19 +4,26 @@ import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { IosStatusBar } from "@/components/IosStatusBar";
+import { sanitizeDoseId, trackEvent } from "@/lib/analytics";
 import { medicines } from "@/lib/medicine-data";
 
 function DoseStepper({
   left,
+  dose,
+  medicineName,
   value,
   onDecrease,
   onIncrease,
 }: {
   left: number;
+  dose: string;
+  medicineName: string;
   value: number;
-  onDecrease: () => void;
-  onIncrease: () => void;
+  onDecrease: () => number;
+  onIncrease: () => number;
 }) {
+  const doseId = sanitizeDoseId(dose);
+
   return (
     <div
       className="absolute top-[7px] h-[30px] w-[106px] rounded-[15px] border border-[#dce3ee] bg-[#f9fbff]"
@@ -24,7 +31,17 @@ function DoseStepper({
     >
       <button
         type="button"
-        onClick={onDecrease}
+        data-gtm-id={`dose-minus-${doseId}`}
+        aria-label={`${dose} 수량 줄이기`}
+        onClick={() => {
+          const quantity = onDecrease();
+          trackEvent("medicine_dose_change", {
+            medicine_name: medicineName,
+            dose,
+            action: "minus",
+            quantity,
+          });
+        }}
         className="absolute left-0 top-0 h-[30px] w-[32px] text-[18px] font-semibold leading-[30px] text-[#2f70ff]"
       >
         -
@@ -34,7 +51,17 @@ function DoseStepper({
       </span>
       <button
         type="button"
-        onClick={onIncrease}
+        data-gtm-id={`dose-plus-${doseId}`}
+        aria-label={`${dose} 수량 늘리기`}
+        onClick={() => {
+          const quantity = onIncrease();
+          trackEvent("medicine_dose_change", {
+            medicine_name: medicineName,
+            dose,
+            action: "plus",
+            quantity,
+          });
+        }}
         className="absolute right-0 top-0 h-[30px] w-[32px] text-[18px] font-semibold leading-[30px] text-[#2f70ff]"
       >
         +
@@ -47,6 +74,7 @@ export function DietDoseSelectScreen() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const medicineId = searchParams.get("medicine");
+  const entryPoint = searchParams.get("entry_point") ?? "home_service_card";
   const selectedMedicine = useMemo(() => {
     return medicines.find((medicine) => medicine.id === medicineId && medicine.doses) ?? medicines[0];
   }, [medicineId]);
@@ -63,17 +91,25 @@ export function DietDoseSelectScreen() {
     setIsDoseExpanded(true);
   }, [doses]);
 
+  useEffect(() => {
+    trackEvent("medicine_select_view", { page_name: "medicine_select" });
+  }, []);
+
   const updateDoseCount = (index: number, delta: number) => {
     setIsUnknownSelected(false);
+    let nextQuantity = 0;
     setDoseCounts((current) =>
       current.map((count, countIndex) => {
         if (countIndex !== index) {
           return count;
         }
 
-        return Math.min(2, Math.max(0, count + delta));
+        nextQuantity = Math.min(2, Math.max(0, count + delta));
+        return nextQuantity;
       }),
     );
+
+    return nextQuantity;
   };
 
   const selectUnknownDose = () => {
@@ -89,7 +125,13 @@ export function DietDoseSelectScreen() {
         <button
           type="button"
           aria-label="홈으로 돌아가기"
-          onClick={() => router.push("/")}
+          onClick={() => {
+            trackEvent("back_click", {
+              screen_name: "cart",
+              destination: "home",
+            });
+            router.push("/");
+          }}
           className="absolute left-[18px] top-2 grid h-10 w-10 place-items-center"
         >
           <svg
@@ -216,6 +258,8 @@ export function DietDoseSelectScreen() {
                 </span>
                 <DoseStepper
                   left={203}
+                  dose={dose}
+                  medicineName={selectedMedicine.id}
                   value={doseCounts[index]}
                   onDecrease={() => updateDoseCount(index, -1)}
                   onIncrease={() => updateDoseCount(index, 1)}
@@ -287,7 +331,21 @@ export function DietDoseSelectScreen() {
       <div className="fixed bottom-0 left-0 right-0 mx-auto h-24 w-full max-w-[393px] bg-white pt-3 shadow-[0_-8px_24px_rgba(17,24,39,0.08)]">
         <button
           type="button"
-          onClick={() => router.push("/pickup-method")}
+          data-gtm-id="medicine-select-place-button"
+          aria-label="병원 약국 선택하기"
+          onClick={() => {
+            const totalQuantity = doseCounts.reduce((sum, count) => sum + count, 0);
+
+            trackEvent("cta_click", {
+              screen_name: "cart",
+              button_name: "place_select_start",
+              medicine_name: selectedMedicine.id,
+              total_quantity: totalQuantity,
+            });
+            router.push(
+              `/pickup-method?medicine=${selectedMedicine.id}&entry_point=${entryPoint}&quantity=${totalQuantity}`,
+            );
+          }}
           className="mx-5 h-14 w-[353px] rounded-[8px] bg-[#2f70ff] text-[16px] font-bold leading-6 text-white"
         >
           병원 · 약국 선택하기

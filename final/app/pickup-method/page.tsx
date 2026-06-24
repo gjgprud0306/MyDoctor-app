@@ -1,5 +1,10 @@
+import { Suspense } from "react";
 import { PickupMethodScreen } from "@/components/PickupMethodScreen";
 
 export default function PickupMethodPage() {
-  return <PickupMethodScreen />;
+  return (
+    <Suspense fallback={null}>
+      <PickupMethodScreen />
+    </Suspense>
+  );
 }

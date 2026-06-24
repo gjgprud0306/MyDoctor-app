@@ -2,7 +2,9 @@
 
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 import { IosStatusBar } from "@/components/IosStatusBar";
+import { trackEvent } from "@/lib/analytics";
 import { findReservationHospital } from "@/lib/reservation-data";
 
 function formatDate(date: string | null) {
@@ -48,7 +50,16 @@ export function ReservationCompleteScreen() {
   const hospital = findReservationHospital(searchParams.get("hospital"));
   const date = formatDate(searchParams.get("date"));
   const time = searchParams.get("time") ?? "13:30";
+  const medicineName = searchParams.get("medicine") ?? "mounjaro";
   const reservationQuery = `hospital=${hospital.id}&date=${encodeURIComponent(date)}&time=${encodeURIComponent(time)}`;
+
+  useEffect(() => {
+    trackEvent("reservation_complete_view", {
+      page_name: "reservation_complete",
+      hospital_name: hospital.name,
+      medicine_name: medicineName,
+    });
+  }, [hospital.name, medicineName]);
 
   return (
     <main className="mx-auto min-h-screen w-full max-w-[393px] bg-white text-[#111827]">
@@ -126,14 +137,32 @@ export function ReservationCompleteScreen() {
       <div className="fixed bottom-0 left-0 right-0 mx-auto h-[132px] w-full max-w-[393px] border-t border-[#eef2f7] bg-white px-4 pt-3">
         <button
           type="button"
-          onClick={() => router.push(`/my-reservation?${reservationQuery}`)}
+          data-gtm-id="reservation-complete-detail-button"
+          aria-label="예약 내역 보기"
+          onClick={() => {
+            trackEvent("cta_click", {
+              screen_name: "cart",
+              button_name: "reservation_detail",
+              destination: "reservation_detail",
+            });
+            router.push(`/my-reservation?${reservationQuery}`);
+          }}
           className="h-12 w-[361px] rounded-[8px] bg-[#2f70ff] text-[16px] font-bold leading-6 text-white"
         >
           예약 내역 보기
         </button>
         <button
           type="button"
-          onClick={() => router.push("/")}
+          data-gtm-id="reservation-complete-home-button"
+          aria-label="홈으로 가기"
+          onClick={() => {
+            trackEvent("cta_click", {
+              screen_name: "cart",
+              button_name: "home",
+              destination: "home",
+            });
+            router.push("/");
+          }}
           className="mt-2 h-11 w-[361px] rounded-[8px] border border-[#dce3ee] bg-white text-[15px] font-bold leading-5 text-[#111827]"
         >
           홈으로 가기
