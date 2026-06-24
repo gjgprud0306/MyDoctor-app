@@ -4,11 +4,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { getScreenNameForPath, trackPageView } from "@/lib/analytics";
 
-type GtmRouteEventsProps = {
-  measurementId: string;
-};
-
-export function GtmRouteEvents({ measurementId }: GtmRouteEventsProps) {
+export function GtmRouteEvents() {
   const pathname = usePathname();
   const trackedPathRef = useRef("");
 
@@ -20,10 +16,8 @@ export function GtmRouteEvents({ measurementId }: GtmRouteEventsProps) {
     }
 
     trackedPathRef.current = pagePath;
-    trackPageView(getScreenNameForPath(pathname), {
-      ga_measurement_id: measurementId,
-    });
-  }, [measurementId, pathname]);
+    trackPageView(getScreenNameForPath(pathname));
+  }, [pathname]);
 
   return null;
 }

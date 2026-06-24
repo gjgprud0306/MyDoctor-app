@@ -7,6 +7,8 @@ export type AnalyticsParameters = Record<string, AnalyticsValue>;
 
 const DEFAULT_SCREEN_NAME: ScreenName = "home";
 const DEFAULT_TESTER_ID = "dev";
+const VALID_TESTER_IDS = ["tester_01", "tester_02", "tester_03"] as const;
+const ENABLE_DIRECT_GA4_EVENTS = process.env.NEXT_PUBLIC_ENABLE_GA4_DIRECT_EVENTS !== "false";
 const SCREEN_BY_PATH: Array<{ pattern: RegExp; screenName: ScreenName }> = [
   { pattern: /^\/$/, screenName: "home" },
   { pattern: /^\/search\/?$/, screenName: "search" },
@@ -45,12 +47,31 @@ function getUtmContext() {
   const searchParams = getSearchParams();
   const utmSource = searchParams.get("utm_source") ?? "";
   const utmContent = searchParams.get("utm_content") ?? "";
+  const testerId = VALID_TESTER_IDS.some((validTesterId) => validTesterId === utmContent)
+    ? utmContent
+    : DEFAULT_TESTER_ID;
 
   return {
-    tester_id: utmContent || DEFAULT_TESTER_ID,
+    tester_id: testerId,
     utm_source: utmSource,
     utm_content: utmContent,
   };
+}
+
+function isDebugModeEnabled() {
+  if (typeof window === "undefined") {
+    return false;
+  }
+
+  const searchParams = getSearchParams();
+
+  return (
+    process.env.NODE_ENV !== "production" ||
+    searchParams.get("debug_mode") === "true" ||
+    searchParams.get("debug_mode") === "1" ||
+    searchParams.has("gtm_debug") ||
+    searchParams.has("gtm_preview")
+  );
 }
 
 function buildEventParameters(parameters: AnalyticsParameters = {}) {
@@ -67,10 +88,14 @@ function buildEventParameters(parameters: AnalyticsParameters = {}) {
     ...getUtmContext(),
     timestamp: new Date().toISOString(),
   };
+  const debugParameters: AnalyticsParameters = isDebugModeEnabled()
+    ? { debug_mode: true }
+    : {};
 
   return Object.fromEntries(
     Object.entries({
       ...commonParameters,
+      ...debugParameters,
       ...restParameters,
     }).filter(([, value]) => value !== undefined),
   ) as AnalyticsParameters;
@@ -93,7 +118,9 @@ export function trackUtEvent(eventName: string, parameters: AnalyticsParameters 
     ...eventParameters,
   });
 
-  window.gtag?.("event", eventName, eventParameters);
+  if (ENABLE_DIRECT_GA4_EVENTS) {
+    window.gtag?.("event", eventName, eventParameters);
+  }
 
   if (process.env.NODE_ENV !== "production") {
     console.info("[UT Analytics]", eventName, eventParameters);
