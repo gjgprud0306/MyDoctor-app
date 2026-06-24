@@ -7,7 +7,15 @@ export type AnalyticsParameters = Record<string, AnalyticsValue>;
 
 const DEFAULT_SCREEN_NAME: ScreenName = "home";
 const DEFAULT_TESTER_ID = "dev";
-const VALID_TESTER_IDS = ["tester_01", "tester_02", "tester_03", "dev"] as const;
+const VALID_TESTER_IDS = [
+  "tester_01",
+  "tester_02",
+  "tester_03",
+  "tester_04",
+  "tester_05",
+  "teacher",
+  "dev",
+] as const;
 const ENABLE_DIRECT_GA4_EVENTS = process.env.NEXT_PUBLIC_ENABLE_GA4_DIRECT_EVENTS !== "false";
 const SCREEN_BY_PATH: Array<{ pattern: RegExp; screenName: ScreenName }> = [
   { pattern: /^\/$/, screenName: "home" },

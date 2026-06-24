@@ -4,7 +4,7 @@
 
 - GitHub (브랜치/커밋): main, 홈 TOP 3 카드 클릭 연결 커밋 `b17de5b2 fix: link home top hospital cards` push 완료
 - Vercel 배포 상태: Vercel CLI 연결 완료 (`hg800/my-doctor-app`, Root Directory `final`). 홈 TOP 3 카드 클릭 연결 포함 최신 Production 배포 완료, deployment `dpl_8iGKMAyVWm4yiYuxHWCjbdESmz18`, 실제 공개 alias `https://my-doctor-app-mocha.vercel.app` HTTP 200 확인, 홈 및 TOP 3 병원별 상세 URL HTTP 200 확인
-- 현재 진행 중인 작업: 사용자 테스트 UTM 링크 문서화 및 Analytics tester_id 규칙 보강 완료, GitHub push 및 Vercel 배포 전
+- 현재 진행 중인 작업: teacher/tester_04/tester_05 UTM 링크 문서화 및 Analytics tester_id 규칙 보강 완료, GitHub push 및 Vercel 배포 전
 
 ### 완료된 작업
 
@@ -210,6 +210,7 @@
 - 2026-06-24 analytics-production-build: `final/`에서 `npm run build` 성공, `.env.production` 로드 확인. 산출물 스캔으로 GTM script/noscript, `GTM-WXQFTF5W`, GA4 `G-58KL1SR9DG`, `send_page_view: false` 포함 확인. 로컬 포트 실행은 환경 제한 `listen EPERM 127.0.0.1:3000`으로 미실행
 - 2026-06-24 utm-test-links: 현재 Production alias `https://my-doctor-app-mocha.vercel.app` 기준 사용자 테스트 링크 4개를 `README.md`에 정리. `tester_01`/`tester_02`/`tester_03`/`dev` 링크는 `utm_source=ut1`, `utm_content=...` 형식 사용
 - 2026-06-24 utm-tester-id-rule: `final/lib/analytics.ts`의 허용 `tester_id` 목록에 `dev`를 명시 추가. 허용값 외 `utm_content` 또는 값 없음은 기존처럼 `tester_id=dev` 처리
+- 2026-06-24 utm-extra-links: `README.md` 사용자 테스트 UTM 링크에 `tester_04`, `tester_05`, `teacher`를 추가. `final/lib/analytics.ts` 허용 `tester_id` 목록에도 동일하게 반영해 이벤트 공통 파라미터 `tester_id`로 인식되도록 보강
 
 ### 남은 작업
 

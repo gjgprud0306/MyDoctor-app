@@ -16,13 +16,16 @@
 | tester_01 | https://my-doctor-app-mocha.vercel.app?utm_source=ut1&utm_content=tester_01 |
 | tester_02 | https://my-doctor-app-mocha.vercel.app?utm_source=ut1&utm_content=tester_02 |
 | tester_03 | https://my-doctor-app-mocha.vercel.app?utm_source=ut1&utm_content=tester_03 |
+| tester_04 | https://my-doctor-app-mocha.vercel.app?utm_source=ut1&utm_content=tester_04 |
+| tester_05 | https://my-doctor-app-mocha.vercel.app?utm_source=ut1&utm_content=tester_05 |
+| teacher | https://my-doctor-app-mocha.vercel.app?utm_source=ut1&utm_content=teacher |
 | dev 확인용 | https://my-doctor-app-mocha.vercel.app?utm_source=ut1&utm_content=dev |
 
 기존 URL에 query string이 있으면 `?` 대신 `&utm_source=ut1&utm_content=...` 형식으로 붙입니다.
 
 Analytics 연결 규칙:
 
-- `utm_content`가 `tester_01`, `tester_02`, `tester_03`, `dev` 중 하나면 해당 값을 `tester_id`로 사용합니다.
+- `utm_content`가 `tester_01`, `tester_02`, `tester_03`, `tester_04`, `tester_05`, `teacher`, `dev` 중 하나면 해당 값을 `tester_id`로 사용합니다.
 - `utm_content`가 없거나 허용되지 않은 값이면 `tester_id`는 `dev`로 처리합니다.
 - 모든 `trackEvent`/`trackUtEvent` 이벤트에는 `tester_id`, `screen_name`, `utm_source`, `utm_content`, `timestamp`가 자동 포함됩니다.
 
