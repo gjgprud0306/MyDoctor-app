@@ -4,7 +4,7 @@
 
 - GitHub (브랜치/커밋): main, 홈 TOP 3 카드 클릭 연결 커밋 `b17de5b2 fix: link home top hospital cards` push 완료
 - Vercel 배포 상태: Vercel CLI 연결 완료 (`hg800/my-doctor-app`, Root Directory `final`). 홈 TOP 3 카드 클릭 연결 포함 최신 Production 배포 완료, deployment `dpl_8iGKMAyVWm4yiYuxHWCjbdESmz18`, 실제 공개 alias `https://my-doctor-app-mocha.vercel.app` HTTP 200 확인, 홈 및 TOP 3 병원별 상세 URL HTTP 200 확인
-- 현재 진행 중인 작업: GA4/GTM 운영 연동 보강 로컬 적용 완료, GitHub push 및 Vercel 배포 전
+- 현재 진행 중인 작업: 사용자 테스트 UTM 링크 문서화 및 Analytics tester_id 규칙 보강 완료, GitHub push 및 Vercel 배포 전
 
 ### 완료된 작업
 
@@ -206,8 +206,10 @@
 - 2026-06-24 ut-analytics-events: 라우트 진입 `page_view` 자동 전송을 공통 유틸로 연결하고 GA 기본 `send_page_view`는 비활성화. 홈/검색/상세/예약흐름/마이페이지 화면을 `home`, `search`, `detail`, `cart`, `mypage`로 매핑하고 `cta_click`, `back_click`, `search_click`, `filter_click`, `sort_click`, `tab_click` 필수 이벤트명으로 주요 클릭 이벤트 정리
 - 2026-06-24 ut-analytics-build: `final/`에서 `npm run build` 성공, 15개 static route 생성 확인. `rg`로 필수 이벤트명과 공통 파라미터 자동 주입 코드 스캔 확인
 - 2026-06-24 analytics-production-env: `final/.env.production`, `final/.env.example`에 `NEXT_PUBLIC_GTM_ID=GTM-WXQFTF5W`, `NEXT_PUBLIC_GA_MEASUREMENT_ID=G-58KL1SR9DG`, `NEXT_PUBLIC_ENABLE_GA4_DIRECT_EVENTS=true` 추가. `final/app/layout.tsx` GTM/GA 삽입을 환경변수 기반으로 전환
-- 2026-06-24 analytics-production-debug: `final/lib/analytics.ts`에서 `tester_id`를 `tester_01`/`tester_02`/`tester_03`만 허용하고 그 외 `dev` 처리하도록 보강. 개발 환경, `?debug_mode=true`, `?debug_mode=1`, GTM Preview 파라미터 접속 시 GA4 `debug_mode` 포함
+- 2026-06-24 analytics-production-debug: `final/lib/analytics.ts`에서 `tester_id`를 `tester_01`/`tester_02`/`tester_03`/`dev`만 허용하고 그 외 `dev` 처리하도록 보강. 개발 환경, `?debug_mode=true`, `?debug_mode=1`, GTM Preview 파라미터 접속 시 GA4 `debug_mode` 포함
 - 2026-06-24 analytics-production-build: `final/`에서 `npm run build` 성공, `.env.production` 로드 확인. 산출물 스캔으로 GTM script/noscript, `GTM-WXQFTF5W`, GA4 `G-58KL1SR9DG`, `send_page_view: false` 포함 확인. 로컬 포트 실행은 환경 제한 `listen EPERM 127.0.0.1:3000`으로 미실행
+- 2026-06-24 utm-test-links: 현재 Production alias `https://my-doctor-app-mocha.vercel.app` 기준 사용자 테스트 링크 4개를 `README.md`에 정리. `tester_01`/`tester_02`/`tester_03`/`dev` 링크는 `utm_source=ut1`, `utm_content=...` 형식 사용
+- 2026-06-24 utm-tester-id-rule: `final/lib/analytics.ts`의 허용 `tester_id` 목록에 `dev`를 명시 추가. 허용값 외 `utm_content` 또는 값 없음은 기존처럼 `tester_id=dev` 처리
 
 ### 남은 작업
 
