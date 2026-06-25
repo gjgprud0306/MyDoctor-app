@@ -48,7 +48,7 @@ export function QuickAccess({ actions }: QuickAccessProps) {
             entry_point: "home_search_bar",
           })
         }
-        className="mt-3 flex h-10 w-[353px] items-center rounded-[14px] bg-white px-[15px] text-left shadow-soft"
+        className="mt-3 flex h-10 w-[353px] items-center rounded-[14px] bg-white px-[15px] text-left"
       >
         <SystemIcon
           name="search"
