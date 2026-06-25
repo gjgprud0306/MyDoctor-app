@@ -108,7 +108,7 @@ export function PopularCareGrid({ items, onDietClick }: PopularCareGridProps) {
             onClick={() => trackServiceClick(item.title, itemIndex)}
             className="relative h-16 overflow-hidden rounded-xl bg-white text-left"
           >
-            <div className="absolute left-6 top-[15px] w-[78px]">
+            <div className="absolute left-3 top-[15px] w-[88px]">
               <h3 className="text-sm font-medium leading-[18px] tracking-[-0.02em] text-black">
                 {item.title}
               </h3>
