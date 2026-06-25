@@ -25,7 +25,15 @@ export function PopularCareGrid({ items, onDietClick }: PopularCareGridProps) {
       return { serviceType: "cold", gtmId: "home-service-cold", position: "popular_3" };
     }
 
-    return { serviceType: "rhinitis", gtmId: "home-service-rhinitis", position: `popular_${index + 1}` };
+    if (title === "인공눈물") {
+      return {
+        serviceType: "artificial_tears",
+        gtmId: "home-service-artificial-tears",
+        position: "popular_4",
+      };
+    }
+
+    return { serviceType: "general", gtmId: "home-service-general", position: `popular_${index + 1}` };
   };
 
   const trackServiceClick = (title: string, index: number) => {
@@ -100,7 +108,7 @@ export function PopularCareGrid({ items, onDietClick }: PopularCareGridProps) {
             onClick={() => trackServiceClick(item.title, itemIndex)}
             className="flex h-16 items-center justify-between overflow-hidden rounded-xl bg-white px-3 py-1.5"
           >
-            <div>
+            <div className="min-w-0">
               <h3 className="text-sm font-medium leading-[18px] tracking-[-0.02em] text-black">
                 {item.title}
               </h3>
@@ -114,7 +122,7 @@ export function PopularCareGrid({ items, onDietClick }: PopularCareGridProps) {
               width={52}
               height={52}
               unoptimized
-              className="h-[52px] w-[52px] object-contain"
+              className="h-[52px] w-[52px] shrink-0 object-contain"
             />
           </button>
         );

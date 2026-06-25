@@ -56,7 +56,7 @@ export const popularCare: CareItem[] = [
     compact: true,
   },
   {
-    title: "눈 건강",
+    title: "인공눈물",
     subtitle: "비대면 빠른 진료",
     icon: "/assets/icons/quick-menu/eye.png",
     compact: true,

@@ -211,6 +211,7 @@
 - 2026-06-24 utm-test-links: 현재 Production alias `https://my-doctor-app-mocha.vercel.app` 기준 사용자 테스트 링크 4개를 `README.md`에 정리. `tester_01`/`tester_02`/`tester_03`/`dev` 링크는 `utm_source=ut1`, `utm_content=...` 형식 사용
 - 2026-06-24 utm-tester-id-rule: `final/lib/analytics.ts`의 허용 `tester_id` 목록에 `dev`를 명시 추가. 허용값 외 `utm_content` 또는 값 없음은 기존처럼 `tester_id=dev` 처리
 - 2026-06-24 utm-extra-links: `README.md` 사용자 테스트 UTM 링크에 `tester_04`, `tester_05`, `teacher`를 추가. `final/lib/analytics.ts` 허용 `tester_id` 목록에도 동일하게 반영해 이벤트 공통 파라미터 `tester_id`로 인식되도록 보강
+- 2026-06-25 home-popular-care-label-build: 홈 `많이 찾는 진료`의 `눈 건강` 문구를 `인공눈물`로 변경하고 카드 내부 텍스트/아이콘 폭 안정화 및 비대면 진료 탭 파란 underline을 화면 절반 너비로 고정. `final/`에서 `npm run build` 성공
 
 ### 남은 작업
 
