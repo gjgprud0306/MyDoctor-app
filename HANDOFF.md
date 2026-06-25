@@ -213,6 +213,7 @@
 - 2026-06-24 utm-extra-links: `README.md` 사용자 테스트 UTM 링크에 `tester_04`, `tester_05`, `teacher`를 추가. `final/lib/analytics.ts` 허용 `tester_id` 목록에도 동일하게 반영해 이벤트 공통 파라미터 `tester_id`로 인식되도록 보강
 - 2026-06-25 home-popular-care-label-build: 홈 `많이 찾는 진료`의 `눈 건강` 문구를 `인공눈물`로 변경하고 카드 내부 텍스트/아이콘 폭 안정화 및 비대면 진료 탭 파란 underline을 화면 절반 너비로 고정. `final/`에서 `npm run build` 성공
 - 2026-06-25 home-search-shadow-build: 홈 검색창 뒤 회색 바처럼 보이던 `shadow-soft` 그림자를 검색창에서 제거. 퀵메뉴 카드 그림자는 유지하고 `final/`에서 `npm run build` 성공
+- 2026-06-25 home-compact-care-card-align-build: 홈 compact 진료 카드의 텍스트와 아이콘 좌표를 고정해 `인공눈물` 카드 배치 틀어짐을 보정. `final/`에서 `npm run build` 성공
 
 ### 남은 작업
 

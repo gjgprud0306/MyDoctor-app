@@ -106,13 +106,13 @@ export function PopularCareGrid({ items, onDietClick }: PopularCareGridProps) {
             data-gtm-id={meta.gtmId}
             aria-label={`${item.title} 진료 카드`}
             onClick={() => trackServiceClick(item.title, itemIndex)}
-            className="flex h-16 items-center justify-between overflow-hidden rounded-xl bg-white px-3 py-1.5"
+            className="relative h-16 overflow-hidden rounded-xl bg-white text-left"
           >
-            <div className="min-w-0">
+            <div className="absolute left-6 top-[15px] w-[78px]">
               <h3 className="text-sm font-medium leading-[18px] tracking-[-0.02em] text-black">
                 {item.title}
               </h3>
-              <p className="mt-0.5 text-[10px] font-medium leading-[13px] tracking-[-0.02em] text-figmaMuted">
+              <p className="mt-0.5 whitespace-nowrap text-[10px] font-medium leading-[13px] tracking-[-0.02em] text-figmaMuted">
                 {item.subtitle}
               </p>
             </div>
@@ -122,7 +122,7 @@ export function PopularCareGrid({ items, onDietClick }: PopularCareGridProps) {
               width={52}
               height={52}
               unoptimized
-              className="h-[52px] w-[52px] shrink-0 object-contain"
+              className="absolute right-5 top-1.5 h-[52px] w-[52px] object-contain"
             />
           </button>
         );
