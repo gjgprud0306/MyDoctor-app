@@ -21,8 +21,8 @@ type Tile = {
   top: number;
 };
 
-const mapWidth = 325;
-const mapHeight = 168;
+const mapWidth = 393;
+const mapHeight = 331;
 const tileSize = 256;
 const minZoom = 13;
 const maxZoom = 16;
@@ -155,7 +155,7 @@ function InteractiveMap({
 
   return (
     <div
-      className="relative mt-3 h-[168px] overflow-hidden rounded-[14px] bg-[#eef5ff] touch-none"
+      className="relative h-[331px] w-[393px] overflow-hidden bg-[#eef5ff] touch-none"
       onPointerDown={(event) => {
         event.currentTarget.setPointerCapture(event.pointerId);
         activePointersRef.current.set(event.pointerId, {
@@ -231,14 +231,6 @@ function InteractiveMap({
       {places.map((place) => (
         <MapMarker key={place.id} place={place} center={center} zoom={zoom} />
       ))}
-      <div className="absolute left-3 top-3 rounded-[12px] bg-white px-3 py-2 shadow-[0_4px_12px_rgba(17,24,39,0.12)]">
-        <p className="text-[10px] font-bold leading-[14px] text-[#111827]">
-          실제 지도 타일
-        </p>
-        <p className="text-[9px] font-medium leading-3 text-[#6b7280]">
-          드래그로 이동
-        </p>
-      </div>
       <p className="absolute bottom-1 left-2 text-[8px] font-medium leading-[10px] text-[#4b5563]">
         © OpenStreetMap
       </p>
@@ -283,67 +275,57 @@ export function NearbyPlaceFinder() {
   };
 
   return (
-    <section className="mx-[22px] mt-[10px] w-[349px]" aria-label="주변 병원 및 약국 찾기">
-      <div className="rounded-[14px] border border-[#d7e3ff] bg-white p-3 shadow-[0_6px_18px_rgba(47,112,255,0.08)]">
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-[14px] font-bold leading-5 text-[#111827]">
-              주변 병원·약국 찾기
-            </h2>
-            <p className="mt-1 text-[10px] font-medium leading-[14px] text-[#6b7280]">
-              mock 데이터 기준으로 표시됩니다
-            </p>
-          </div>
-          <button
-            type="button"
-            onClick={handleLocationSearch}
-            className="h-8 rounded-[16px] bg-[#2f70ff] px-3 text-[11px] font-bold leading-4 text-white"
-          >
-            현재 위치
-          </button>
-        </div>
+    <section className="relative h-[355px] w-[393px]" aria-label="주변 병원 및 약국 찾기">
+      <InteractiveMap
+        center={mapCenter}
+        places={places}
+        zoom={zoom}
+        onCenterChange={setMapCenter}
+        onZoomChange={setZoom}
+      />
 
-        <div className="mt-3 grid grid-cols-3 gap-2">
-          {testRegions.map((region) => (
-            <button
-              key={region.id}
-              type="button"
-              onClick={() => setSelectedRegion(region.id)}
-              className={`h-8 rounded-[16px] text-[11px] font-semibold leading-4 ${
-                selectedRegion === region.id
-                  ? "bg-[#eff6ff] text-[#2f70ff]"
-                  : "bg-[#f3f4f7] text-[#6b7280]"
-              }`}
-            >
-              {region.name}
-            </button>
-          ))}
-        </div>
-
-        <div className="mt-3 flex gap-2">
+      <div className="absolute left-[22px] top-[22px] flex gap-3">
           {(["all", "hospital", "pharmacy"] as const).map((type) => (
             <button
               key={type}
               type="button"
               onClick={() => setSelectedType(type)}
-              className={`h-8 rounded-[16px] px-3 text-[11px] font-semibold leading-4 ${
+              className={`h-8 rounded-[16px] text-[11px] font-semibold leading-4 shadow-[0_2px_8px_rgba(17,24,39,0.08)] ${
+                type === "all" ? "w-11" : "w-[50px]"
+              } ${
                 selectedType === type
                   ? "bg-[#2f70ff] text-white"
-                  : "border border-[#dce3ee] bg-white text-[#111827]"
+                  : "bg-white text-[#111827]"
               }`}
             >
               {typeLabels[type]}
             </button>
           ))}
-        </div>
+      </div>
 
-        <InteractiveMap
-          center={mapCenter}
-          places={places}
-          zoom={zoom}
-          onCenterChange={setMapCenter}
-          onZoomChange={setZoom}
-        />
+      <button
+        type="button"
+        onClick={handleLocationSearch}
+        aria-label="현재 위치"
+        className="absolute bottom-[20px] right-5 grid h-8 w-8 place-items-center rounded-[16px] bg-white text-[#111827] shadow-[0_3px_10px_rgba(17,24,39,0.18)]"
+      >
+        <svg aria-hidden="true" viewBox="0 0 24 24" className="h-5 w-5" fill="none">
+          <path
+            d="M12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Z"
+            stroke="currentColor"
+            strokeWidth="2"
+          />
+          <path
+            d="M12 3v3M12 18v3M3 12h3M18 12h3"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeWidth="2"
+          />
+        </svg>
+      </button>
+
+      <div className="absolute bottom-0 left-0 h-6 w-[393px] rounded-t-[18px] bg-white">
+        <div className="absolute left-[173px] top-2 h-1 w-12 rounded-sm bg-[#6b7280]" />
       </div>
     </section>
   );

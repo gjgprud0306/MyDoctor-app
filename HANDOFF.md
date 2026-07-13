@@ -225,6 +225,7 @@
 - 2026-07-13 hospital-list-map-controls-hidden-build: 병원 리스트 지도 우측 기본 컨트롤(화살표, +, -) 제거. 지도 크기/레이아웃은 유지하고 드래그 이동 및 두 손가락 핀치 확대/축소 동작을 유지하도록 보강. `final/`에서 `npm run build` 성공
 - 2026-07-13 hospital-list-revisit-text-build: 병원 리스트 카드 데이터의 `제진` 오타를 `재진`으로 수정하고 상세 화면 파싱 로직도 동일 문구 기준으로 보정. `final/`에서 `npm run build` 성공
 - 2026-07-13 pickup-method-vertical-space-build: `/pickup-method` 인트로 제목/설명/일러스트를 축소하고 상하 여백을 줄인 뒤 지도 높이를 200px로 확대. 수령 방법 카드와 하단 버튼 위치/크기는 유지하고 `final/`에서 `npm run build` 성공
+- 2026-07-13 figma-398-2188-hospital-list-build: Figma `398:2188` 병원 리스트 프레임 기준으로 `/hospital-list` 상단 지도 영역을 전체 폭 지도 + 오버레이 필터 칩 + 바텀시트 핸들 구조로 수정. 정렬 영역/첫 카드/하단 CTA 좌표를 localhost 393x876에서 확인하고 `final/`에서 `npm run build` 성공
 - 2026-07-13 hospital-list-badge-blue-build: 병원 리스트 카드의 `가격 인증` 뱃지를 BG `#EEF5FF`/Text `#5E82D9`, 오른쪽 혜택 뱃지를 BG `#EAF3FF`/Text `#2F6EFF`로 색상만 변경. 레이아웃/크기/Padding/Radius/텍스트는 유지하고 `final/`에서 `npm run build` 성공
 - 2026-07-13 hospital-list-badge-hierarchy-build: 병원 리스트 카드 색상 위계 조정. 가격 Primary Blue는 유지하고, 오른쪽 재진률/혜택 뱃지는 BG `#F3F7FF`/Text `#5E82D9`, `가격 인증` 라벨은 BG `#F4F5F7`/Text `#6B7280`로 색상만 변경. `final/`에서 `npm run build` 성공
 

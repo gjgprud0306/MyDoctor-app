@@ -175,7 +175,7 @@ export function HospitalListScreen() {
       <div className="h-[calc(100vh-106px)] overflow-y-auto pb-28 mobile-scrollbar">
         <NearbyPlaceFinder />
 
-        <section className="mx-[22px] mt-4 flex h-[38px] w-[349px] items-center gap-[10px]">
+        <section className="mx-[22px] mt-0 flex h-[54px] w-[349px] items-start gap-[10px] pt-[19px]">
           <button
             type="button"
             data-gtm-id="hospital-filter-recommend"
