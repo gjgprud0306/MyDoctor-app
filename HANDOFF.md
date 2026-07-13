@@ -218,6 +218,7 @@
 - 2026-07-13 github-issues-location-map-build: GitHub 이슈 #9/#10/#11 대응으로 `final/lib/location-place-data.ts` 테스트용 서울/천안/수원 병원·약국 mock 데이터와 `NearbyPlaceFinder` 위치/지역 선택/병원·약국 필터/지도형 마커/목록 UI 추가. `/hospital-list` 상단 정적 지도 이미지를 해당 컴포넌트로 교체하고 `final/`에서 `npm run build` 성공
 - 2026-07-13 github-issues-location-map-scope: 실제 카카오맵 SDK/API 키는 미제공 상태라 mock 지도 컴포넌트로 구현. 데이터 `source: "mock"` 및 UI `테스트용` 배지로 실제 기관 오해 방지 처리. 기존 사용자 변경 파일 `final/components/MyReservationScreen.tsx`, `final/components/ReservationCompleteScreen.tsx`는 수정하지 않음
 - 2026-07-13 github-issue-10-real-map-build: 이슈 #10 재검토 후 `NearbyPlaceFinder` 지도 영역을 정적/격자 이미지가 아닌 OpenStreetMap 타일 기반 실제 지도 렌더링으로 교체. Web Mercator 좌표 계산으로 선택 지역/현재 위치 중심, 드래그 이동, 확대/축소, 병원/약국 구분 마커 표시를 구현하고 `final/`에서 `npm run build` 성공
+- 2026-07-13 hospital-list-badge-blue-build: 병원 리스트 카드의 `가격 인증` 뱃지를 BG `#EEF5FF`/Text `#5E82D9`, 오른쪽 혜택 뱃지를 BG `#EAF3FF`/Text `#2F6EFF`로 색상만 변경. 레이아웃/크기/Padding/Radius/텍스트는 유지하고 `final/`에서 `npm run build` 성공
 
 ### 남은 작업
 
