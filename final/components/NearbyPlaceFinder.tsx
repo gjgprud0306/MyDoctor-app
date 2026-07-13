@@ -127,16 +127,30 @@ function InteractiveMap({
   onCenterChange: (center: MapCenter) => void;
   onZoomChange: (zoom: number) => void;
 }) {
+  const activePointersRef = useRef(new Map<number, { x: number; y: number }>());
   const dragRef = useRef<{
     x: number;
     y: number;
     centerPoint: { x: number; y: number };
   } | null>(null);
+  const pinchRef = useRef<{
+    distance: number;
+    zoom: number;
+  } | null>(null);
   const tiles = useMemo(() => getTiles(center, zoom), [center, zoom]);
 
-  const panBy = (deltaX: number, deltaY: number) => {
-    const point = lngLatToPoint(center, zoom);
-    onCenterChange(pointToLngLat({ x: point.x + deltaX, y: point.y + deltaY }, zoom));
+  const getPinchDistance = () => {
+    const pointers = Array.from(activePointersRef.current.values());
+    if (pointers.length < 2) return 0;
+    const deltaX = pointers[0].x - pointers[1].x;
+    const deltaY = pointers[0].y - pointers[1].y;
+    return Math.round(Math.sqrt(deltaX * deltaX + deltaY * deltaY));
+  };
+
+  const clearPointer = (pointerId: number) => {
+    activePointersRef.current.delete(pointerId);
+    pinchRef.current = null;
+    dragRef.current = null;
   };
 
   return (
@@ -144,13 +158,44 @@ function InteractiveMap({
       className="relative mt-3 h-[168px] overflow-hidden rounded-[14px] bg-[#eef5ff] touch-none"
       onPointerDown={(event) => {
         event.currentTarget.setPointerCapture(event.pointerId);
-        dragRef.current = {
+        activePointersRef.current.set(event.pointerId, {
           x: event.clientX,
           y: event.clientY,
-          centerPoint: lngLatToPoint(center, zoom),
-        };
+        });
+
+        if (activePointersRef.current.size === 2) {
+          pinchRef.current = {
+            distance: getPinchDistance(),
+            zoom,
+          };
+          dragRef.current = null;
+          return;
+        }
+
+        if (activePointersRef.current.size === 1) {
+          dragRef.current = {
+            x: event.clientX,
+            y: event.clientY,
+            centerPoint: lngLatToPoint(center, zoom),
+          };
+        }
       }}
       onPointerMove={(event) => {
+        if (activePointersRef.current.has(event.pointerId)) {
+          activePointersRef.current.set(event.pointerId, {
+            x: event.clientX,
+            y: event.clientY,
+          });
+        }
+
+        if (activePointersRef.current.size >= 2 && pinchRef.current) {
+          const distance = getPinchDistance();
+          const zoomDelta = Math.round((distance - pinchRef.current.distance) / 80);
+          const nextZoom = Math.max(minZoom, Math.min(maxZoom, pinchRef.current.zoom + zoomDelta));
+          if (nextZoom !== zoom) onZoomChange(nextZoom);
+          return;
+        }
+
         if (!dragRef.current) return;
         const deltaX = event.clientX - dragRef.current.x;
         const deltaY = event.clientY - dragRef.current.y;
@@ -164,11 +209,11 @@ function InteractiveMap({
           ),
         );
       }}
-      onPointerUp={() => {
-        dragRef.current = null;
+      onPointerUp={(event) => {
+        clearPointer(event.pointerId);
       }}
-      onPointerCancel={() => {
-        dragRef.current = null;
+      onPointerCancel={(event) => {
+        clearPointer(event.pointerId);
       }}
       role="application"
       aria-label="주변 병원과 약국 지도"
@@ -193,56 +238,6 @@ function InteractiveMap({
         <p className="text-[9px] font-medium leading-3 text-[#6b7280]">
           드래그로 이동
         </p>
-      </div>
-      <div className="absolute bottom-3 right-3 grid grid-cols-3 overflow-hidden rounded-[10px] bg-white shadow-[0_4px_12px_rgba(17,24,39,0.12)]">
-        <button
-          type="button"
-          aria-label="지도 왼쪽 이동"
-          onClick={() => panBy(-80, 0)}
-          className="grid h-8 w-8 place-items-center text-[14px] font-bold text-[#4b5563]"
-        >
-          ←
-        </button>
-        <button
-          type="button"
-          aria-label="지도 확대"
-          onClick={() => onZoomChange(Math.min(maxZoom, zoom + 1))}
-          className="grid h-8 w-8 place-items-center border-l border-[#eef2f7] text-[16px] font-bold text-[#4b5563]"
-        >
-          +
-        </button>
-        <button
-          type="button"
-          aria-label="지도 오른쪽 이동"
-          onClick={() => panBy(80, 0)}
-          className="grid h-8 w-8 place-items-center border-l border-[#eef2f7] text-[14px] font-bold text-[#4b5563]"
-        >
-          →
-        </button>
-        <button
-          type="button"
-          aria-label="지도 위로 이동"
-          onClick={() => panBy(0, -80)}
-          className="grid h-8 w-8 place-items-center border-t border-[#eef2f7] text-[14px] font-bold text-[#4b5563]"
-        >
-          ↑
-        </button>
-        <button
-          type="button"
-          aria-label="지도 축소"
-          onClick={() => onZoomChange(Math.max(minZoom, zoom - 1))}
-          className="grid h-8 w-8 place-items-center border-l border-t border-[#eef2f7] text-[16px] font-bold text-[#4b5563]"
-        >
-          -
-        </button>
-        <button
-          type="button"
-          aria-label="지도 아래로 이동"
-          onClick={() => panBy(0, 80)}
-          className="grid h-8 w-8 place-items-center border-l border-t border-[#eef2f7] text-[14px] font-bold text-[#4b5563]"
-        >
-          ↓
-        </button>
       </div>
       <p className="absolute bottom-1 left-2 text-[8px] font-medium leading-[10px] text-[#4b5563]">
         © OpenStreetMap
