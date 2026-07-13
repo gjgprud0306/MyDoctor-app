@@ -166,28 +166,28 @@ export function PickupMethodScreen() {
       </header>
 
       <section className="relative h-[650px]">
-        <section className="absolute left-4 top-4 h-[118px] w-[361px]">
-          <div className="absolute left-3 top-[11px]">
-            <h2 className="whitespace-pre-line text-[23px] font-bold leading-[30px]">
+        <section className="absolute left-4 top-4 h-24 w-[361px]">
+          <div className="absolute left-3 top-2">
+            <h2 className="whitespace-pre-line text-[20px] font-bold leading-[26px]">
               {"어디서 약을\n"}
               <span className="text-[#2f70ff]">받을까요?</span>
             </h2>
-            <p className="mt-1 text-[12px] font-medium leading-[18px] text-[#6b7280]">
+            <p className="mt-1 text-[11px] font-medium leading-4 text-[#6b7280]">
               진료 후 약을 받을 방법을 선택해 주세요.
             </p>
           </div>
           <Image
             src="/assets/images/medicines/pickup-hero.png"
             alt=""
-            width={108}
-            height={108}
+            width={88}
+            height={88}
             priority
             unoptimized
-            className="absolute left-[241px] top-[5px] h-[108px] w-[108px] object-contain"
+            className="absolute left-[261px] top-1 h-[88px] w-[88px] object-contain"
           />
         </section>
 
-        <section className="absolute left-5 top-[156px] h-[208px] w-[353px]">
+        <section className="absolute left-5 top-[132px] h-[232px] w-[353px]">
           <div className="flex h-[22px] items-center justify-between">
             <h2 className="text-[16px] font-bold leading-[22px]">
               가까운 병원 위치
@@ -200,11 +200,11 @@ export function PickupMethodScreen() {
             center={pickupMapCenter}
             markers={pickupMapMarkers}
             width={353}
-            height={176}
+            height={200}
             zoom={16}
             ariaLabel="가까운 병원 위치 지도"
             badgeText="10분 이하"
-            badgeTop={58}
+            badgeTop={70}
             showControls={false}
             className="mt-[10px] rounded-[14px]"
           />
