@@ -54,7 +54,7 @@ function HospitalCard({
           {item.name}
         </h2>
         <div className="mt-[7px] flex items-center gap-[6px]">
-          <span className="rounded-[8px] bg-[#EEF5FF] px-[6px] text-[9px] font-semibold leading-[16px] text-[#5E82D9]">
+          <span className="rounded-[8px] bg-[#F4F5F7] px-[6px] text-[9px] font-semibold leading-[16px] text-[#6B7280]">
             가격 인증
           </span>
           <span className="text-[10px] font-medium leading-[16px] text-[#6b7280]">
@@ -68,7 +68,7 @@ function HospitalCard({
           {item.wait}
         </p>
       </div>
-      <div className="absolute right-4 top-[50px] rounded-[12px] bg-[#EAF3FF] px-[10px] text-[10px] font-semibold leading-6 text-[#2F6EFF]">
+      <div className="absolute right-4 top-[50px] rounded-[12px] bg-[#F3F7FF] px-[10px] text-[10px] font-semibold leading-6 text-[#5E82D9]">
         {item.saving}
       </div>
       <strong className="absolute bottom-[13px] right-4 text-[17px] font-bold leading-[22px] text-[#1268ff]">
