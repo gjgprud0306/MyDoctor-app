@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { IosStatusBar } from "@/components/IosStatusBar";
+import { NearbyPlaceFinder } from "@/components/NearbyPlaceFinder";
 import { trackEvent } from "@/lib/analytics";
 import { hospitalList } from "@/lib/hospital-list-data";
 
@@ -172,17 +173,7 @@ export function HospitalListScreen() {
       </header>
 
       <div className="h-[calc(100vh-106px)] overflow-y-auto pb-28 mobile-scrollbar">
-        <section className="relative mx-[22px] mt-[10px] h-[168px] w-[349px] overflow-hidden rounded-[14px]">
-          <Image
-            src="/assets/images/medicines/hospital-list-map.png"
-            alt="병원 위치 지도"
-            width={349}
-            height={168}
-            priority
-            unoptimized
-            className="h-[168px] w-[349px] rounded-[14px] object-cover"
-          />
-        </section>
+        <NearbyPlaceFinder />
 
         <section className="mx-[22px] mt-4 flex h-[38px] w-[349px] items-center gap-[10px]">
           <button
