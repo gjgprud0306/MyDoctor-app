@@ -31,6 +31,7 @@ type OpenStreetMapViewProps = {
   className?: string;
   ariaLabel: string;
   badgeText?: string;
+  badgeTop?: number;
   showControls?: boolean;
 };
 
@@ -113,6 +114,7 @@ export function OpenStreetMapView({
   className = "",
   ariaLabel,
   badgeText,
+  badgeTop = 28,
   showControls = true,
 }: OpenStreetMapViewProps) {
   const [mapCenter, setMapCenter] = useState(center);
@@ -201,7 +203,10 @@ export function OpenStreetMapView({
       })}
 
       {badgeText ? (
-        <div className="absolute left-[139px] top-7 rounded-[18px] bg-[#2f70ff] px-5 py-[9px] text-[12px] font-bold leading-[18px] text-white shadow-[0_4px_12px_rgba(47,112,255,0.28)]">
+        <div
+          className="absolute left-[139px] rounded-[18px] bg-[#2f70ff] px-5 py-[9px] text-[12px] font-bold leading-[18px] text-white shadow-[0_4px_12px_rgba(47,112,255,0.28)]"
+          style={{ top: badgeTop }}
+        >
           {badgeText}
         </div>
       ) : null}

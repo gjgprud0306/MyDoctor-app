@@ -187,7 +187,7 @@ export function PickupMethodScreen() {
           />
         </section>
 
-        <section className="absolute left-5 top-[156px] h-[168px] w-[353px]">
+        <section className="absolute left-5 top-[156px] h-[208px] w-[353px]">
           <div className="flex h-[22px] items-center justify-between">
             <h2 className="text-[16px] font-bold leading-[22px]">
               가까운 병원 위치
@@ -200,16 +200,17 @@ export function PickupMethodScreen() {
             center={pickupMapCenter}
             markers={pickupMapMarkers}
             width={353}
-            height={136}
+            height={176}
             zoom={16}
             ariaLabel="가까운 병원 위치 지도"
             badgeText="10분 이하"
+            badgeTop={42}
             showControls={false}
             className="mt-[10px] rounded-[14px]"
           />
         </section>
 
-        <section className="absolute left-5 top-[346px] h-[257px] w-[353px]">
+        <section className="absolute left-5 top-[386px] h-[257px] w-[353px]">
           <h2 className="text-[16px] font-bold leading-[22px]">
             수령 방법 선택
           </h2>
