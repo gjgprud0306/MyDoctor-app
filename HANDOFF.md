@@ -223,6 +223,7 @@
 - 2026-07-13 pickup-method-map-badge-position-build: `/pickup-method` 지도 크기/레이아웃은 유지하고 `10분 이하` 라벨 y 위치만 58px로 조정해 지도 중앙보다 약간 위에 자연스럽게 배치. `final/`에서 `npm run build` 성공
 - 2026-07-13 hospital-list-nearby-duplicate-cleanup-build: 병원 리스트의 지도 아래 테스트용 병원·약국 카드 목록과 위치 안내 문구를 제거. 지역 선택/병원·약국 필터/지도 기능은 유지하고 기존 추천순/가격순/대기 짧은순 영역이 바로 이어지도록 정리. `final/`에서 `npm run build` 성공
 - 2026-07-13 hospital-list-map-controls-hidden-build: 병원 리스트 지도 우측 기본 컨트롤(화살표, +, -) 제거. 지도 크기/레이아웃은 유지하고 드래그 이동 및 두 손가락 핀치 확대/축소 동작을 유지하도록 보강. `final/`에서 `npm run build` 성공
+- 2026-07-13 hospital-list-revisit-text-build: 병원 리스트 카드 데이터의 `제진` 오타를 `재진`으로 수정하고 상세 화면 파싱 로직도 동일 문구 기준으로 보정. `final/`에서 `npm run build` 성공
 - 2026-07-13 hospital-list-badge-blue-build: 병원 리스트 카드의 `가격 인증` 뱃지를 BG `#EEF5FF`/Text `#5E82D9`, 오른쪽 혜택 뱃지를 BG `#EAF3FF`/Text `#2F6EFF`로 색상만 변경. 레이아웃/크기/Padding/Radius/텍스트는 유지하고 `final/`에서 `npm run build` 성공
 - 2026-07-13 hospital-list-badge-hierarchy-build: 병원 리스트 카드 색상 위계 조정. 가격 Primary Blue는 유지하고, 오른쪽 재진률/혜택 뱃지는 BG `#F3F7FF`/Text `#5E82D9`, `가격 인증` 라벨은 BG `#F4F5F7`/Text `#6B7280`로 색상만 변경. `final/`에서 `npm run build` 성공
 

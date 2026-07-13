@@ -47,7 +47,7 @@ function getReviewText(distance: string) {
 }
 
 function getRevisitRate(saving: string) {
-  return saving.replace("제진", "").trim();
+  return saving.replace("재진", "").trim();
 }
 
 function getWaitText(wait: string) {
