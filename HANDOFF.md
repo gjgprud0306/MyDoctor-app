@@ -217,10 +217,11 @@
 - 2026-06-25 home-compact-care-text-left-build: 홈 compact 진료 카드 텍스트 시작점을 카드 왼쪽 12px 기준으로 당겨 작업 기준 이미지처럼 왼쪽 정렬되도록 보정. `final/`에서 `npm run build` 성공
 - 2026-07-13 github-issues-location-map-build: GitHub 이슈 #9/#10/#11 대응으로 `final/lib/location-place-data.ts` 테스트용 서울/천안/수원 병원·약국 mock 데이터와 `NearbyPlaceFinder` 위치/지역 선택/병원·약국 필터/지도형 마커/목록 UI 추가. `/hospital-list` 상단 정적 지도 이미지를 해당 컴포넌트로 교체하고 `final/`에서 `npm run build` 성공
 - 2026-07-13 github-issues-location-map-scope: 실제 카카오맵 SDK/API 키는 미제공 상태라 mock 지도 컴포넌트로 구현. 데이터 `source: "mock"` 및 UI `테스트용` 배지로 실제 기관 오해 방지 처리. 기존 사용자 변경 파일 `final/components/MyReservationScreen.tsx`, `final/components/ReservationCompleteScreen.tsx`는 수정하지 않음
+- 2026-07-13 github-issue-10-real-map-build: 이슈 #10 재검토 후 `NearbyPlaceFinder` 지도 영역을 정적/격자 이미지가 아닌 OpenStreetMap 타일 기반 실제 지도 렌더링으로 교체. Web Mercator 좌표 계산으로 선택 지역/현재 위치 중심, 드래그 이동, 확대/축소, 병원/약국 구분 마커 표시를 구현하고 `final/`에서 `npm run build` 성공
 
 ### 남은 작업
 
-- 이슈 #10의 실제 지도 SDK 전환은 카카오맵 등 API 키와 도메인 제한 설정 후 SDK 렌더링으로 교체 필요. 현재는 mock 데이터 기반 지도형 컴포넌트/마커 구조까지 완료
+- 카카오맵 등 특정 국내 지도 SDK로 전환하려면 클라이언트용 API 키와 Vercel 도메인 제한 설정이 필요. 현재 배포본은 별도 키 없이 OpenStreetMap 타일 기반 실제 지도 UI로 동작
 - GTM 관리자에서 GA4 Configuration 태그 및 Custom Event 트리거/GA4 Event 태그를 만들거나, 현재 direct GA4 전송(`NEXT_PUBLIC_ENABLE_GA4_DIRECT_EVENTS=true`) 기준으로 DebugView에서 이벤트 수신 확인
 - GTM Preview는 `https://my-doctor-app-mocha.vercel.app/?debug_mode=true&utm_source=test&utm_content=tester_01` 접속 후 `page_view`, `cta_click`, `search_click`, `tab_click` 등 dataLayer 이벤트 확인
 - 요청 시 변경사항 GitHub push 및 Vercel Production 배포 후 공개 URL HTTP 200 확인
