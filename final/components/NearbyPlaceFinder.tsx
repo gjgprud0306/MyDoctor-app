@@ -9,8 +9,6 @@ import {
   type TestRegionId,
 } from "@/lib/location-place-data";
 
-type PermissionState = "idle" | "granted" | "denied" | "failed";
-
 type MapCenter = {
   lat: number;
   lng: number;
@@ -34,11 +32,6 @@ const typeLabels: Record<TestPlaceType | "all", string> = {
   hospital: "병원",
   pharmacy: "약국",
 };
-
-function formatDistance(distanceMeters: number) {
-  if (distanceMeters < 1000) return `${distanceMeters}m`;
-  return `${Math.round(distanceMeters / 100) / 10}km`;
-}
 
 function lngLatToPoint(center: MapCenter, zoom: number) {
   const scale = tileSize * 2 ** zoom;
@@ -258,52 +251,9 @@ function InteractiveMap({
   );
 }
 
-function PlaceRow({ place }: { place: NearbyPlace }) {
-  const isHospital = place.type === "hospital";
-
-  return (
-    <li className="rounded-[12px] border border-[#e5eaf3] bg-white px-3 py-3">
-      <div className="flex items-start justify-between gap-3">
-        <div className="min-w-0">
-          <div className="flex items-center gap-2">
-            <span
-              className={`rounded-[8px] px-[6px] text-[9px] font-semibold leading-4 ${
-                isHospital ? "bg-[#eff6ff] text-[#2f70ff]" : "bg-[#e8fff2] text-[#00a866]"
-              }`}
-            >
-              {typeLabels[place.type]}
-            </span>
-            <span className="rounded-[8px] bg-[#f3f4f7] px-[6px] text-[9px] font-semibold leading-4 text-[#6b7280]">
-              테스트용
-            </span>
-          </div>
-          <h2 className="mt-2 truncate text-[13px] font-bold leading-[18px] text-[#111827]">
-            {place.name}
-          </h2>
-          <p className="mt-1 text-[10px] font-medium leading-[14px] text-[#6b7280]">
-            {place.department}
-          </p>
-          <p className="mt-1 truncate text-[10px] font-medium leading-[14px] text-[#6b7280]">
-            {place.address}
-          </p>
-        </div>
-        <div className="shrink-0 text-right">
-          <strong className="text-[12px] font-bold leading-4 text-[#1268ff]">
-            {formatDistance(place.distanceMeters)}
-          </strong>
-          <p className={`mt-2 text-[10px] font-semibold leading-[14px] ${place.openNow ? "text-[#00a866]" : "text-[#9ca3af]"}`}>
-            {place.openNow ? "운영 중" : "테스트 종료"}
-          </p>
-        </div>
-      </div>
-    </li>
-  );
-}
-
 export function NearbyPlaceFinder() {
   const [selectedRegion, setSelectedRegion] = useState<TestRegionId>("seoul");
   const [selectedType, setSelectedType] = useState<TestPlaceType | "all">("all");
-  const [permissionState, setPermissionState] = useState<PermissionState>("idle");
   const [zoom, setZoom] = useState(15);
 
   const selectedRegionInfo = testRegions.find((region) => region.id === selectedRegion) ?? testRegions[0];
@@ -322,21 +272,17 @@ export function NearbyPlaceFinder() {
 
   const handleLocationSearch = () => {
     if (!("geolocation" in navigator)) {
-      setPermissionState("failed");
       return;
     }
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        setPermissionState("granted");
         setMapCenter({
           lat: position.coords.latitude,
           lng: position.coords.longitude,
         });
       },
-      () => {
-        setPermissionState("denied");
-      },
+      () => {},
       { enableHighAccuracy: false, maximumAge: 60000, timeout: 5000 },
     );
   };
@@ -403,25 +349,6 @@ export function NearbyPlaceFinder() {
           onCenterChange={setMapCenter}
           onZoomChange={setZoom}
         />
-
-        <p className="mt-2 text-[10px] font-medium leading-[14px] text-[#6b7280]">
-          {permissionState === "granted" && "위치 권한이 허용되었습니다. 테스트 데이터는 선택 지역 기준으로 표시됩니다."}
-          {permissionState === "denied" && "위치 권한이 거부되어 선택 지역 기준으로 표시합니다."}
-          {permissionState === "failed" && "현재 위치를 사용할 수 없어 선택 지역 기준으로 표시합니다."}
-          {permissionState === "idle" && "검색 버튼을 눌러 위치 권한을 요청하거나 지역을 직접 선택하세요."}
-        </p>
-
-        {places.length > 0 ? (
-          <ul className="mt-3 flex flex-col gap-2">
-            {places.map((place) => (
-              <PlaceRow key={place.id} place={place} />
-            ))}
-          </ul>
-        ) : (
-          <div className="mt-3 rounded-[12px] bg-[#f9fafb] px-3 py-4 text-center text-[12px] font-semibold leading-4 text-[#6b7280]">
-            테스트 결과가 없습니다
-          </div>
-        )}
       </div>
     </section>
   );
