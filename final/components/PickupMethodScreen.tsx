@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { IosStatusBar } from "@/components/IosStatusBar";
+import { OpenStreetMapView, type MapTileMarker } from "@/components/OpenStreetMapView";
 import { trackEvent } from "@/lib/analytics";
 
 type MethodCardProps = {
@@ -16,6 +17,25 @@ type MethodCardProps = {
   ariaLabel: string;
   onSelect: () => void;
 };
+
+const pickupMapCenter = { lat: 37.4979, lng: 127.0276 };
+
+const pickupMapMarkers: MapTileMarker[] = [
+  {
+    id: "pickup-hospital-primary",
+    label: "H",
+    lat: 37.4972,
+    lng: 127.0295,
+    color: "blue",
+  },
+  {
+    id: "pickup-hospital-secondary",
+    label: "H",
+    lat: 37.4948,
+    lng: 127.0312,
+    color: "blue",
+  },
+];
 
 function MethodCard({
   title,
@@ -176,13 +196,16 @@ export function PickupMethodScreen() {
               내 주변 기준
             </span>
           </div>
-          <Image
-            src="/assets/images/medicines/pickup-map.png"
-            alt="가까운 병원 위치 지도"
+          <OpenStreetMapView
+            center={pickupMapCenter}
+            markers={pickupMapMarkers}
             width={353}
             height={136}
-            unoptimized
-            className="mt-[10px] h-[136px] w-[353px] rounded-[14px] object-cover"
+            zoom={16}
+            ariaLabel="가까운 병원 위치 지도"
+            badgeText="10분 이하"
+            showControls={false}
+            className="mt-[10px] rounded-[14px]"
           />
         </section>
 
