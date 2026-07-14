@@ -70,12 +70,12 @@ export function AppHeader() {
                 <Link
                   key={icon.label}
                   href="/search"
-                  aria-label="검색"
-                  data-gtm-id="home-header-search"
+                  aria-label="홈 검색창"
+                  data-gtm-id="home-search-bar"
                   onClick={() =>
                     trackEvent("search_click", {
                       screen_name: "home",
-                      entry_point: "home_header_search",
+                      entry_point: "home_search_bar",
                     })
                   }
                   className="absolute top-3 grid h-6 w-6 place-items-center"
