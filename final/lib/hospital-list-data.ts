@@ -130,7 +130,7 @@ export const hospitalList: HospitalListItem[] = [
     totalPrice: "298,000원",
     saving: "재진 96%",
     revisitRate: "96%",
-    image: "/assets/images/thumbnails/hospital-rank-01.png",
+    image: "/assets/images/hospitals/mock/mock-reception-01.png",
     address: "서울 강남구 논현로 508",
   },
   {
@@ -149,7 +149,7 @@ export const hospitalList: HospitalListItem[] = [
     totalPrice: "305,000원",
     saving: "재진 91%",
     revisitRate: "91%",
-    image: "/assets/images/thumbnails/hospital-rank-02.png",
+    image: "/assets/images/hospitals/mock/mock-reception-02.png",
     address: "서울 서초구 강남대로 321",
   },
   {
@@ -168,7 +168,7 @@ export const hospitalList: HospitalListItem[] = [
     totalPrice: "318,000원",
     saving: "재진 89%",
     revisitRate: "89%",
-    image: "/assets/images/thumbnails/hospital-rank-03.png",
+    image: "/assets/images/hospitals/mock/mock-reception-03.png",
     address: "서울 송파구 백제고분로 184",
   },
   {
@@ -187,7 +187,7 @@ export const hospitalList: HospitalListItem[] = [
     totalPrice: "307,000원",
     saving: "재진 93%",
     revisitRate: "93%",
-    image: "/assets/images/hospitals/hospital-list-01.png",
+    image: "/assets/images/hospitals/mock/mock-reception-04.png",
     address: "경기 성남시 분당구 판교역로 152",
   },
   {
@@ -206,7 +206,7 @@ export const hospitalList: HospitalListItem[] = [
     totalPrice: "292,000원",
     saving: "재진 94%",
     revisitRate: "94%",
-    image: "/assets/images/hospitals/hospital-list-02.png",
+    image: "/assets/images/hospitals/mock/mock-reception-05.png",
     address: "경기 성남시 분당구 정자일로 95",
   },
   {
@@ -225,7 +225,7 @@ export const hospitalList: HospitalListItem[] = [
     totalPrice: "330,000원",
     saving: "재진 87%",
     revisitRate: "87%",
-    image: "/assets/images/hospitals/hospital-list-03.png",
+    image: "/assets/images/hospitals/mock/mock-reception-06.png",
     address: "서울 송파구 송파대로 345",
   },
   {
@@ -244,7 +244,7 @@ export const hospitalList: HospitalListItem[] = [
     totalPrice: "312,000원",
     saving: "재진 88%",
     revisitRate: "88%",
-    image: "/assets/images/hospitals/hospital-list-04.png",
+    image: "/assets/images/hospitals/mock/mock-reception-07.png",
     address: "서울 구로구 디지털로 272",
   },
   {
@@ -263,7 +263,7 @@ export const hospitalList: HospitalListItem[] = [
     totalPrice: "299,000원",
     saving: "재진 97%",
     revisitRate: "97%",
-    image: "/assets/images/hospitals/hospital-list-05.png",
+    image: "/assets/images/hospitals/mock/mock-reception-08.png",
     address: "서울 마포구 양화로 45",
   },
   {
@@ -282,7 +282,7 @@ export const hospitalList: HospitalListItem[] = [
     totalPrice: "322,000원",
     saving: "재진 86%",
     revisitRate: "86%",
-    image: "/assets/images/thumbnails/hospital-rank-01.png",
+    image: "/assets/images/hospitals/mock/mock-reception-09.png",
     address: "서울 용산구 한강대로 95",
   },
 ];
