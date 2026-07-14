@@ -14,6 +14,10 @@ type MapCenter = {
   lng: number;
 };
 
+type NearbyPlaceFinderProps = {
+  onUserLocationResolved?: (center: MapCenter) => void;
+};
+
 type Tile = {
   key: string;
   src: string;
@@ -21,7 +25,7 @@ type Tile = {
   top: number;
 };
 
-const mapWidth = 393;
+const mapWidth = 390;
 const mapHeight = 331;
 const tileSize = 256;
 const minZoom = 13;
@@ -87,6 +91,21 @@ function projectMarker(place: NearbyPlace, center: MapCenter, zoom: number) {
     left: Math.round(mapWidth / 2 + placePoint.x - centerPoint.x),
     top: Math.round(mapHeight / 2 + placePoint.y - centerPoint.y),
   };
+}
+
+function getDistanceMeters(from: MapCenter, to: MapCenter) {
+  const earthRadius = 6371000;
+  const latDelta = ((to.lat - from.lat) * Math.PI) / 180;
+  const lngDelta = ((to.lng - from.lng) * Math.PI) / 180;
+  const fromLat = (from.lat * Math.PI) / 180;
+  const toLat = (to.lat * Math.PI) / 180;
+  const value =
+    Math.sin(latDelta / 2) * Math.sin(latDelta / 2) +
+    Math.cos(fromLat) *
+      Math.cos(toLat) *
+      Math.sin(lngDelta / 2) *
+      Math.sin(lngDelta / 2);
+  return Math.round(earthRadius * 2 * Math.atan2(Math.sqrt(value), Math.sqrt(1 - value)));
 }
 
 function MapMarker({
@@ -155,7 +174,7 @@ function InteractiveMap({
 
   return (
     <div
-      className="relative h-[331px] w-[393px] overflow-hidden bg-[#eef5ff] touch-none"
+      className="relative h-[331px] w-full overflow-hidden bg-[#eef5ff] touch-none"
       onPointerDown={(event) => {
         event.currentTarget.setPointerCapture(event.pointerId);
         activePointersRef.current.set(event.pointerId, {
@@ -238,44 +257,72 @@ function InteractiveMap({
   );
 }
 
-export function NearbyPlaceFinder() {
+export function NearbyPlaceFinder({ onUserLocationResolved }: NearbyPlaceFinderProps) {
   const [selectedRegion, setSelectedRegion] = useState<TestRegionId>("seoul");
   const [selectedType, setSelectedType] = useState<TestPlaceType | "all">("all");
   const [zoom, setZoom] = useState(15);
+  const [isLocating, setIsLocating] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const [userLocation, setUserLocation] = useState<MapCenter | null>(null);
 
   const selectedRegionInfo = testRegions.find((region) => region.id === selectedRegion) ?? testRegions[0];
   const [mapCenter, setMapCenter] = useState<MapCenter>(selectedRegionInfo.center);
 
   const places = useMemo(() => {
-    return nearbyPlaceMockData
+    const filteredPlaces = nearbyPlaceMockData
       .filter((place) => place.region === selectedRegion)
-      .filter((place) => selectedType === "all" || place.type === selectedType)
-      .sort((a, b) => a.distanceMeters - b.distanceMeters);
-  }, [selectedRegion, selectedType]);
+      .filter((place) => selectedType === "all" || place.type === selectedType);
+
+    if (!userLocation) {
+      return filteredPlaces.sort((a, b) => a.distanceMeters - b.distanceMeters);
+    }
+
+    return filteredPlaces.sort(
+      (a, b) =>
+        getDistanceMeters(userLocation, { lat: a.lat, lng: a.lng }) -
+        getDistanceMeters(userLocation, { lat: b.lat, lng: b.lng }),
+    );
+  }, [selectedRegion, selectedType, userLocation]);
 
   useEffect(() => {
-    setMapCenter(selectedRegionInfo.center);
-  }, [selectedRegionInfo.center]);
+    if (!userLocation) setMapCenter(selectedRegionInfo.center);
+  }, [selectedRegionInfo.center, userLocation]);
+
+  useEffect(() => {
+    if (!toastMessage) return;
+    const timer = window.setTimeout(() => setToastMessage(""), 2400);
+    return () => window.clearTimeout(timer);
+  }, [toastMessage]);
 
   const handleLocationSearch = () => {
     if (!("geolocation" in navigator)) {
+      setToastMessage("위치 권한을 허용하면 내 주변 병원을 볼 수 있습니다.");
       return;
     }
 
+    setIsLocating(true);
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        setMapCenter({
+        const nextCenter = {
           lat: position.coords.latitude,
           lng: position.coords.longitude,
-        });
+        };
+        setMapCenter(nextCenter);
+        setUserLocation(nextCenter);
+        onUserLocationResolved?.(nextCenter);
+        setZoom(16);
+        setIsLocating(false);
       },
-      () => {},
+      () => {
+        setIsLocating(false);
+        setToastMessage("위치 권한을 허용하면 내 주변 병원을 볼 수 있습니다.");
+      },
       { enableHighAccuracy: false, maximumAge: 60000, timeout: 5000 },
     );
   };
 
   return (
-    <section className="relative h-[355px] w-[393px]" aria-label="주변 병원 및 약국 찾기">
+    <section className="relative h-[355px] w-full" aria-label="주변 병원 및 약국 찾기">
       <InteractiveMap
         center={mapCenter}
         places={places}
@@ -306,26 +353,37 @@ export function NearbyPlaceFinder() {
       <button
         type="button"
         onClick={handleLocationSearch}
+        disabled={isLocating}
         aria-label="현재 위치"
-        className="absolute bottom-[20px] right-5 grid h-8 w-8 place-items-center rounded-[16px] bg-white text-[#111827] shadow-[0_3px_10px_rgba(17,24,39,0.18)]"
+        className="absolute bottom-11 right-5 grid h-8 w-8 place-items-center rounded-[16px] bg-white text-[#111827] shadow-[0_3px_10px_rgba(17,24,39,0.18)] disabled:text-[#9ca3af]"
       >
-        <svg aria-hidden="true" viewBox="0 0 24 24" className="h-5 w-5" fill="none">
-          <path
-            d="M12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Z"
-            stroke="currentColor"
-            strokeWidth="2"
-          />
-          <path
-            d="M12 3v3M12 18v3M3 12h3M18 12h3"
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeWidth="2"
-          />
-        </svg>
+        {isLocating ? (
+          <span className="h-4 w-4 animate-spin rounded-full border-2 border-[#dce3ee] border-t-[#2f70ff]" />
+        ) : (
+          <svg aria-hidden="true" viewBox="0 0 24 24" className="h-5 w-5" fill="none">
+            <path
+              d="M12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Z"
+              stroke="currentColor"
+              strokeWidth="2"
+            />
+            <path
+              d="M12 3v3M12 18v3M3 12h3M18 12h3"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeWidth="2"
+            />
+          </svg>
+        )}
       </button>
 
-      <div className="absolute bottom-0 left-0 h-6 w-[393px] rounded-t-[18px] bg-white">
-        <div className="absolute left-[173px] top-2 h-1 w-12 rounded-sm bg-[#6b7280]" />
+      {toastMessage ? (
+        <div className="absolute bottom-[86px] left-5 right-5 rounded-[10px] bg-[#111827] px-3 py-2 text-center text-[11px] font-medium leading-4 text-white shadow-[0_8px_18px_rgba(17,24,39,0.18)]">
+          {toastMessage}
+        </div>
+      ) : null}
+
+      <div className="absolute bottom-0 left-0 h-6 w-full rounded-t-[18px] bg-white">
+        <div className="absolute left-1/2 top-2 h-1 w-12 -translate-x-1/2 rounded-sm bg-[#6b7280]" />
       </div>
     </section>
   );

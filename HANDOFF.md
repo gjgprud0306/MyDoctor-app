@@ -228,6 +228,7 @@
 - 2026-07-13 figma-398-2188-hospital-list-build: Figma `398:2188` 병원 리스트 프레임 기준으로 `/hospital-list` 상단 지도 영역을 전체 폭 지도 + 오버레이 필터 칩 + 바텀시트 핸들 구조로 수정. 정렬 영역/첫 카드/하단 CTA 좌표를 localhost 393x876에서 확인하고 `final/`에서 `npm run build` 성공
 - 2026-07-13 hospital-list-badge-blue-build: 병원 리스트 카드의 `가격 인증` 뱃지를 BG `#EEF5FF`/Text `#5E82D9`, 오른쪽 혜택 뱃지를 BG `#EAF3FF`/Text `#2F6EFF`로 색상만 변경. 레이아웃/크기/Padding/Radius/텍스트는 유지하고 `final/`에서 `npm run build` 성공
 - 2026-07-13 hospital-list-badge-hierarchy-build: 병원 리스트 카드 색상 위계 조정. 가격 Primary Blue는 유지하고, 오른쪽 재진률/혜택 뱃지는 BG `#F3F7FF`/Text `#5E82D9`, `가격 인증` 라벨은 BG `#F4F5F7`/Text `#6B7280`로 색상만 변경. `final/`에서 `npm run build` 성공
+- 2026-07-14 hospital-list-bottom-sheet-location-build: 병원 리스트 지도 위 목록 영역을 드래그 가능한 바텀시트로 전환. 기본 상태는 지도 하단 높이를 유지하고 핸들 드래그/키보드 ArrowUp·ArrowDown으로 확장·복귀 가능하도록 구현. 지도 FAB는 바텀시트와 겹치지 않도록 24px 위로 이동하고, 현재 위치 권한 허용 시 지도 중심 이동 및 추천순 리스트 거리순 갱신을 연결. 권한 거부/미지원 시 토스트 표시. `/pickup-method`의 `내 주변 기준`도 실제 위치 요청 버튼으로 연결. `final/`에서 `npm run build` 성공, localhost 390x876 스크린샷으로 `/hospital-list`, `/pickup-method` 렌더링 확인
 
 ### 남은 작업
 

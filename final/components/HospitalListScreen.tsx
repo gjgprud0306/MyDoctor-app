@@ -2,13 +2,41 @@
 
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { IosStatusBar } from "@/components/IosStatusBar";
 import { NearbyPlaceFinder } from "@/components/NearbyPlaceFinder";
 import { trackEvent } from "@/lib/analytics";
 import { hospitalList } from "@/lib/hospital-list-data";
 
 type SortOption = "recommended" | "price" | "wait";
+
+type MapCenter = {
+  lat: number;
+  lng: number;
+};
+
+const hospitalCoordinates: Record<string, MapCenter> = {
+  "asan-immune-plus": { lat: 37.5002, lng: 127.0308 },
+  "suwon-the-cell": { lat: 37.2664, lng: 127.0311 },
+  "hangaon-oriental": { lat: 37.4919, lng: 127.0341 },
+  "gangnam-bareun": { lat: 37.4986, lng: 127.0267 },
+  "seoul-slim": { lat: 37.5135, lng: 127.1002 },
+};
+
+function getDistanceKm(from: MapCenter, to: MapCenter) {
+  const earthRadius = 6371;
+  const latDelta = ((to.lat - from.lat) * Math.PI) / 180;
+  const lngDelta = ((to.lng - from.lng) * Math.PI) / 180;
+  const fromLat = (from.lat * Math.PI) / 180;
+  const toLat = (to.lat * Math.PI) / 180;
+  const value =
+    Math.sin(latDelta / 2) * Math.sin(latDelta / 2) +
+    Math.cos(fromLat) *
+      Math.cos(toLat) *
+      Math.sin(lngDelta / 2) *
+      Math.sin(lngDelta / 2);
+  return Math.round(earthRadius * 2 * Math.atan2(Math.sqrt(value), Math.sqrt(1 - value)));
+}
 
 function FilterIcon() {
   return (
@@ -26,10 +54,12 @@ function FilterIcon() {
 function HospitalCard({
   item,
   rank,
+  distance,
   onSelect,
 }: {
   item: (typeof hospitalList)[number];
   rank: number;
+  distance: string;
   onSelect: () => void;
 }) {
   return (
@@ -39,7 +69,7 @@ function HospitalCard({
       data-gtm-rank={rank}
       aria-label={`${item.name} 병원 카드`}
       onClick={onSelect}
-      className="relative h-[116px] w-[349px] rounded-[12px] border border-[#d7e3ff] bg-white text-left shadow-[0_6px_18px_rgba(47,112,255,0.08)]"
+      className="relative h-[116px] w-[349px] shrink-0 rounded-[12px] border border-[#d7e3ff] bg-white text-left shadow-[0_6px_18px_rgba(47,112,255,0.08)]"
     >
       <Image
         src={item.image}
@@ -62,7 +92,7 @@ function HospitalCard({
           </span>
         </div>
         <p className="mt-[5px] text-[10px] font-medium leading-[14px] text-[#6b7280]">
-          {item.distance}
+          {distance}
         </p>
         <p className="mt-[6px] text-[10px] font-semibold leading-[14px] text-[#4b5563]">
           {item.wait}
@@ -85,6 +115,9 @@ export function HospitalListScreen() {
   const receiveMethod = searchParams.get("receive_method") ?? "hospital_only";
   const entryPoint = searchParams.get("entry_point") ?? "home_service_card";
   const [sortOption, setSortOption] = useState<SortOption>("recommended");
+  const [userLocation, setUserLocation] = useState<MapCenter | null>(null);
+  const [isSheetExpanded, setIsSheetExpanded] = useState(false);
+  const sheetDragStartYRef = useRef<number | null>(null);
 
   const sortedHospitals = useMemo(() => {
     if (sortOption === "price") {
@@ -99,8 +132,17 @@ export function HospitalListScreen() {
       );
     }
 
+    if (userLocation) {
+      return [...hospitalList].sort((a, b) => {
+        const aPosition = hospitalCoordinates[a.id];
+        const bPosition = hospitalCoordinates[b.id];
+        if (!aPosition || !bPosition) return 0;
+        return getDistanceKm(userLocation, aPosition) - getDistanceKm(userLocation, bPosition);
+      });
+    }
+
     return hospitalList;
-  }, [sortOption]);
+  }, [sortOption, userLocation]);
 
   const isPriceSort = sortOption === "price";
   const isWaitSort = sortOption === "wait";
@@ -116,6 +158,24 @@ export function HospitalListScreen() {
       screen_name: "cart",
       filter_type: filterType,
     });
+  };
+
+  const getCardDistance = (item: (typeof hospitalList)[number]) => {
+    const position = hospitalCoordinates[item.id];
+    if (!userLocation || !position) return item.distance;
+    return `${item.reviewCount} · ${getDistanceKm(userLocation, position)} km`;
+  };
+
+  const handleSheetPointerDown = (clientY: number) => {
+    sheetDragStartYRef.current = clientY;
+  };
+
+  const handleSheetPointerEnd = (clientY: number) => {
+    if (sheetDragStartYRef.current === null) return;
+    const deltaY = clientY - sheetDragStartYRef.current;
+    if (deltaY < -40) setIsSheetExpanded(true);
+    if (deltaY > 40) setIsSheetExpanded(false);
+    sheetDragStartYRef.current = null;
   };
 
   useEffect(() => {
@@ -172,90 +232,116 @@ export function HospitalListScreen() {
         </button>
       </header>
 
-      <div className="h-[calc(100vh-106px)] overflow-y-auto pb-28 mobile-scrollbar">
-        <NearbyPlaceFinder />
+      <div className="relative h-[calc(100vh-106px)] overflow-hidden">
+        <NearbyPlaceFinder onUserLocationResolved={setUserLocation} />
 
-        <section className="mx-[22px] mt-0 flex h-[54px] w-[349px] items-start gap-[10px] pt-[19px]">
-          <button
-            type="button"
-            data-gtm-id="hospital-filter-recommend"
-            aria-label="추천순 정렬"
-            onClick={() => {
-              setSortOption("recommended");
-              trackSortClick("recommend");
+        <section
+          className={`absolute bottom-0 left-0 right-0 rounded-t-[18px] bg-white shadow-[0_-8px_24px_rgba(17,24,39,0.10)] transition-[top] duration-200 ease-out ${
+            isSheetExpanded ? "top-28" : "top-[331px]"
+          }`}
+          aria-label="병원 리스트 바텀시트"
+        >
+          <div
+            className="flex h-8 touch-none items-center justify-center"
+            role="button"
+            tabIndex={0}
+            aria-label="병원 리스트 높이 조절"
+            onPointerDown={(event) => handleSheetPointerDown(event.clientY)}
+            onPointerUp={(event) => handleSheetPointerEnd(event.clientY)}
+            onPointerCancel={() => {
+              sheetDragStartYRef.current = null;
             }}
-            className={`h-8 w-[78px] rounded-[16px] text-[12px] font-semibold leading-4 ${
-              isRecommendedSort
-                ? "bg-[#2f70ff] text-white"
-                : "border border-[#dce3ee] bg-white text-[#111827]"
-            }`}
-          >
-            추천순
-          </button>
-          <button
-            type="button"
-            data-gtm-id="hospital-filter-price"
-            aria-label="가격순 정렬"
-            onClick={() => {
-              setSortOption("price");
-              trackSortClick("price");
+            onKeyDown={(event) => {
+              if (event.key === "ArrowUp") setIsSheetExpanded(true);
+              if (event.key === "ArrowDown") setIsSheetExpanded(false);
             }}
-            className={`h-8 w-[78px] rounded-[16px] text-[12px] font-semibold leading-4 ${
-              isPriceSort
-                ? "bg-[#2f70ff] text-white"
-                : "border border-[#dce3ee] bg-white text-[#111827]"
-            }`}
           >
-            가격순
-          </button>
-          <button
-            type="button"
-            data-gtm-id="hospital-filter-revisit"
-            aria-label="대기 짧은순 정렬"
-            onClick={() => {
-              setSortOption("wait");
-              trackSortClick("wait");
-            }}
-            className={`h-8 w-[90px] rounded-[16px] text-[12px] font-semibold leading-4 ${
-              isWaitSort
-                ? "bg-[#2f70ff] text-white"
-                : "border border-[#dce3ee] bg-white text-[#111827]"
-            }`}
-          >
-            대기 짧은순
-          </button>
-          <button
-            type="button"
-            aria-label="필터"
-            data-gtm-id="hospital-filter-more"
-            onClick={() => trackFilterClick("more")}
-            className="grid h-8 w-[33px] place-items-center rounded-[16px] border border-[#dce3ee] bg-white text-[#6b7280]"
-          >
-            <FilterIcon />
-          </button>
-        </section>
+            <span className="h-1 w-12 rounded-sm bg-[#c5ccd8]" />
+          </div>
 
-        <section className="mx-[22px] mt-4 flex w-[349px] flex-col gap-4">
-          {sortedHospitals.map((item, index) => (
-            <HospitalCard
-              key={item.id}
-              item={item}
-              rank={index + 1}
-              onSelect={() => {
-                trackEvent("hospital_card_click", {
-                  page_name: "hospital_list",
-                  hospital_name: item.name,
-                  rank: index + 1,
-                  price: item.price,
-                  distance: item.distanceText,
-                  revisit_rate: item.revisitRate,
-                });
-                router.push(
-                  `/hospital-detail?hospital=${item.id}&medicine=${medicineName}&receive_method=${receiveMethod}&entry_point=${entryPoint}`,
-                );
+          <section className="mx-[22px] flex h-[54px] w-[349px] items-start gap-[10px] pt-[11px]">
+            <button
+              type="button"
+              data-gtm-id="hospital-filter-recommend"
+              aria-label="추천순 정렬"
+              onClick={() => {
+                setSortOption("recommended");
+                trackSortClick("recommend");
               }}
-            />
-          ))}
+              className={`h-8 w-[78px] rounded-[16px] text-[12px] font-semibold leading-4 ${
+                isRecommendedSort
+                  ? "bg-[#2f70ff] text-white"
+                  : "border border-[#dce3ee] bg-white text-[#111827]"
+              }`}
+            >
+              추천순
+            </button>
+            <button
+              type="button"
+              data-gtm-id="hospital-filter-price"
+              aria-label="가격순 정렬"
+              onClick={() => {
+                setSortOption("price");
+                trackSortClick("price");
+              }}
+              className={`h-8 w-[78px] rounded-[16px] text-[12px] font-semibold leading-4 ${
+                isPriceSort
+                  ? "bg-[#2f70ff] text-white"
+                  : "border border-[#dce3ee] bg-white text-[#111827]"
+              }`}
+            >
+              가격순
+            </button>
+            <button
+              type="button"
+              data-gtm-id="hospital-filter-revisit"
+              aria-label="대기 짧은순 정렬"
+              onClick={() => {
+                setSortOption("wait");
+                trackSortClick("wait");
+              }}
+              className={`h-8 w-[90px] rounded-[16px] text-[12px] font-semibold leading-4 ${
+                isWaitSort
+                  ? "bg-[#2f70ff] text-white"
+                  : "border border-[#dce3ee] bg-white text-[#111827]"
+              }`}
+            >
+              대기 짧은순
+            </button>
+            <button
+              type="button"
+              aria-label="필터"
+              data-gtm-id="hospital-filter-more"
+              onClick={() => trackFilterClick("more")}
+              className="grid h-8 w-[33px] place-items-center rounded-[16px] border border-[#dce3ee] bg-white text-[#6b7280]"
+            >
+              <FilterIcon />
+            </button>
+          </section>
+
+          <section className="mx-[22px] mt-3 flex h-[calc(100%-95px)] w-[349px] flex-col gap-4 overflow-y-auto pb-28 mobile-scrollbar">
+            {sortedHospitals.map((item, index) => (
+              <HospitalCard
+                key={item.id}
+                item={item}
+                rank={index + 1}
+                distance={getCardDistance(item)}
+                onSelect={() => {
+                  trackEvent("hospital_card_click", {
+                    page_name: "hospital_list",
+                    hospital_name: item.name,
+                    rank: index + 1,
+                    price: item.price,
+                    distance: getCardDistance(item),
+                    revisit_rate: item.revisitRate,
+                  });
+                  router.push(
+                    `/hospital-detail?hospital=${item.id}&medicine=${medicineName}&receive_method=${receiveMethod}&entry_point=${entryPoint}`,
+                  );
+                }}
+              />
+            ))}
+          </section>
         </section>
       </div>
 

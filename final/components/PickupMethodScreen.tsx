@@ -37,6 +37,9 @@ const pickupMapMarkers: MapTileMarker[] = [
   },
 ];
 
+const locationPermissionMessage =
+  "위치 권한을 허용하면 내 주변 병원을 볼 수 있습니다.";
+
 function MethodCard({
   title,
   description,
@@ -122,12 +125,44 @@ export function PickupMethodScreen() {
   const [selectedMethod, setSelectedMethod] = useState<"hospital" | "pharmacy">(
     "hospital",
   );
+  const [mapCenter, setMapCenter] = useState(pickupMapCenter);
+  const [isLocating, setIsLocating] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
   const receiveMethod =
     selectedMethod === "hospital" ? "hospital_only" : "hospital_pharmacy";
 
   useEffect(() => {
     trackEvent("receive_method_view", { page_name: "receive_method" });
   }, []);
+
+  useEffect(() => {
+    if (!toastMessage) return;
+    const timer = window.setTimeout(() => setToastMessage(""), 2400);
+    return () => window.clearTimeout(timer);
+  }, [toastMessage]);
+
+  const handleNearbyClick = () => {
+    if (!("geolocation" in navigator)) {
+      setToastMessage(locationPermissionMessage);
+      return;
+    }
+
+    setIsLocating(true);
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setMapCenter({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        });
+        setIsLocating(false);
+      },
+      () => {
+        setIsLocating(false);
+        setToastMessage(locationPermissionMessage);
+      },
+      { enableHighAccuracy: false, maximumAge: 60000, timeout: 5000 },
+    );
+  };
 
   return (
     <main className="mx-auto min-h-screen w-full max-w-[393px] bg-white text-[#111827]">
@@ -166,7 +201,7 @@ export function PickupMethodScreen() {
       </header>
 
       <section className="relative h-[650px]">
-        <section className="absolute left-4 top-4 h-24 w-[361px]">
+        <section className="absolute left-4 top-4 h-24 w-[calc(100%-32px)] max-w-[361px]">
           <div className="absolute left-3 top-2">
             <h2 className="whitespace-pre-line text-[20px] font-bold leading-[26px]">
               {"어디서 약을\n"}
@@ -192,12 +227,17 @@ export function PickupMethodScreen() {
             <h2 className="text-[16px] font-bold leading-[22px]">
               가까운 병원 위치
             </h2>
-            <span className="text-[12px] font-medium leading-[18px] text-[#6b7280]">
-              내 주변 기준
-            </span>
+            <button
+              type="button"
+              onClick={handleNearbyClick}
+              disabled={isLocating}
+              className="text-[12px] font-medium leading-[18px] text-[#6b7280] disabled:text-[#9ca3af]"
+            >
+              {isLocating ? "확인 중" : "내 주변 기준"}
+            </button>
           </div>
           <OpenStreetMapView
-            center={pickupMapCenter}
+            center={mapCenter}
             markers={pickupMapMarkers}
             width={353}
             height={200}
@@ -208,6 +248,11 @@ export function PickupMethodScreen() {
             showControls={false}
             className="mt-[10px] rounded-[14px]"
           />
+          {toastMessage ? (
+            <div className="absolute bottom-3 left-3 right-3 rounded-[10px] bg-[#111827] px-3 py-2 text-center text-[11px] font-medium leading-4 text-white shadow-[0_8px_18px_rgba(17,24,39,0.18)]">
+              {toastMessage}
+            </div>
+          ) : null}
         </section>
 
         <section className="absolute left-5 top-[386px] h-[257px] w-[353px]">
@@ -246,7 +291,7 @@ export function PickupMethodScreen() {
         </section>
       </section>
 
-      <div className="fixed bottom-0 left-0 right-0 mx-auto h-24 w-full max-w-[393px] bg-white pt-3 shadow-[0_-8px_24px_rgba(17,24,39,0.08)]">
+      <div className="fixed bottom-0 left-0 right-0 mx-auto h-24 w-full max-w-[393px] bg-white px-5 pt-3 shadow-[0_-8px_24px_rgba(17,24,39,0.08)]">
         <button
           type="button"
           data-gtm-id="receive-method-submit"
@@ -261,7 +306,7 @@ export function PickupMethodScreen() {
               `/hospital-list?medicine=${medicineName}&receive_method=${receiveMethod}&entry_point=${entryPoint}`,
             );
           }}
-          className="mx-5 h-14 w-[353px] rounded-[8px] bg-[#2f70ff] text-[16px] font-bold leading-6 text-white"
+          className="h-14 w-full rounded-[8px] bg-[#2f70ff] text-[16px] font-bold leading-6 text-white"
         >
           선택 완료
         </button>
