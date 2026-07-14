@@ -21,6 +21,15 @@ const hospitalCoordinates: Record<string, MapCenter> = {
   "hangaon-oriental": { lat: 37.4919, lng: 127.0341 },
   "gangnam-bareun": { lat: 37.4986, lng: 127.0267 },
   "seoul-slim": { lat: 37.5135, lng: 127.1002 },
+  "yeoksam-diet-clinic": { lat: 37.5033, lng: 127.0368 },
+  "seocho-fit-clinic": { lat: 37.4936, lng: 127.0259 },
+  "jamsil-wellness": { lat: 37.5082, lng: 127.0874 },
+  "pangyo-slim-care": { lat: 37.3947, lng: 127.1112 },
+  "bundang-one-clinic": { lat: 37.3671, lng: 127.1084 },
+  "songpa-diet-medical": { lat: 37.5007, lng: 127.1125 },
+  "guro-fit-family": { lat: 37.4851, lng: 126.8958 },
+  "mapo-light-clinic": { lat: 37.5564, lng: 126.9236 },
+  "yongsan-balance": { lat: 37.5299, lng: 126.9647 },
 };
 
 function getDistanceKm(from: MapCenter, to: MapCenter) {
