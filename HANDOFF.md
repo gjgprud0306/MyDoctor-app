@@ -233,6 +233,7 @@
 - 2026-07-14 hospital-list-mock-thumbnails-build: 추가 mock 병원 9개의 썸네일만 `final/public/assets/images/hospitals/mock/mock-reception-01.png`~`09.png`로 교체. 기존 병원 5개 이미지는 유지하고 mock 병원끼리 이미지 중복 없음 확인. 새 이미지는 240x276 PNG로 카드 80x92 렌더링 기준 3x 해상도 충족. `final/`에서 `npm run build` 성공, localhost `/hospital-list?medicine=mounjaro` 200 및 새 정적 이미지 9개 200 확인
 - 2026-07-14 hospital-list-user-thumbnails-build: 사용자 첨부 병원 데스크/리셉션 JPEG 중 9장을 추가 mock 병원 썸네일 `mock-reception-01.png`~`09.png`에 중복 없이 랜덤 적용. 기존 병원 이미지 경로와 카드/데이터/레이아웃은 변경하지 않고 기존 `object-cover` 유지. 출력 이미지는 240x276 PNG로 cover crop 처리. `final/`에서 `npm run build` 성공, localhost `/hospital-list?medicine=mounjaro` 200 및 새 정적 이미지 9개 200 확인
 - 2026-07-14 my-reservation-home-button-build: 예약 내역 화면 하단에 fixed Primary 버튼 `홈으로 이동` 추가. 버튼 클릭 시 `/`로 이동하고 `cta_click` 이벤트 전송. 기존 예약 카드 영역은 유지. `final/`에서 `npm run build` 성공, localhost `/my-reservation?...` 200 및 390x876 스크린샷으로 버튼 표시 확인
+- 2026-07-14 home-header-notifications-build: 홈 상단 검색 아이콘을 기존 `/search` 라우트로 유지 연결하고 홈 검색창도 동일 검색 페이지 재사용 확인. 알림 벨은 `/notifications`로 연결하고 읽지 않은 알림이 있을 때만 빨간 dot 표시. 알림 화면 진입 시 `localStorage` 읽음 처리 후 홈 dot 제거 상태로 갱신되도록 구현. mock 알림 4개(예약 확정/예약 안내/최저가 병원/이벤트) 추가. `final/`에서 `npm run build` 성공, localhost `/`, `/search`, `/notifications` 200 및 390x876 알림 화면 스크린샷 확인
 
 ### 남은 작업
 
