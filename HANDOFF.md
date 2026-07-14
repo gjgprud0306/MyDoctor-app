@@ -231,6 +231,7 @@
 - 2026-07-14 hospital-list-bottom-sheet-location-build: 병원 리스트 지도 위 목록 영역을 드래그 가능한 바텀시트로 전환. 기본 상태는 지도 하단 높이를 유지하고 핸들 드래그/키보드 ArrowUp·ArrowDown으로 확장·복귀 가능하도록 구현. 지도 FAB는 바텀시트와 겹치지 않도록 24px 위로 이동하고, 현재 위치 권한 허용 시 지도 중심 이동 및 추천순 리스트 거리순 갱신을 연결. 권한 거부/미지원 시 토스트 표시. `/pickup-method`의 `내 주변 기준`도 실제 위치 요청 버튼으로 연결. `final/`에서 `npm run build` 성공, localhost 390x876 스크린샷으로 `/hospital-list`, `/pickup-method` 렌더링 확인
 - 2026-07-14 hospital-list-mock-data-14-build: 병원 리스트 mock 데이터를 5개에서 14개로 확장. 병원명/거리/리뷰 수/대기시간/재진률/가격을 서로 다르게 구성하고 현재 위치 기준 거리순 계산용 좌표 매핑도 추가. 사용 가능한 로컬 병원 이미지 에셋 8개만 사용했으며 새 이미지 생성 없음. `final/`에서 `npm run build` 성공, localhost `/hospital-list?medicine=mounjaro` 200 및 390x876 스크린샷 렌더링 확인. 데이터 기준 가격순/대기 짧은순 정렬 결과 확인
 - 2026-07-14 hospital-list-mock-thumbnails-build: 추가 mock 병원 9개의 썸네일만 `final/public/assets/images/hospitals/mock/mock-reception-01.png`~`09.png`로 교체. 기존 병원 5개 이미지는 유지하고 mock 병원끼리 이미지 중복 없음 확인. 새 이미지는 240x276 PNG로 카드 80x92 렌더링 기준 3x 해상도 충족. `final/`에서 `npm run build` 성공, localhost `/hospital-list?medicine=mounjaro` 200 및 새 정적 이미지 9개 200 확인
+- 2026-07-14 hospital-list-user-thumbnails-build: 사용자 첨부 병원 데스크/리셉션 JPEG 중 9장을 추가 mock 병원 썸네일 `mock-reception-01.png`~`09.png`에 중복 없이 랜덤 적용. 기존 병원 이미지 경로와 카드/데이터/레이아웃은 변경하지 않고 기존 `object-cover` 유지. 출력 이미지는 240x276 PNG로 cover crop 처리. `final/`에서 `npm run build` 성공, localhost `/hospital-list?medicine=mounjaro` 200 및 새 정적 이미지 9개 200 확인
 
 ### 남은 작업
 
