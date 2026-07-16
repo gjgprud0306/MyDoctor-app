@@ -243,8 +243,6 @@ export function PickupMethodScreen() {
             height={200}
             zoom={16}
             ariaLabel="가까운 병원 위치 지도"
-            badgeText="10분 이하"
-            badgeTop={70}
             showControls={false}
             className="mt-[10px] rounded-[14px]"
           />
