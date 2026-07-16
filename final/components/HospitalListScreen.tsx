@@ -221,28 +221,16 @@ export function HospitalListScreen() {
             />
           </svg>
         </button>
-        <h1 className="absolute left-[134px] top-4 text-[16px] font-semibold leading-6">
+        <h1 className="absolute left-1/2 top-4 -translate-x-1/2 whitespace-nowrap text-[16px] font-semibold leading-6">
           다이어트 주사 예약
         </h1>
-        <button
-          type="button"
-          aria-label="찜하기"
-          className="absolute right-5 top-2 grid h-10 w-10 place-items-center"
-        >
-          <svg aria-hidden="true" viewBox="0 0 24 24" className="h-6 w-6" fill="none">
-            <path
-              d="M20.8 8.6c0 5.2-8.8 10.4-8.8 10.4S3.2 13.8 3.2 8.6A4.6 4.6 0 0 1 12 6.7a4.6 4.6 0 0 1 8.8 1.9Z"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-            />
-          </svg>
-        </button>
       </header>
 
       <div className="relative h-[calc(100vh-106px)] overflow-hidden">
-        <NearbyPlaceFinder onUserLocationResolved={setUserLocation} />
+        <NearbyPlaceFinder
+          onUserLocationResolved={setUserLocation}
+          isListExpanded={isSheetExpanded}
+        />
 
         <section
           className={`absolute bottom-0 left-0 right-0 rounded-t-[18px] bg-white shadow-[0_-8px_24px_rgba(17,24,39,0.10)] transition-[top] duration-200 ease-out ${

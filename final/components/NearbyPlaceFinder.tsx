@@ -16,6 +16,7 @@ type MapCenter = {
 
 type NearbyPlaceFinderProps = {
   onUserLocationResolved?: (center: MapCenter) => void;
+  isListExpanded?: boolean;
 };
 
 type Tile = {
@@ -257,7 +258,10 @@ function InteractiveMap({
   );
 }
 
-export function NearbyPlaceFinder({ onUserLocationResolved }: NearbyPlaceFinderProps) {
+export function NearbyPlaceFinder({
+  onUserLocationResolved,
+  isListExpanded = false,
+}: NearbyPlaceFinderProps) {
   const [selectedRegion, setSelectedRegion] = useState<TestRegionId>("seoul");
   const [selectedType, setSelectedType] = useState<TestPlaceType | "all">("all");
   const [zoom, setZoom] = useState(15);
@@ -355,7 +359,9 @@ export function NearbyPlaceFinder({ onUserLocationResolved }: NearbyPlaceFinderP
         onClick={handleLocationSearch}
         disabled={isLocating}
         aria-label="현재 위치"
-        className="absolute bottom-11 right-5 grid h-8 w-8 place-items-center rounded-[16px] bg-white text-[#111827] shadow-[0_3px_10px_rgba(17,24,39,0.18)] disabled:text-[#9ca3af]"
+        className={`absolute right-5 grid h-8 w-8 place-items-center rounded-[16px] bg-white text-[#111827] shadow-[0_3px_10px_rgba(17,24,39,0.18)] transition-[top] duration-200 ease-out disabled:text-[#9ca3af] ${
+          isListExpanded ? "top-14" : "top-[279px]"
+        }`}
       >
         {isLocating ? (
           <span className="h-4 w-4 animate-spin rounded-full border-2 border-[#dce3ee] border-t-[#2f70ff]" />
