@@ -239,6 +239,7 @@
 - 2026-07-16 hospital-list-sheet-location-button-build: 병원 리스트 바텀시트 확장/복귀 상태에 맞춰 현재 위치 버튼이 시트 상단과 20~24px 간격을 유지하며 함께 이동하도록 연결. 상단 헤더 우측 찜 아이콘 제거 후 타이틀 중앙 정렬 유지. `final/`에서 `npm run build` 성공
 - 2026-07-21 search-result-card-tags-build: 검색 결과 하단 `역삼다이어트의원`, `송파다이어트메디컬` 카드에 진료 분야/약품 정보 행을 추가해 상단 검색 결과 카드 3개와 동일한 `병원명 → 진료 분야/약품 → 리뷰·거리·평균 대기시간` 구조로 통일. 기존 병원명/가격/리뷰/거리/대기시간 데이터는 변경하지 않음. `final/`에서 `npm run build` 성공
 - 2026-07-21 high-return-revisit-badge-blue-build: `재진율 높은 병원` 카드의 재진률 뱃지 색상을 기존 병원 리스트와 동일한 연한 블루 톤(`#F3F7FF`/`#5E82D9`)으로 변경. 크기/padding/radius/텍스트는 유지. `final/`에서 `npm run build` 성공
+- 2026-07-21 high-return-thumbnail-rank-badge-remove-build: 메인 배너 진입 화면(`/high-return-hospital-list`)의 병원 썸네일 좌측 상단 순위 숫자 배지 1/2/3 제거. 다른 UI는 변경하지 않고 `final/`에서 `npm run build` 성공
 
 ### 남은 작업
 

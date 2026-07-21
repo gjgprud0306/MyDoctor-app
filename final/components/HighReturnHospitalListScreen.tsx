@@ -57,9 +57,6 @@ function HighReturnHospitalCard({
             unoptimized
             className="h-[92px] w-20 object-cover"
           />
-          <span className="absolute left-2 top-2 grid h-6 w-6 place-items-center rounded-[12px] bg-[#2f70ff] text-[11px] font-bold leading-4 text-white">
-            {rank}
-          </span>
         </div>
         <div className="min-w-0 flex-1">
           <div className="flex items-start justify-between gap-2">
