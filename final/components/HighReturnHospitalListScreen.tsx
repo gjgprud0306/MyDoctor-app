@@ -71,7 +71,7 @@ function HighReturnHospitalCard({
                 {item.department}
               </p>
             </div>
-            <span className="shrink-0 rounded-[12px] bg-[#dcfce7] px-[10px] text-[12px] font-bold leading-6 text-[#00a866]">
+            <span className="shrink-0 rounded-[12px] bg-[#F3F7FF] px-[10px] text-[12px] font-bold leading-6 text-[#5E82D9]">
               재진율 {item.revisitRate}
             </span>
           </div>
