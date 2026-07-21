@@ -237,6 +237,7 @@
 - 2026-07-14 home-header-search-route-build: 홈 상단 돋보기와 홈 검색창 모두 동일한 `/search` 라우트 및 `home_search_bar` 진입값을 사용하도록 정리. 새 검색 화면 생성 없이 기존 `ScreenSearch` 재사용. 홈 UI/레이아웃 변경 없음. `final/`에서 `npm run build` 성공, localhost `/`, `/search` 200 및 홈 390x876 스크린샷 확인
 - 2026-07-16 pickup-method-map-label-remove-build: `/pickup-method` 지도 위 고정 라벨 `10분 이하` 호출을 제거하고 `OpenStreetMapView`의 미사용 badge overlay props/rendering도 정리. 지도 이동/확대·축소 로직과 수령 방법 화면 레이아웃은 변경하지 않음. `final/`에서 `npm run build` 성공
 - 2026-07-16 hospital-list-sheet-location-button-build: 병원 리스트 바텀시트 확장/복귀 상태에 맞춰 현재 위치 버튼이 시트 상단과 20~24px 간격을 유지하며 함께 이동하도록 연결. 상단 헤더 우측 찜 아이콘 제거 후 타이틀 중앙 정렬 유지. `final/`에서 `npm run build` 성공
+- 2026-07-21 search-result-card-tags-build: 검색 결과 하단 `역삼다이어트의원`, `송파다이어트메디컬` 카드에 진료 분야/약품 정보 행을 추가해 상단 검색 결과 카드 3개와 동일한 `병원명 → 진료 분야/약품 → 리뷰·거리·평균 대기시간` 구조로 통일. 기존 병원명/가격/리뷰/거리/대기시간 데이터는 변경하지 않음. `final/`에서 `npm run build` 성공
 
 ### 남은 작업
 

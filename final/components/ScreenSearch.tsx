@@ -26,6 +26,8 @@ const hospitalTags: Record<string, string[]> = {
   "hangaon-oriental": ["비염", "감기", "여성질환", "피부"],
   "gangnam-bareun": ["탈모", "피부", "남성질환", "여드름"],
   "seoul-slim": ["다이어트", "마운자로", "위고비", "여성질환"],
+  "yeoksam-diet-clinic": ["다이어트", "위고비", "마운자로"],
+  "songpa-diet-medical": ["다이어트", "삭센다", "위고비"],
 };
 
 const keywordAnalyticsNames: Record<string, string> = {
