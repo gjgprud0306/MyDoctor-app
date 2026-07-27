@@ -27,7 +27,7 @@ export const medicines: MedicineItem[] = [
     imageLeft: 12,
     imageTop: 9,
     contentLeft: 96,
-    cardHeight: 88,
+    cardHeight: 93,
     buttonLeft: 292,
     buttonTop: 24,
     doses: ["2.5mg", "5mg", "7.5mg", "10mg"],

@@ -18,51 +18,47 @@ export function MedicineCard({ item, top, onSelect }: MedicineCardProps) {
       onClick={onSelect}
       data-gtm-id={`medicine-option-${medicineName}`}
       aria-label={`${item.name} 선택`}
-      className="absolute left-5 w-[353px] rounded-[14px] border border-[#d7dde8] bg-white text-left"
+      className="absolute left-5 flex w-[353px] items-center gap-[10px] rounded-[14px] border border-[#d7dde8] bg-white px-3 py-[5px] text-left"
       style={{ top, height: item.cardHeight }}
     >
-      <Image
-        src={item.image}
-        alt=""
-        width={item.imageSize}
-        height={item.imageSize}
-        unoptimized
-        className="absolute object-contain"
-        style={{
-          left: item.imageLeft,
-          top: item.imageTop,
-          width: item.imageSize,
-          height: item.imageSize,
-        }}
-      />
-      <div
-        className="absolute top-[5px] h-[81px] w-[190px]"
-        style={{ left: item.contentLeft }}
-      >
-        <div className="absolute left-0 top-0 flex h-[43px] items-start">
-          <h2 className="h-[43px] max-w-[135px] whitespace-nowrap px-[10px] pt-[10px] text-[17px] font-semibold leading-[23px] text-[#111827]">
+      <div className="grid h-[68px] w-[68px] shrink-0 place-items-center overflow-hidden bg-white">
+        <Image
+          src={item.image}
+          alt=""
+          width={item.imageSize}
+          height={item.imageSize}
+          unoptimized
+          className="object-contain"
+          style={{
+            width: item.imageSize,
+            height: item.imageSize,
+          }}
+        />
+      </div>
+      <div className="flex h-[76px] w-[202px] shrink-0 flex-col justify-center">
+        <div className="flex min-h-6 items-center gap-2">
+          <h2 className="w-[114px] shrink-0 truncate text-[17px] font-semibold leading-[22px] text-[#111827]">
             {item.name}
           </h2>
-          <span className="mt-[13px] h-[17px] whitespace-nowrap rounded-[8px] border border-[#c8d0dc] px-[6px] text-[10px] font-medium leading-[15px] text-[#6b7280]">
+          <span className="inline-flex h-[18px] min-w-[68px] shrink-0 items-center justify-center rounded-[9px] border border-[#c8d0dc] px-[6px] text-[10px] font-medium leading-[13px] text-[#6b7280]">
             {item.ingredient}
           </span>
         </div>
-        <p className="absolute left-[10px] top-[37px] whitespace-nowrap text-[10px] font-medium leading-[13px] text-[#4b5563]">
+        <p className="mt-1 w-full truncate text-[10px] font-medium leading-[13px] text-[#4b5563]">
           {item.effect}
         </p>
-        <div className="absolute left-[10px] top-[52px] flex h-[23px] items-start gap-2">
-          <span className="pt-[5px] text-[10px] font-medium leading-[13px] text-[#6b7280]">
+        <div className="mt-2 flex h-[22px] items-center gap-2">
+          <span className="shrink-0 text-[10px] font-medium leading-[13px] text-[#6b7280]">
             처방 진료비
           </span>
-          <strong className="text-[18px] font-bold leading-[23px] text-[#1c6cff]">
+          <strong className="shrink-0 text-[18px] font-bold leading-[22px] text-[#1c6cff]">
             {item.price}
           </strong>
         </div>
       </div>
       <span
         aria-hidden="true"
-        className="absolute grid h-10 w-10 place-items-center rounded-full border border-[#e1e6ef] bg-white"
-        style={{ left: item.buttonLeft, top: item.buttonTop }}
+        className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-[#e1e6ef] bg-white"
       >
         <svg
           aria-hidden="true"
