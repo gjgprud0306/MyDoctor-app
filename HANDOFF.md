@@ -241,6 +241,7 @@
 - 2026-07-21 high-return-revisit-badge-blue-build: `재진율 높은 병원` 카드의 재진률 뱃지 색상을 기존 병원 리스트와 동일한 연한 블루 톤(`#F3F7FF`/`#5E82D9`)으로 변경. 크기/padding/radius/텍스트는 유지. `final/`에서 `npm run build` 성공
 - 2026-07-21 high-return-thumbnail-rank-badge-remove-build: 메인 배너 진입 화면(`/high-return-hospital-list`)의 병원 썸네일 좌측 상단 순위 숫자 배지 1/2/3 제거. 다른 UI는 변경하지 않고 `final/`에서 `npm run build` 성공
 - 2026-07-27 medicine-list-card-autolayout-build: Figma `439:2197` 기준으로 `Screen_MedicineList` 하단 약 카드 부모 컴포넌트(`MedicineCard`) 내부를 absolute 좌표 중심에서 flex 오토레이아웃 구조로 정리. 약명/성분칩/효과/처방 진료비/가격 행 정렬을 통일하고 첫 카드 높이도 93px로 맞춤. 의료 용량 소수점 데이터는 실제 용량값이라 변경하지 않음. `final/`에서 `npm run build` 성공
+- 2026-07-27 medicine-card-ingredient-chip-build: Figma 수정 기준으로 약 이름과 성분 칩 사이 간격을 12px로 맞추고, 약 이름 고정폭을 제거해 성분 칩이 약 이름 바로 옆에 붙도록 `MedicineCard`를 수정. `알약 · 캡슐` 칩 텍스트 중앙 정렬과 성분명 표기(`세미글루티드`, `리라글루티드`)를 반영. `final/`에서 `npm run build` 성공
 
 ### 남은 작업
 

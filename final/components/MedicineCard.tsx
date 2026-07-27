@@ -36,11 +36,11 @@ export function MedicineCard({ item, top, onSelect }: MedicineCardProps) {
         />
       </div>
       <div className="flex h-[76px] w-[202px] shrink-0 flex-col justify-center">
-        <div className="flex min-h-6 items-center gap-2">
-          <h2 className="w-[114px] shrink-0 truncate text-[17px] font-semibold leading-[22px] text-[#111827]">
+        <div className="flex min-h-6 items-center gap-3">
+          <h2 className="shrink-0 whitespace-nowrap text-[17px] font-semibold leading-[22px] text-[#111827]">
             {item.name}
           </h2>
-          <span className="inline-flex h-[18px] min-w-[68px] shrink-0 items-center justify-center rounded-[9px] border border-[#c8d0dc] px-[6px] text-[10px] font-medium leading-[13px] text-[#6b7280]">
+          <span className="inline-flex h-[18px] shrink-0 items-center justify-center rounded-[9px] border border-[#c8d0dc] px-2 py-0 text-center text-[10px] font-medium leading-[14px] text-[#6b7280] whitespace-nowrap">
             {item.ingredient}
           </span>
         </div>
@@ -51,7 +51,7 @@ export function MedicineCard({ item, top, onSelect }: MedicineCardProps) {
           <span className="shrink-0 text-[10px] font-medium leading-[13px] text-[#6b7280]">
             처방 진료비
           </span>
-          <strong className="shrink-0 text-[18px] font-bold leading-[22px] text-[#1c6cff]">
+          <strong className="shrink-0 text-[17px] font-bold leading-[22px] text-[#1c6cff]">
             {item.price}
           </strong>
         </div>

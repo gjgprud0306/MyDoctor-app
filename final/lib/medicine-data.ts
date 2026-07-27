@@ -35,7 +35,7 @@ export const medicines: MedicineItem[] = [
   {
     id: "wegovy",
     name: "위OO",
-    ingredient: "세마글루타이드",
+    ingredient: "세미글루티드",
     effect: "포만감 증가 · 식욕 감소 · 체중 감량 효과",
     price: "39,000원~",
     image: "/assets/images/medicines/wegovy.png",
@@ -51,7 +51,7 @@ export const medicines: MedicineItem[] = [
   {
     id: "saxenda",
     name: "삭OO",
-    ingredient: "리라글루타이드",
+    ingredient: "리라글루티드",
     effect: "식욕 억제 · 체중 감량 · 혈당 조절 효과",
     price: "20,000원~",
     image: "/assets/images/medicines/saxenda.png",
