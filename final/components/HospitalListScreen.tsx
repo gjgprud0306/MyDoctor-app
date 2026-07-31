@@ -107,15 +107,17 @@ function HospitalCard({
           {item.wait}
         </p>
       </div>
-      <div className="absolute right-4 top-[50px] rounded-[12px] bg-[#F3F7FF] px-[10px] text-[10px] font-semibold leading-6 text-[#5E82D9]">
-        {item.saving}
+      <div className="absolute right-4 top-[45px] flex w-[112px] flex-col items-end">
+        <div className="rounded-[12px] bg-[#F3F7FF] px-[10px] text-[10px] font-semibold leading-6 text-[#5E82D9]">
+          {item.saving}
+        </div>
+        <span className="mt-1 text-[9px] font-semibold leading-[12px] text-[#6b7280]">
+          총 예상 비용
+        </span>
+        <strong className="mt-1 text-[17px] font-bold leading-[22px] text-[#1268ff]">
+          {item.price}
+        </strong>
       </div>
-      <span className="absolute bottom-[37px] right-4 text-[9px] font-semibold leading-[12px] text-[#6b7280]">
-        총 예상 비용
-      </span>
-      <strong className="absolute bottom-[13px] right-4 text-[17px] font-bold leading-[22px] text-[#1268ff]">
-        {item.price}
-      </strong>
     </button>
   );
 }

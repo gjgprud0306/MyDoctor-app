@@ -243,6 +243,7 @@
 - 2026-07-27 medicine-list-card-autolayout-build: Figma `439:2197` 기준으로 `Screen_MedicineList` 하단 약 카드 부모 컴포넌트(`MedicineCard`) 내부를 absolute 좌표 중심에서 flex 오토레이아웃 구조로 정리. 약명/성분칩/효과/처방 진료비/가격 행 정렬을 통일하고 첫 카드 높이도 93px로 맞춤. 의료 용량 소수점 데이터는 실제 용량값이라 변경하지 않음. `final/`에서 `npm run build` 성공
 - 2026-07-27 medicine-card-ingredient-chip-build: Figma 수정 기준으로 약 이름과 성분 칩 사이 간격을 12px로 맞추고, 약 이름 고정폭을 제거해 성분 칩이 약 이름 바로 옆에 붙도록 `MedicineCard`를 수정. `알약 · 캡슐` 칩 텍스트 중앙 정렬과 성분명 표기(`세미글루티드`, `리라글루티드`)를 반영. `final/`에서 `npm run build` 성공
 - 2026-07-31 hospital-list-total-cost-notice-build: Figma `462:1995` 병원 리스트 화면 기준으로 필터칩 아래 총 예상 비용 안내 영역을 추가. `가격순` 필터명을 `총 예상 비용순`으로 변경하고 병원 카드 가격 영역에 `총 예상 비용` 라벨을 추가. 카드별 `진료비+약제비 포함` 반복 문구는 추가하지 않음. `final/`에서 `npm run build` 성공
+- 2026-07-31 hospital-list-total-cost-overlap-build: 병원 카드 우측 재진률 뱃지와 `총 예상 비용` 라벨이 겹치던 문제를 수정. 우측 영역을 단일 세로 column으로 묶어 재진률 뱃지, 라벨, 금액이 순서대로 배치되도록 재정렬. 카드 크기와 리스트 구조는 유지하고 `final/`에서 `npm run build` 성공
 
 ### 남은 작업
 
