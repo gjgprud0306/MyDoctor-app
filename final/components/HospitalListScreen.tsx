@@ -110,6 +110,9 @@ function HospitalCard({
       <div className="absolute right-4 top-[50px] rounded-[12px] bg-[#F3F7FF] px-[10px] text-[10px] font-semibold leading-6 text-[#5E82D9]">
         {item.saving}
       </div>
+      <span className="absolute bottom-[37px] right-4 text-[9px] font-semibold leading-[12px] text-[#6b7280]">
+        총 예상 비용
+      </span>
       <strong className="absolute bottom-[13px] right-4 text-[17px] font-bold leading-[22px] text-[#1268ff]">
         {item.price}
       </strong>
@@ -265,7 +268,7 @@ export function HospitalListScreen() {
                 setSortOption("recommended");
                 trackSortClick("recommend");
               }}
-              className={`h-8 w-[78px] rounded-[16px] text-[12px] font-semibold leading-4 ${
+              className={`h-8 w-16 rounded-[16px] text-[12px] font-semibold leading-4 ${
                 isRecommendedSort
                   ? "bg-[#2f70ff] text-white"
                   : "border border-[#dce3ee] bg-white text-[#111827]"
@@ -276,18 +279,18 @@ export function HospitalListScreen() {
             <button
               type="button"
               data-gtm-id="hospital-filter-price"
-              aria-label="가격순 정렬"
+              aria-label="총 예상 비용순 정렬"
               onClick={() => {
                 setSortOption("price");
                 trackSortClick("price");
               }}
-              className={`h-8 w-[78px] rounded-[16px] text-[12px] font-semibold leading-4 ${
+              className={`h-8 w-28 rounded-[16px] text-[12px] font-semibold leading-4 ${
                 isPriceSort
                   ? "bg-[#2f70ff] text-white"
                   : "border border-[#dce3ee] bg-white text-[#111827]"
               }`}
             >
-              가격순
+              총 예상 비용순
             </button>
             <button
               type="button"
@@ -316,7 +319,19 @@ export function HospitalListScreen() {
             </button>
           </section>
 
-          <section className="mx-[22px] mt-3 flex h-[calc(100%-95px)] w-[349px] flex-col gap-4 overflow-y-auto pb-28 mobile-scrollbar">
+          <div className="mx-[22px] mt-2 flex min-h-[42px] w-[349px] items-center gap-2 rounded-[12px] bg-[#F3F7FF] px-3 py-2">
+            <span
+              aria-hidden="true"
+              className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#DCEBFF] text-[12px] font-bold leading-5 text-[#2F70FF]"
+            >
+              i
+            </span>
+            <p className="text-[11px] font-medium leading-[16px] text-[#4b5563]">
+              모든 금액은 진료비와 약제비를 합산한 총 예상 비용입니다.
+            </p>
+          </div>
+
+          <section className="mx-[22px] mt-3 flex h-[calc(100%-149px)] w-[349px] flex-col gap-4 overflow-y-auto pb-28 mobile-scrollbar">
             {sortedHospitals.map((item, index) => (
               <HospitalCard
                 key={item.id}
