@@ -88,11 +88,11 @@ function HospitalCard({
         unoptimized
         className="absolute left-3 top-3 h-[92px] w-20 rounded-[8px] object-cover"
       />
-      <div className="absolute left-[104px] top-4">
-        <h2 className="text-[14px] font-bold leading-[18px] text-[#111827]">
+      <div className="absolute left-[104px] top-3 w-[132px]">
+        <h2 className="truncate text-[14px] font-bold leading-[18px] text-[#111827]">
           {item.name}
         </h2>
-        <div className="mt-[7px] flex items-center gap-[6px]">
+        <div className="mt-2 flex items-center gap-[6px]">
           <span className="rounded-[8px] bg-[#F4F5F7] px-[6px] text-[9px] font-semibold leading-[16px] text-[#6B7280]">
             가격 인증
           </span>
@@ -100,21 +100,21 @@ function HospitalCard({
             {item.hours}
           </span>
         </div>
-        <p className="mt-[5px] text-[10px] font-medium leading-[14px] text-[#6b7280]">
+        <p className="mt-1 text-[10px] font-medium leading-[14px] text-[#6b7280]">
           ⭐ {item.rating} · {item.reviewCount}
         </p>
-        <p className="mt-[6px] text-[10px] font-semibold leading-[14px] text-[#4b5563]">
+        <p className="mt-1 text-[10px] font-normal leading-[14px] text-[#4b5563]">
           {item.wait} · {distanceText}
         </p>
       </div>
-      <div className="absolute right-4 top-[45px] flex w-[112px] flex-col items-end">
-        <div className="rounded-[12px] bg-[#F3F7FF] px-[10px] text-[10px] font-semibold leading-6 text-[#5E82D9]">
-          {item.saving}
-        </div>
-        <span className="mt-1 text-[9px] font-semibold leading-[12px] text-[#6b7280]">
+      <div className="absolute right-4 top-3 rounded-[12px] bg-[#F3F7FF] px-[10px] text-[10px] font-semibold leading-6 text-[#5E82D9]">
+        {item.saving}
+      </div>
+      <div className="absolute bottom-3 right-4 flex w-[112px] flex-col items-end gap-1">
+        <span className="text-[9px] font-medium leading-3 text-[#6b7280]">
           총 예상 비용
         </span>
-        <strong className="mt-1 text-[17px] font-bold leading-[22px] text-[#1268ff]">
+        <strong className="text-[17px] font-bold leading-[22px] text-[#1268ff]">
           {item.price}
         </strong>
       </div>

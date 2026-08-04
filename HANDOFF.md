@@ -244,6 +244,7 @@
 - 2026-07-27 medicine-card-ingredient-chip-build: Figma 수정 기준으로 약 이름과 성분 칩 사이 간격을 12px로 맞추고, 약 이름 고정폭을 제거해 성분 칩이 약 이름 바로 옆에 붙도록 `MedicineCard`를 수정. `알약 · 캡슐` 칩 텍스트 중앙 정렬과 성분명 표기(`세미글루티드`, `리라글루티드`)를 반영. `final/`에서 `npm run build` 성공
 - 2026-07-31 hospital-list-total-cost-notice-build: Figma `462:1995` 병원 리스트 화면 기준으로 필터칩 아래 총 예상 비용 안내 영역을 추가. `가격순` 필터명을 `총 예상 비용순`으로 변경하고 병원 카드 가격 영역에 `총 예상 비용` 라벨을 추가. 카드별 `진료비+약제비 포함` 반복 문구는 추가하지 않음. `final/`에서 `npm run build` 성공
 - 2026-07-31 hospital-list-total-cost-overlap-build: 병원 카드 우측 재진률 뱃지와 `총 예상 비용` 라벨이 겹치던 문제를 수정. 우측 영역을 단일 세로 column으로 묶어 재진률 뱃지, 라벨, 금액이 순서대로 배치되도록 재정렬. 카드 크기와 리스트 구조는 유지하고 `final/`에서 `npm run build` 성공
+- 2026-08-04 hospital-list-card-readability-build: 병원 리스트 카드 내부 정렬을 보정. 평점 행은 `⭐ 평점 · 리뷰` Medium, 평균 대기/거리 행은 Regular로 계층화하고, 병원명/재진희망 뱃지 상단 기준선 및 `총 예상 비용` 라벨/금액 우측 정렬을 맞춤. 카드 크기/색상/기능은 유지. `final/`에서 `npm run build` 성공, localhost `/hospital-list` HTTP 200 확인
 
 ### 남은 작업
 
