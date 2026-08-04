@@ -8,7 +8,7 @@ import { NearbyPlaceFinder } from "@/components/NearbyPlaceFinder";
 import { trackEvent } from "@/lib/analytics";
 import { hospitalList } from "@/lib/hospital-list-data";
 
-type SortOption = "recommended" | "price" | "wait";
+type SortOption = "recommended" | "price" | "revisit";
 
 type MapCenter = {
   lat: number;
@@ -140,9 +140,11 @@ export function HospitalListScreen() {
       );
     }
 
-    if (sortOption === "wait") {
+    if (sortOption === "revisit") {
       return [...hospitalList].sort(
-        (a, b) => Number(a.wait.replace(/\D/g, "")) - Number(b.wait.replace(/\D/g, "")),
+        (a, b) =>
+          Number(b.revisitRate.replace(/\D/g, "")) -
+          Number(a.revisitRate.replace(/\D/g, "")),
       );
     }
 
@@ -159,9 +161,9 @@ export function HospitalListScreen() {
   }, [sortOption, userLocation]);
 
   const isPriceSort = sortOption === "price";
-  const isWaitSort = sortOption === "wait";
+  const isRevisitSort = sortOption === "revisit";
   const isRecommendedSort = sortOption === "recommended";
-  const trackSortClick = (sortType: "recommend" | "price" | "wait") => {
+  const trackSortClick = (sortType: "recommend" | "price" | "revisit") => {
     trackEvent("sort_click", {
       screen_name: "cart",
       sort_type: sortType,
@@ -261,7 +263,7 @@ export function HospitalListScreen() {
             <span className="h-1 w-12 rounded-sm bg-[#c5ccd8]" />
           </div>
 
-          <section className="mx-[22px] flex h-[54px] w-[349px] items-start gap-[10px] pt-[11px]">
+          <section className="mx-[22px] flex h-[54px] w-[349px] items-start gap-2 pt-[11px]">
             <button
               type="button"
               data-gtm-id="hospital-filter-recommend"
@@ -270,7 +272,7 @@ export function HospitalListScreen() {
                 setSortOption("recommended");
                 trackSortClick("recommend");
               }}
-              className={`h-8 w-16 rounded-[16px] text-[12px] font-semibold leading-4 ${
+              className={`h-8 w-[66px] rounded-[16px] text-[12px] font-semibold leading-4 ${
                 isRecommendedSort
                   ? "bg-[#2f70ff] text-white"
                   : "border border-[#dce3ee] bg-white text-[#111827]"
@@ -281,34 +283,34 @@ export function HospitalListScreen() {
             <button
               type="button"
               data-gtm-id="hospital-filter-price"
-              aria-label="총 예상 비용순 정렬"
+              aria-label="비용순 정렬"
               onClick={() => {
                 setSortOption("price");
                 trackSortClick("price");
               }}
-              className={`h-8 w-28 rounded-[16px] text-[12px] font-semibold leading-4 ${
+              className={`h-8 w-[66px] rounded-[16px] text-[12px] font-semibold leading-4 ${
                 isPriceSort
                   ? "bg-[#2f70ff] text-white"
                   : "border border-[#dce3ee] bg-white text-[#111827]"
               }`}
             >
-              총 예상 비용순
+              비용순
             </button>
             <button
               type="button"
               data-gtm-id="hospital-filter-revisit"
-              aria-label="대기 짧은순 정렬"
+              aria-label="재진희망순 정렬"
               onClick={() => {
-                setSortOption("wait");
-                trackSortClick("wait");
+                setSortOption("revisit");
+                trackSortClick("revisit");
               }}
               className={`h-8 w-[90px] rounded-[16px] text-[12px] font-semibold leading-4 ${
-                isWaitSort
+                isRevisitSort
                   ? "bg-[#2f70ff] text-white"
                   : "border border-[#dce3ee] bg-white text-[#111827]"
               }`}
             >
-              대기 짧은순
+              재진희망순
             </button>
             <button
               type="button"
@@ -320,6 +322,20 @@ export function HospitalListScreen() {
               <FilterIcon />
             </button>
           </section>
+
+          {isRecommendedSort ? (
+            <div className="mx-[22px] mt-2 flex min-h-[42px] w-[349px] items-center gap-2 rounded-[12px] bg-[#F3F7FF] px-3 py-2">
+              <span
+                aria-hidden="true"
+                className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#DCEBFF] text-[12px] font-bold leading-5 text-[#2F70FF]"
+              >
+                i
+              </span>
+              <p className="text-[11px] font-medium leading-[16px] text-[#4b5563]">
+                총 예상 비용과 재진희망률을 함께 고려한 추천 결과입니다.
+              </p>
+            </div>
+          ) : null}
 
           <div className="mx-[22px] mt-2 flex min-h-[42px] w-[349px] items-center gap-2 rounded-[12px] bg-[#F3F7FF] px-3 py-2">
             <span
@@ -333,7 +349,11 @@ export function HospitalListScreen() {
             </p>
           </div>
 
-          <section className="mx-[22px] mt-3 flex h-[calc(100%-149px)] w-[349px] flex-col gap-4 overflow-y-auto pb-28 mobile-scrollbar">
+          <section
+            className={`mx-[22px] mt-3 flex w-[349px] flex-col gap-4 overflow-y-auto pb-28 mobile-scrollbar ${
+              isRecommendedSort ? "h-[calc(100%-199px)]" : "h-[calc(100%-149px)]"
+            }`}
+          >
             {sortedHospitals.map((item, index) => (
               <HospitalCard
                 key={item.id}
