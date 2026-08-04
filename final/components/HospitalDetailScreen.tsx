@@ -55,11 +55,7 @@ function getWaitText(wait: string) {
 }
 
 function getMetricText(hospital: (typeof hospitalList)[number] | (typeof noExtraFeeHospitals)[number]) {
-  if ("rating" in hospital) {
-    return `평점 ${hospital.rating} (${hospital.reviewCount})`;
-  }
-
-  return `${hospital.revisitRate || getRevisitRate(hospital.saving)} (${hospital.reviewCount || getReviewText(hospital.distance)})`;
+  return `평점 ${hospital.rating} (${hospital.reviewCount})`;
 }
 
 export function HospitalDetailScreen() {

@@ -63,12 +63,12 @@ function FilterIcon() {
 function HospitalCard({
   item,
   rank,
-  distance,
+  distanceText,
   onSelect,
 }: {
   item: (typeof hospitalList)[number];
   rank: number;
-  distance: string;
+  distanceText: string;
   onSelect: () => void;
 }) {
   return (
@@ -101,10 +101,10 @@ function HospitalCard({
           </span>
         </div>
         <p className="mt-[5px] text-[10px] font-medium leading-[14px] text-[#6b7280]">
-          {distance}
+          ⭐ {item.rating} · {item.reviewCount}
         </p>
         <p className="mt-[6px] text-[10px] font-semibold leading-[14px] text-[#4b5563]">
-          {item.wait}
+          {item.wait} · {distanceText}
         </p>
       </div>
       <div className="absolute right-4 top-[45px] flex w-[112px] flex-col items-end">
@@ -174,10 +174,10 @@ export function HospitalListScreen() {
     });
   };
 
-  const getCardDistance = (item: (typeof hospitalList)[number]) => {
+  const getCardDistanceText = (item: (typeof hospitalList)[number]) => {
     const position = hospitalCoordinates[item.id];
-    if (!userLocation || !position) return item.distance;
-    return `${item.reviewCount} · ${getDistanceKm(userLocation, position)} km`;
+    if (!userLocation || !position) return item.distanceText;
+    return `${getDistanceKm(userLocation, position)}km`;
   };
 
   const handleSheetPointerDown = (clientY: number) => {
@@ -339,14 +339,14 @@ export function HospitalListScreen() {
                 key={item.id}
                 item={item}
                 rank={index + 1}
-                distance={getCardDistance(item)}
+                distanceText={getCardDistanceText(item)}
                 onSelect={() => {
                   trackEvent("hospital_card_click", {
                     page_name: "hospital_list",
                     hospital_name: item.name,
                     rank: index + 1,
                     price: item.price,
-                    distance: getCardDistance(item),
+                    distance: getCardDistanceText(item),
                     revisit_rate: item.revisitRate,
                   });
                   router.push(
