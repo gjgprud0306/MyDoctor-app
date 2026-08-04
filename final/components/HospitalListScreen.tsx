@@ -60,15 +60,26 @@ function FilterIcon() {
   );
 }
 
+function getRecommendationReason(item: (typeof hospitalList)[number]) {
+  const revisitRate = Number(item.revisitRate.replace(/\D/g, ""));
+  const price = Number(item.price.replace(/\D/g, ""));
+
+  if (revisitRate >= 94) return "재진희망률 높음";
+  if (price <= 300000) return "비용 대비 추천";
+  return "균형 좋은 선택";
+}
+
 function HospitalCard({
   item,
   rank,
   distanceText,
+  showRecommendationReason,
   onSelect,
 }: {
   item: (typeof hospitalList)[number];
   rank: number;
   distanceText: string;
+  showRecommendationReason: boolean;
   onSelect: () => void;
 }) {
   return (
@@ -88,29 +99,39 @@ function HospitalCard({
         unoptimized
         className="absolute left-3 top-3 h-[92px] w-20 rounded-[8px] object-cover"
       />
-      <div className="absolute left-[104px] top-3 w-[132px]">
+      <div className="absolute left-[104px] top-2 w-[132px]">
+        {showRecommendationReason ? (
+          <p className="mb-1 h-3 truncate text-[9px] font-medium leading-3 text-[#2f70ff]">
+            추천 이유 · {getRecommendationReason(item)}
+          </p>
+        ) : null}
         <h2 className="truncate text-[14px] font-bold leading-[18px] text-[#111827]">
           {item.name}
         </h2>
-        <div className="mt-2 flex items-center gap-[6px]">
-          <span className="rounded-[8px] bg-[#F4F5F7] px-[6px] text-[9px] font-semibold leading-[16px] text-[#6B7280]">
+        <div className="mt-1 flex items-center gap-[6px]">
+          <span className="rounded-[8px] bg-[#F6F7FA] px-[5px] text-[9px] font-medium leading-[16px] text-[#8A94A6]">
             가격 인증
           </span>
           <span className="text-[10px] font-medium leading-[16px] text-[#6b7280]">
             {item.hours}
           </span>
         </div>
-        <p className="mt-1 text-[10px] font-medium leading-[14px] text-[#6b7280]">
+        <p className="mt-1 inline-flex h-[18px] max-w-[132px] items-center rounded-[9px] bg-[#FFF7E6] px-[6px] text-[10px] font-semibold leading-[14px] text-[#374151]">
           ⭐ {item.rating} · {item.reviewCount}
         </p>
-        <p className="mt-1 text-[10px] font-normal leading-[14px] text-[#4b5563]">
-          {item.wait} · {distanceText}
+        <p className="mt-1 flex h-4 items-center gap-1 text-[10px] font-normal leading-[14px] text-[#4b5563]">
+          <span aria-hidden="true" className="text-[10px] leading-[14px] text-[#8A94A6]">
+            ⏱
+          </span>
+          <span>
+            {item.wait} · {distanceText}
+          </span>
         </p>
       </div>
       <div className="absolute right-4 top-3 rounded-[12px] bg-[#F3F7FF] px-[10px] text-[10px] font-semibold leading-6 text-[#5E82D9]">
         {item.saving}
       </div>
-      <div className="absolute bottom-3 right-4 flex w-[112px] flex-col items-end gap-1">
+      <div className="absolute bottom-3 right-4 flex w-[112px] flex-col items-end gap-[2px]">
         <span className="text-[9px] font-medium leading-3 text-[#6b7280]">
           총 예상 비용
         </span>
@@ -360,6 +381,7 @@ export function HospitalListScreen() {
                 item={item}
                 rank={index + 1}
                 distanceText={getCardDistanceText(item)}
+                showRecommendationReason={isRecommendedSort}
                 onSelect={() => {
                   trackEvent("hospital_card_click", {
                     page_name: "hospital_list",
