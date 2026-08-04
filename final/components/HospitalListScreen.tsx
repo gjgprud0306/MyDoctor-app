@@ -60,26 +60,15 @@ function FilterIcon() {
   );
 }
 
-function getRecommendationReason(item: (typeof hospitalList)[number]) {
-  const revisitRate = Number(item.revisitRate.replace(/\D/g, ""));
-  const price = Number(item.price.replace(/\D/g, ""));
-
-  if (revisitRate >= 94) return "재진희망률 높음";
-  if (price <= 300000) return "비용 대비 추천";
-  return "균형 좋은 선택";
-}
-
 function HospitalCard({
   item,
   rank,
   distanceText,
-  showRecommendationReason,
   onSelect,
 }: {
   item: (typeof hospitalList)[number];
   rank: number;
   distanceText: string;
-  showRecommendationReason: boolean;
   onSelect: () => void;
 }) {
   return (
@@ -99,12 +88,7 @@ function HospitalCard({
         unoptimized
         className="absolute left-3 top-3 h-[92px] w-20 rounded-[8px] object-cover"
       />
-      <div className="absolute left-[104px] top-2 w-[132px]">
-        {showRecommendationReason ? (
-          <p className="mb-1 h-3 truncate text-[9px] font-medium leading-3 text-[#2f70ff]">
-            추천 이유 · {getRecommendationReason(item)}
-          </p>
-        ) : null}
+      <div className="absolute left-[104px] top-3 w-[132px]">
         <h2 className="truncate text-[14px] font-bold leading-[18px] text-[#111827]">
           {item.name}
         </h2>
@@ -116,7 +100,7 @@ function HospitalCard({
             {item.hours}
           </span>
         </div>
-        <p className="mt-1 inline-flex h-[18px] max-w-[132px] items-center rounded-[9px] bg-[#FFF7E6] px-[6px] text-[10px] font-semibold leading-[14px] text-[#374151]">
+        <p className="mt-1 text-[10px] font-medium leading-[14px] text-[#374151]">
           ⭐ {item.rating} · {item.reviewCount}
         </p>
         <p className="mt-1 flex h-4 items-center gap-1 text-[10px] font-normal leading-[14px] text-[#4b5563]">
@@ -381,7 +365,6 @@ export function HospitalListScreen() {
                 item={item}
                 rank={index + 1}
                 distanceText={getCardDistanceText(item)}
-                showRecommendationReason={isRecommendedSort}
                 onSelect={() => {
                   trackEvent("hospital_card_click", {
                     page_name: "hospital_list",
