@@ -342,22 +342,22 @@ export function HospitalListScreen() {
             </div>
           ) : null}
 
-          <div className="mx-[22px] mt-2 flex min-h-[42px] w-[349px] items-center gap-2 rounded-[12px] bg-[#F3F7FF] px-3 py-2">
-            <span
-              aria-hidden="true"
-              className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#DCEBFF] text-[12px] font-bold leading-5 text-[#2F70FF]"
-            >
-              i
-            </span>
-            <p className="text-[11px] font-medium leading-[16px] text-[#4b5563]">
-              모든 금액은 진료비와 약제비를 합산한 총 예상 비용입니다.
-            </p>
-          </div>
+          {!isRecommendedSort ? (
+            <div className="mx-[22px] mt-2 flex min-h-[42px] w-[349px] items-center gap-2 rounded-[12px] bg-[#F3F7FF] px-3 py-2">
+              <span
+                aria-hidden="true"
+                className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#DCEBFF] text-[12px] font-bold leading-5 text-[#2F70FF]"
+              >
+                i
+              </span>
+              <p className="text-[11px] font-medium leading-[16px] text-[#4b5563]">
+                모든 금액은 진료비와 약제비를 합산한 총 예상 비용입니다.
+              </p>
+            </div>
+          ) : null}
 
           <section
-            className={`mx-[22px] mt-3 flex w-[349px] flex-col gap-4 overflow-y-auto pb-28 mobile-scrollbar ${
-              isRecommendedSort ? "h-[calc(100%-199px)]" : "h-[calc(100%-149px)]"
-            }`}
+            className="mx-[22px] mt-3 flex h-[calc(100%-149px)] w-[349px] flex-col gap-4 overflow-y-auto pb-28 mobile-scrollbar"
           >
             {sortedHospitals.map((item, index) => (
               <HospitalCard
