@@ -2,12 +2,14 @@
 
 ### 현재 상태
 
-- 2026-10-11 최신 Figma 홈 하단바 교체 및 viewport 하단 고정 완료. 커밋·push·Vercel 배포 확인 진행 중.
+- 2026-10-11 최신 Figma 홈 하단바 교체 및 viewport 하단 고정 완료. 구현 커밋 `2142eea` main push 완료. Vercel 자동 배포 success 확인 (`9adgzj41KAuhTkwGtPgE8GAeHSnV`). 공개 https://my-doctor-app-mocha.vercel.app HTTP 200 확인.
 - GitHub #12 반응형 수정: 병원 상세·약 목록·수령 방식·용량 선택의 고정 너비, 홈 알림 배지, 검색 삭제/헤더/지도/수량 버튼 터치 영역 개선. 지도는 실제 컨테이너 너비에 맞춰 타일·마커 좌표 계산.
 - 기존 미커밋 DietDoseSelectScreen/HospitalDetailScreen 수정도 #12 범위로 검토·포함.
 - 검증: Chrome 모바일 에뮬레이션 375/390/393/414/420px × 홈·검색·병원 목록·병원 상세·약 목록·수령 방식·내 예약·용량 선택 총 40개 조합에서 viewport 밖 가로 넘침 없음. 홈 상단/하단 스크롤 시 하단바 위치 고정 및 모바일 가상 상태바/홈 인디케이터 숨김 확인.
-- `npm run build` (TypeScript 포함) 통과, `git diff --check` 통과.
+- `npm run build` (TypeScript 포함) 통과, `git diff --check` 통과. 데스크톱 가상 상태바 표시, 홈 바텀시트 표시, 검색어 개별/전체 삭제, 약국 수령 선택 후 병원 목록 전달 동작 통과.
 - 남은 검증: 실제 iPhone Safari 및 홈 화면에 설치한 PWA의 시스템 safe-area 표시. 로컬 에뮬레이션만으로 실기기 완료를 주장하지 않으며 #12는 이 확인 전까지 열어 둠.
+
+- GitHub #12에 변경사항·검증 결과·배포 URL 댓글 기록 완료. 실제 iPhone/PWA 검증 항목은 열어 둠.
 
 ### 완료된 작업
 
