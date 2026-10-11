@@ -1,5 +1,12 @@
 ## 작업 현황 기록
 
+### 2026-10-11 병원 목록 손잡이 드래그 수정
+
+- 원인: pointer capture 없이 손잡이 내부 pointerup만 처리해 마우스를 밖에서 놓으면 종료 누락. pointermove 처리도 없어 이동 중 시트가 따라오지 않았음.
+- 수정: 포인터 캡처, 실시간 위치 갱신, 기존 72/138px 위치로 스냅, 취소/캡처 해제 처리, 방향키·Enter·Space 지원. 정렬·필터 및 카드 디자인 유지.
+- 검증: Chrome 실제 마우스 입력으로 이동 중 위치 변화, 손잡이 밖에서 놓기, 아래로 접기, 키보드 확장 통과. npm run build 및 git diff --check 통과.
+- 실제 터치 기기 검증은 별도 필요.
+
 ### 현재 상태
 
 - 2026-10-11 최신 Figma 홈 하단바 교체 및 viewport 하단 고정 완료. 구현 커밋 `2142eea` main push 완료. Vercel 자동 배포 success 확인 (`9adgzj41KAuhTkwGtPgE8GAeHSnV`). 공개 https://my-doctor-app-mocha.vercel.app HTTP 200 확인.

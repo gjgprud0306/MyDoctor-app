@@ -107,7 +107,8 @@ export function HospitalListScreen() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [filters, setFilters] = useState<HospitalFilters>(emptyHospitalFilters);
   const [draftFilters, setDraftFilters] = useState<HospitalFilters>(emptyHospitalFilters);
-  const sheetDragStartYRef = useRef<number | null>(null);
+  const [dragTop, setDragTop] = useState<number | null>(null);
+  const sheetDragRef = useRef<{ pointerId: number; startY: number; startTop: number; top: number } | null>(null);
 
   const sortedHospitals = useMemo(() => {
     if (sortOption === "price") {
@@ -165,16 +166,12 @@ export function HospitalListScreen() {
   const filteredHospitals = sortedHospitals.filter((item) => matches(item, filters));
   const draftCount = hospitalList.filter((item) => matches(item, draftFilters)).length;
 
-  const handleSheetPointerDown = (clientY: number) => {
-    sheetDragStartYRef.current = clientY;
-  };
-
-  const handleSheetPointerEnd = (clientY: number) => {
-    if (sheetDragStartYRef.current === null) return;
-    const deltaY = clientY - sheetDragStartYRef.current;
-    if (deltaY < -40) setIsSheetExpanded(true);
-    if (deltaY > 40) setIsSheetExpanded(false);
-    sheetDragStartYRef.current = null;
+  const finishSheetDrag = (cancelled = false) => {
+    const drag = sheetDragRef.current;
+    if (!drag) return;
+    if (!cancelled) setIsSheetExpanded(drag.top < 106);
+    sheetDragRef.current = null;
+    setDragTop(null);
   };
 
   useEffect(() => {
@@ -218,24 +215,43 @@ export function HospitalListScreen() {
         />
 
         <section
-          className={`absolute bottom-0 left-0 right-0 rounded-t-[24px] bg-white shadow-[0_-8px_24px_rgba(17,24,39,0.10)] transition-[top] duration-200 ease-out ${
-            isSheetExpanded ? "top-[72px]" : "top-[138px]"
+          className={`absolute bottom-0 left-0 right-0 rounded-t-[24px] bg-white shadow-[0_-8px_24px_rgba(17,24,39,0.10)] ${
+            dragTop === null ? "transition-[top] duration-200 ease-out motion-reduce:transition-none" : ""
           }`}
+          style={{ top: dragTop ?? (isSheetExpanded ? 72 : 138) }}
           aria-label="병원 리스트 바텀시트"
         >
           <div
-            className="flex h-6 touch-none items-center justify-center"
+            className="flex h-6 touch-none select-none cursor-grab active:cursor-grabbing items-center justify-center"
             role="button"
             tabIndex={0}
             aria-label="병원 리스트 높이 조절"
-            onPointerDown={(event) => handleSheetPointerDown(event.clientY)}
-            onPointerUp={(event) => handleSheetPointerEnd(event.clientY)}
-            onPointerCancel={() => {
-              sheetDragStartYRef.current = null;
+            aria-expanded={isSheetExpanded}
+            onPointerDown={(event) => {
+              if (!event.isPrimary || event.button !== 0) return;
+              event.currentTarget.setPointerCapture(event.pointerId);
+              const top = isSheetExpanded ? 72 : 138;
+              sheetDragRef.current = { pointerId: event.pointerId, startY: event.clientY, startTop: top, top };
+              setDragTop(top);
             }}
+            onPointerMove={(event) => {
+              const drag = sheetDragRef.current;
+              if (!drag || drag.pointerId !== event.pointerId) return;
+              drag.top = Math.max(72, Math.min(138, Math.round((drag.startTop + event.clientY - drag.startY) / 2) * 2));
+              setDragTop(drag.top);
+            }}
+            onPointerUp={() => finishSheetDrag()}
+            onPointerCancel={() => finishSheetDrag(true)}
+            onLostPointerCapture={() => finishSheetDrag(true)}
             onKeyDown={(event) => {
-              if (event.key === "ArrowUp") setIsSheetExpanded(true);
-              if (event.key === "ArrowDown") setIsSheetExpanded(false);
+              if (event.key === "ArrowUp" || event.key === "ArrowDown") {
+                event.preventDefault();
+                setIsSheetExpanded(event.key === "ArrowUp");
+              }
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                setIsSheetExpanded((expanded) => !expanded);
+              }
             }}
           >
             <span className="h-1 w-12 rounded-sm bg-[#6b7280]" />
