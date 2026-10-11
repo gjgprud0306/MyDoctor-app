@@ -1,4 +1,6 @@
 export type HospitalListItem = {
+  availableToday?: boolean;
+  consultationMethods?: ("in_person" | "remote")[];
   id: string;
   name: string;
   department: string;

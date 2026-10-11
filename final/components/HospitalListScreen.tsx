@@ -6,6 +6,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { IosStatusBar } from "@/components/IosStatusBar";
 import { NearbyPlaceFinder } from "@/components/NearbyPlaceFinder";
 import { trackEvent } from "@/lib/analytics";
+import { HospitalFilterSheet } from "@/components/HospitalFilterSheet";
+import { emptyHospitalFilters, matchesHospitalFilters, type HospitalFilters } from "@/lib/hospital-filters";
 import { hospitalList } from "@/lib/hospital-list-data";
 
 type SortOption = "recommended" | "price" | "revisit";
@@ -32,7 +34,7 @@ const hospitalCoordinates: Record<string, MapCenter> = {
   "yongsan-balance": { lat: 37.5299, lng: 126.9647 },
 };
 
-function getDistanceKm(from: MapCenter, to: MapCenter) {
+function getPreciseDistanceKm(from: MapCenter, to: MapCenter) {
   const earthRadius = 6371;
   const latDelta = ((to.lat - from.lat) * Math.PI) / 180;
   const lngDelta = ((to.lng - from.lng) * Math.PI) / 180;
@@ -44,20 +46,11 @@ function getDistanceKm(from: MapCenter, to: MapCenter) {
       Math.cos(toLat) *
       Math.sin(lngDelta / 2) *
       Math.sin(lngDelta / 2);
-  return Math.round(earthRadius * 2 * Math.atan2(Math.sqrt(value), Math.sqrt(1 - value)));
+  return earthRadius * 2 * Math.atan2(Math.sqrt(value), Math.sqrt(1 - value));
 }
 
-function FilterIcon() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 24 24" className="h-5 w-5" fill="none">
-      <path
-        d="M4 7h16M8 12h8M10 17h4"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeWidth="2"
-      />
-    </svg>
-  );
+function getDistanceKm(from: MapCenter, to: MapCenter) {
+  return Math.round(getPreciseDistanceKm(from, to));
 }
 
 function HospitalCard({
@@ -78,7 +71,7 @@ function HospitalCard({
       data-gtm-rank={rank}
       aria-label={`${item.name} 병원 카드`}
       onClick={onSelect}
-      className="relative h-[116px] w-[349px] shrink-0 rounded-[12px] border border-[#d7e3ff] bg-white text-left shadow-[0_6px_18px_rgba(47,112,255,0.08)]"
+      className="relative h-[116px] w-full shrink-0 rounded-[12px] border border-[#d7e3ff] bg-white text-left shadow-[0_6px_18px_rgba(47,112,255,0.08)]"
     >
       <Image
         src={item.image}
@@ -88,41 +81,15 @@ function HospitalCard({
         unoptimized
         className="absolute left-3 top-3 h-[92px] w-20 rounded-[8px] object-cover"
       />
-      <div className="absolute left-[104px] top-3 w-[132px]">
-        <h2 className="truncate text-[14px] font-bold leading-[18px] text-[#111827]">
-          {item.name}
-        </h2>
-        <div className="mt-1 flex items-center gap-[6px]">
-          <span className="rounded-[8px] bg-[#F6F7FA] px-[5px] text-[9px] font-medium leading-[16px] text-[#8A94A6]">
-            가격 인증
-          </span>
-          <span className="text-[10px] font-medium leading-[16px] text-[#6b7280]">
-            {item.hours}
-          </span>
-        </div>
-        <p className="mt-1 text-[10px] font-medium leading-[14px] text-[#374151]">
-          ⭐ {item.rating} · {item.reviewCount}
-        </p>
-        <p className="mt-1 flex h-4 items-center gap-1 text-[10px] font-normal leading-[14px] text-[#4b5563]">
-          <span aria-hidden="true" className="text-[10px] leading-[14px] text-[#8A94A6]">
-            ⏱
-          </span>
-          <span>
-            {item.wait} · {distanceText}
-          </span>
-        </p>
+      <div className="absolute left-[106px] top-2 flex flex-col items-start">
+        <span className="rounded bg-[#f4f5f7] px-1 text-[6px] font-semibold leading-4 text-[#6b7280]">진료비 · 약제비 포함</span>
+        <h2 className="py-[2px] text-[14px] font-bold leading-[18px] text-[#111827]">{item.name}</h2>
+        <p className="text-[10px] font-medium leading-4 text-[#6b7280]">{item.hours}</p>
+        <p className="mt-1 text-[10px] font-medium leading-[14px] text-[#6b7280]">({item.reviewCount}) · {distanceText}</p>
+        <p className="mt-[6px] text-[10px] font-semibold leading-[14px] text-[#4b5563]">{item.wait}</p>
       </div>
-      <div className="absolute right-4 top-3 rounded-[12px] bg-[#F3F7FF] px-[10px] text-[10px] font-semibold leading-6 text-[#5E82D9]">
-        {item.saving}
-      </div>
-      <div className="absolute bottom-3 right-4 flex w-[112px] flex-col items-end gap-[2px]">
-        <span className="text-[9px] font-medium leading-3 text-[#6b7280]">
-          총 예상 비용
-        </span>
-        <strong className="text-[17px] font-bold leading-[22px] text-[#1268ff]">
-          {item.price}
-        </strong>
-      </div>
+      <div className="absolute right-6 top-[50px] rounded-xl bg-[#f3f7ff] px-[10px] text-[10px] font-semibold leading-6 text-[#5e82d9]">재진 {item.revisitRate}</div>
+      <strong className="absolute bottom-[14px] right-6 text-[18px] font-bold leading-[22px] text-[#1268ff]">{item.price}</strong>
     </button>
   );
 }
@@ -136,6 +103,10 @@ export function HospitalListScreen() {
   const [sortOption, setSortOption] = useState<SortOption>("recommended");
   const [userLocation, setUserLocation] = useState<MapCenter | null>(null);
   const [isSheetExpanded, setIsSheetExpanded] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [filters, setFilters] = useState<HospitalFilters>(emptyHospitalFilters);
+  const [draftFilters, setDraftFilters] = useState<HospitalFilters>(emptyHospitalFilters);
   const sheetDragStartYRef = useRef<number | null>(null);
 
   const sortedHospitals = useMemo(() => {
@@ -187,6 +158,13 @@ export function HospitalListScreen() {
     return `${getDistanceKm(userLocation, position)}km`;
   };
 
+  const matches = (item: (typeof hospitalList)[number], value: HospitalFilters) =>
+    matchesHospitalFilters(item, value, userLocation && hospitalCoordinates[item.id]
+      ? getPreciseDistanceKm(userLocation, hospitalCoordinates[item.id])
+      : Number.parseInt(item.distanceText, 10));
+  const filteredHospitals = sortedHospitals.filter((item) => matches(item, filters));
+  const draftCount = hospitalList.filter((item) => matches(item, draftFilters)).length;
+
   const handleSheetPointerDown = (clientY: number) => {
     sheetDragStartYRef.current = clientY;
   };
@@ -208,8 +186,8 @@ export function HospitalListScreen() {
   }, [medicineName, receiveMethod]);
 
   return (
-    <main className="mx-auto h-screen w-full max-w-[393px] overflow-hidden bg-white text-[#111827]">
-      <IosStatusBar />
+    <main className="mx-auto h-dvh w-full max-w-[402px] overflow-hidden bg-white text-[#111827]">
+      <IosStatusBar variant="hospital" />
       <header className="relative h-14">
         <button
           type="button"
@@ -221,37 +199,32 @@ export function HospitalListScreen() {
             });
             router.push("/pickup-method");
           }}
-          className="absolute left-5 top-2 grid h-10 w-10 place-items-center"
+          className="absolute left-3 top-2 grid h-10 w-10 place-items-center"
         >
-          <svg aria-hidden="true" viewBox="0 0 24 24" className="h-6 w-6" fill="none">
-            <path
-              d="m15 18-6-6 6-6"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-            />
-          </svg>
+          <img src="/assets/icons/hospital-filter/back.svg" alt="" />
         </button>
         <h1 className="absolute left-1/2 top-4 -translate-x-1/2 whitespace-nowrap text-[16px] font-semibold leading-6">
           다이어트 주사 예약
         </h1>
+        <button type="button" aria-label="찜하기" aria-pressed={isSaved} onClick={() => setIsSaved(!isSaved)} className="absolute right-3 top-2 grid h-10 w-10 place-items-center">
+          <img src="/assets/icons/hospital-filter/heart.svg" alt="" />
+        </button>
       </header>
 
-      <div className="relative h-[calc(100vh-106px)] overflow-hidden">
+      <div className="relative h-[calc(100%-118px)] overflow-hidden">
         <NearbyPlaceFinder
           onUserLocationResolved={setUserLocation}
           isListExpanded={isSheetExpanded}
         />
 
         <section
-          className={`absolute bottom-0 left-0 right-0 rounded-t-[18px] bg-white shadow-[0_-8px_24px_rgba(17,24,39,0.10)] transition-[top] duration-200 ease-out ${
-            isSheetExpanded ? "top-28" : "top-[331px]"
+          className={`absolute bottom-0 left-0 right-0 rounded-t-[24px] bg-white shadow-[0_-8px_24px_rgba(17,24,39,0.10)] transition-[top] duration-200 ease-out ${
+            isSheetExpanded ? "top-[72px]" : "top-[138px]"
           }`}
           aria-label="병원 리스트 바텀시트"
         >
           <div
-            className="flex h-8 touch-none items-center justify-center"
+            className="flex h-6 touch-none items-center justify-center"
             role="button"
             tabIndex={0}
             aria-label="병원 리스트 높이 조절"
@@ -265,10 +238,10 @@ export function HospitalListScreen() {
               if (event.key === "ArrowDown") setIsSheetExpanded(false);
             }}
           >
-            <span className="h-1 w-12 rounded-sm bg-[#c5ccd8]" />
+            <span className="h-1 w-12 rounded-sm bg-[#6b7280]" />
           </div>
 
-          <section className="mx-[22px] flex h-[54px] w-[349px] items-start gap-2 pt-[11px]">
+          <section className="mx-5 flex h-[54px] items-start gap-2 pt-4">
             <button
               type="button"
               data-gtm-id="hospital-filter-recommend"
@@ -277,7 +250,7 @@ export function HospitalListScreen() {
                 setSortOption("recommended");
                 trackSortClick("recommend");
               }}
-              className={`h-8 w-[66px] rounded-[16px] text-[12px] font-semibold leading-4 ${
+              className={`h-9 w-[78px] rounded-full text-[14px] font-semibold leading-4 ${
                 isRecommendedSort
                   ? "bg-[#2f70ff] text-white"
                   : "border border-[#dce3ee] bg-white text-[#111827]"
@@ -293,7 +266,7 @@ export function HospitalListScreen() {
                 setSortOption("price");
                 trackSortClick("price");
               }}
-              className={`h-8 w-[66px] rounded-[16px] text-[12px] font-semibold leading-4 ${
+              className={`h-9 w-[78px] rounded-full text-[14px] font-semibold leading-4 ${
                 isPriceSort
                   ? "bg-[#2f70ff] text-white"
                   : "border border-[#dce3ee] bg-white text-[#111827]"
@@ -309,7 +282,7 @@ export function HospitalListScreen() {
                 setSortOption("revisit");
                 trackSortClick("revisit");
               }}
-              className={`h-8 w-[90px] rounded-[16px] text-[12px] font-semibold leading-4 ${
+              className={`h-9 w-[90px] rounded-full text-[14px] font-semibold leading-4 ${
                 isRevisitSort
                   ? "bg-[#2f70ff] text-white"
                   : "border border-[#dce3ee] bg-white text-[#111827]"
@@ -321,45 +294,20 @@ export function HospitalListScreen() {
               type="button"
               aria-label="필터"
               data-gtm-id="hospital-filter-more"
-              onClick={() => trackFilterClick("more")}
-              className="grid h-8 w-[33px] place-items-center rounded-[16px] border border-[#dce3ee] bg-white text-[#6b7280]"
+              aria-haspopup="dialog"
+              aria-expanded={isFilterOpen}
+              onClick={() => { trackFilterClick("more"); setDraftFilters({ ...filters, methods: [...filters.methods] }); setIsFilterOpen(true); }}
+              className="grid h-9 w-[38px] place-items-center rounded-full border border-[#dce3ee] bg-white text-[#6b7280]"
             >
-              <FilterIcon />
+              <img src="/assets/icons/hospital-filter/filter.svg" alt="" />
             </button>
           </section>
 
-          {isRecommendedSort ? (
-            <div className="mx-[22px] mt-2 flex min-h-[42px] w-[349px] items-center gap-2 rounded-[12px] bg-[#F3F7FF] px-3 py-2">
-              <span
-                aria-hidden="true"
-                className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#DCEBFF] text-[12px] font-bold leading-5 text-[#2F70FF]"
-              >
-                i
-              </span>
-              <p className="text-[11px] font-medium leading-[16px] text-[#4b5563]">
-                총 예상 비용과 재진희망률을 함께 고려한 추천 결과입니다.
-              </p>
-            </div>
-          ) : null}
-
-          {!isRecommendedSort ? (
-            <div className="mx-[22px] mt-2 flex min-h-[42px] w-[349px] items-center gap-2 rounded-[12px] bg-[#F3F7FF] px-3 py-2">
-              <span
-                aria-hidden="true"
-                className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#DCEBFF] text-[12px] font-bold leading-5 text-[#2F70FF]"
-              >
-                i
-              </span>
-              <p className="text-[11px] font-medium leading-[16px] text-[#4b5563]">
-                모든 금액은 진료비와 약제비를 합산한 총 예상 비용입니다.
-              </p>
-            </div>
-          ) : null}
-
           <section
-            className="mx-[22px] mt-3 flex h-[calc(100%-149px)] w-[349px] flex-col gap-4 overflow-y-auto pb-28 mobile-scrollbar"
+            className="mx-[22px] mt-4 flex h-[calc(100%-94px)] flex-col gap-4 overflow-y-auto pb-28 mobile-scrollbar"
           >
-            {sortedHospitals.map((item, index) => (
+            {filteredHospitals.length === 0 && <p role="status" className="py-8 text-center text-[14px] leading-6 text-[#6b7280]">조건에 맞는 병원이 없습니다.<br />필터 조건을 변경해 주세요.</p>}
+            {filteredHospitals.map((item, index) => (
               <HospitalCard
                 key={item.id}
                 item={item}
@@ -384,7 +332,7 @@ export function HospitalListScreen() {
         </section>
       </div>
 
-      <div className="fixed bottom-0 left-0 right-0 mx-auto h-20 w-full max-w-[393px] bg-white pt-[10px] shadow-[0_-8px_24px_rgba(17,24,39,0.08)]">
+      <div className="fixed bottom-0 left-0 right-0 mx-auto h-[110px] w-full max-w-[402px] bg-white px-5 pt-[10px] shadow-[0_-8px_24px_rgba(17,24,39,0.08)]">
         <button
           type="button"
           data-gtm-id="hospital-select-button"
@@ -394,14 +342,15 @@ export function HospitalListScreen() {
               screen_name: "cart",
               button_name: "hospital_select",
               selected_hospital_count: 1,
-              hospital_name: sortedHospitals[0]?.name,
+              hospital_name: filteredHospitals[0]?.name,
             })
           }
-          className="mx-[22px] h-14 w-[349px] rounded-[8px] bg-[#2f70ff] text-[16px] font-bold leading-6 text-white"
+          className="h-14 w-full rounded-[8px] bg-[#2f70ff] text-[16px] font-bold leading-6 text-white"
         >
           병원 선택하기
         </button>
       </div>
+      {isFilterOpen && <HospitalFilterSheet value={draftFilters} count={draftCount} onChange={setDraftFilters} onClose={() => setIsFilterOpen(false)} onApply={() => { setFilters(draftFilters); setIsFilterOpen(false); }} />}
     </main>
   );
 }

@@ -1,10 +1,11 @@
 import Image from "next/image";
 
 type IosStatusBarProps = {
-  variant?: "default" | "home";
+  variant?: "default" | "home" | "hospital";
 };
 
 const statusBarSources = {
+  hospital: "/assets/images/system/ios-status-bar-hospital.png",
   default: "/assets/images/system/ios-status-bar.png",
   home: "/assets/images/system/ios-status-bar-home.png",
 };
@@ -12,18 +13,18 @@ const statusBarSources = {
 export function IosStatusBar({ variant = "default" }: IosStatusBarProps) {
   return (
     <div
-      className={`ios-status-bar relative h-[50px] w-full overflow-hidden ${
+      className={`ios-status-bar relative w-full overflow-hidden ${variant === "hospital" ? "h-[62px]" : "h-[50px]"} ${
         variant === "home" ? "bg-appBg" : "bg-white"
       }`}
     >
       <Image
         src={statusBarSources[variant]}
         alt=""
-        width={393}
-        height={50}
+        width={variant === "hospital" ? 402 : 393}
+        height={variant === "hospital" ? 62 : 50}
         priority
         unoptimized
-        className="h-[50px] w-full object-fill"
+        className="h-full w-full object-fill"
       />
     </div>
   );

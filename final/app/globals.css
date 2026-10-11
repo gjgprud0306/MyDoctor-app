@@ -14,6 +14,7 @@
 html,
 body {
   min-height: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -96,4 +97,25 @@ img {
   .app-header {
     height: 48px;
   }
+}
+
+.hospital-filter-sheet {
+  position: fixed;
+  inset: auto 0 0;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 402px;
+  max-height: 100dvh;
+  border: 0;
+  border-radius: 24px 24px 0 0;
+  padding: 12px 24px 24px;
+  color: #111827;
+  background: white;
+  overflow-y: auto;
+  animation: sheet-up 200ms ease-out;
+}
+.hospital-filter-sheet[open] { display: flex; flex-direction: column; gap: 20px; }
+.hospital-filter-sheet::backdrop { background: rgb(0 0 0 / 40%); }
+@media (prefers-reduced-motion: reduce) {
+  .hospital-filter-sheet { animation: none; }
 }

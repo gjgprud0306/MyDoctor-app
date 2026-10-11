@@ -335,14 +335,14 @@ export function NearbyPlaceFinder({
         onZoomChange={setZoom}
       />
 
-      <div className="absolute left-[22px] top-[22px] flex gap-3">
+      <div className="absolute left-5 top-3 flex gap-2">
           {(["all", "hospital", "pharmacy"] as const).map((type) => (
             <button
               key={type}
               type="button"
               onClick={() => setSelectedType(type)}
-              className={`h-8 rounded-[16px] text-[11px] font-semibold leading-4 shadow-[0_2px_8px_rgba(17,24,39,0.08)] ${
-                type === "all" ? "w-11" : "w-[50px]"
+              className={`h-8 rounded-[16px] text-[14px] font-semibold leading-4 shadow-[0_2px_8px_rgba(17,24,39,0.08)] ${
+                type === "all" ? "w-[58px]" : "w-[62px]"
               } ${
                 selectedType === type
                   ? "bg-[#2f70ff] text-white"
@@ -360,7 +360,7 @@ export function NearbyPlaceFinder({
         disabled={isLocating}
         aria-label="현재 위치"
         className={`absolute right-5 grid h-8 w-8 place-items-center rounded-[16px] bg-white text-[#111827] shadow-[0_3px_10px_rgba(17,24,39,0.18)] transition-[top] duration-200 ease-out disabled:text-[#9ca3af] ${
-          isListExpanded ? "top-14" : "top-[279px]"
+          isListExpanded ? "top-4" : "top-[82px]"
         }`}
       >
         {isLocating ? (
@@ -388,9 +388,7 @@ export function NearbyPlaceFinder({
         </div>
       ) : null}
 
-      <div className="absolute bottom-0 left-0 h-6 w-full rounded-t-[18px] bg-white">
-        <div className="absolute left-1/2 top-2 h-1 w-12 -translate-x-1/2 rounded-sm bg-[#6b7280]" />
-      </div>
+
     </section>
   );
 }

@@ -261,3 +261,14 @@
 - 로컬 포트 실행 가능한 환경 또는 실기기에서 모바일/PWA 시각 QA
 - 변경사항 발생 시 GitHub push 후 Vercel Production 배포/화면 업데이트 확인. 기준 공개 URL: `https://my-doctor-app-mocha.vercel.app`
 - 변경사항 push 후 관련 이슈에 변경사항, 검증 결과, 배포 URL 댓글 작성 및 완료 조건 충족 시 close
+
+### 2026-10-11 병원 탐색·필터·예약 완료 Figma 반영
+
+- Main Content `279:3631`: 402px 화면, 병원 카드 비용 포함 라벨/정보 배치, 36px 정렬 칩과 원형 필터 버튼 반영. 기존 추천/비용/재진희망 정렬 로직 유지, 동적 지도 유지.
+- Overlay `271:1494`: 첨부 원형 필터 버튼에 네이티브 dialog 바텀시트 연결. 진료 중/오늘 진료 가능 단일 선택, 진료 방식 복수 선택, 거리 단일 선택. 적용 전 임시 선택 분리, Escape/바깥 영역 닫기 시 취소, 초기화와 결과 개수 표시, 빈 결과 안내 구현. 최신 Figma에서 삭제된 X 버튼은 추가하지 않음.
+- Screen_ReservationComplete `256:3146`: Figma 문서 아이콘, 정보 카드 간격, 하단 고정 CTA 반영. 기존 동적 예약 정보와 라우팅 유지.
+- Figma 에셋 6개를 public/assets에 저장하고 DESIGN_HANDOFF.md에 출처 기록.
+- 검증: 최종 npm run build 성공, git diff --check 통과. Chrome에서 적용/취소/초기화/외부 클릭/선택 유지/정렬 순서 유지/빈 결과 검증. 375/390/393/402/414/420px에서 두 화면 및 필터 가로 넘침 없음, 런타임 오류 없음. 거리 경계값 및 오늘 진료/진료 중·진료 방식 메타데이터 단위 검증 통과.
+- 데이터 한계: 현재 14개 예약 fixture는 대면 방문 정보만 제공. 비대면 메타데이터 없는 병원은 비대면 필터 결과에서 제외. availableToday가 없으면 확인 가능한 영업 중 상태를 사용하며, 실제 진료시간 API 연동은 남은 작업.
+- 기존 미커밋 DietDoseSelectScreen.tsx / HospitalDetailScreen.tsx 변경은 이번 커밋 범위에서 제외하고 로컬에 보존.
+- GitHub 커밋/push 후 원격 상태 확인 예정. Vercel 배포 상태는 커밋 상태 API로 확인. 이슈 #12는 전체 화면 검증이 남아 닫지 않음.

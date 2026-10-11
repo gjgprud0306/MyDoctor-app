@@ -112,3 +112,10 @@
 - 루트 final/ 폴더에 있는 PNG 파일은 이번 핸드오프 export 경로가 아니므로 구현 에셋으로 사용하지 않습니다.
 - 프로모션 배너의 좌우 화살표는 추가 export가 필요할 수 있습니다.
 - 검색, 헤더, 섹션 보조, 하단 내비게이션처럼 선명도가 중요한 시스템 아이콘은 코드 내 SVG 컴포넌트로 렌더링합니다.
+
+## 2026-10-11 병원 탐색 / 필터 / 예약 완료
+- 기준 노드: Main Content `279:3631`, 병원 필터 Overlay `271:1494`, Screen_ReservationComplete `256:3146`.
+- Figma export 완료: `final/public/assets/icons/hospital-filter/`의 filter.svg (279:3677), check.svg (I271:1516;271:1507), back.svg (279:3649), heart.svg (279:3653), reservation-document.png (256:3194, 116×116).
+- 기존 병원 썸네일 및 상태바 로컬 export 재사용. 지도는 기존 동적 OpenStreetMap 유지.
+- 필터 CTA의 24곳은 디자인 예시이며 구현에서는 실제 매칭 개수를 표시. 데이터에 없는 비대면 진료 가능 여부는 임의 생성하지 않음.
+- 병원 목록 전용 상태바 `279:3633`을 `final/public/assets/images/system/ios-status-bar-hospital.png` (402×62)로 export 완료.
