@@ -2,9 +2,9 @@
 
 ### 현재 상태
 
-- GitHub (브랜치/커밋): main, 홈 TOP 3 카드 클릭 연결 커밋 `b17de5b2 fix: link home top hospital cards` push 완료
-- Vercel 배포 상태: Vercel CLI 연결 완료 (`hg800/my-doctor-app`, Root Directory `final`). 홈 TOP 3 카드 클릭 연결 포함 최신 Production 배포 완료, deployment `dpl_8iGKMAyVWm4yiYuxHWCjbdESmz18`, 실제 공개 alias `https://my-doctor-app-mocha.vercel.app` HTTP 200 확인, 홈 및 TOP 3 병원별 상세 URL HTTP 200 확인
-- 현재 진행 중인 작업: teacher/tester_04/tester_05 UTM 링크 문서화 및 Analytics tester_id 규칙 보강 완료, GitHub push 및 Vercel 배포 전
+- GitHub (브랜치/커밋): main, 병원 탐색·필터·예약 완료 Figma 반영 구현 커밋 `d58746f6` push 완료 (2026-10-11)
+- Vercel 배포 상태: 구현 커밋 `d58746f6` 자동 배포 success 확인. 배포 `DdLz6ZWZeC8wZCFMUe9uS2kektUR`, 공개 `https://my-doctor-app-mocha.vercel.app/hospital-list` HTTP 200 확인 (2026-10-11).
+- 현재 진행 중인 작업: 요청한 세 Figma 화면 구현·검증·push 완료. 기존 미커밋 DietDoseSelectScreen.tsx / HospitalDetailScreen.tsx는 별도 작업으로 보존.
 
 ### 완료된 작업
 
@@ -271,4 +271,4 @@
 - 검증: 최종 npm run build 성공, git diff --check 통과. Chrome에서 적용/취소/초기화/외부 클릭/선택 유지/정렬 순서 유지/빈 결과 검증. 375/390/393/402/414/420px에서 두 화면 및 필터 가로 넘침 없음, 런타임 오류 없음. 거리 경계값 및 오늘 진료/진료 중·진료 방식 메타데이터 단위 검증 통과.
 - 데이터 한계: 현재 14개 예약 fixture는 대면 방문 정보만 제공. 비대면 메타데이터 없는 병원은 비대면 필터 결과에서 제외. availableToday가 없으면 확인 가능한 영업 중 상태를 사용하며, 실제 진료시간 API 연동은 남은 작업.
 - 기존 미커밋 DietDoseSelectScreen.tsx / HospitalDetailScreen.tsx 변경은 이번 커밋 범위에서 제외하고 로컬에 보존.
-- GitHub 커밋/push 후 원격 상태 확인 예정. Vercel 배포 상태는 커밋 상태 API로 확인. 이슈 #12는 전체 화면 검증이 남아 닫지 않음.
+- GitHub 구현 커밋 `d58746f6` main push 완료. Vercel 자동 배포 success 및 병원 목록 HTTP 200 확인. 이슈 #12에 변경·검증·배포 URL 댓글 작성 완료. 전체 화면 검증이 남아 이슈는 닫지 않음.
