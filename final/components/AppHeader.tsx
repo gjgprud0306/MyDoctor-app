@@ -60,7 +60,7 @@ export function AppHeader() {
                   className="h-6 w-6 object-contain"
                 />
                 {icon.label === "알림" && hasUnreadNotifications ? (
-                  <span className="absolute right-0 top-0 h-[7px] w-[7px] rounded-full bg-[#f04242]" />
+                  <span className="absolute right-2 top-[10px] h-[6px] w-[6px] rounded-full bg-[#f04242]" />
                 ) : null}
               </>
             );
@@ -78,8 +78,8 @@ export function AppHeader() {
                       entry_point: "home_search_bar",
                     })
                   }
-                  className="absolute top-3 grid h-6 w-6 place-items-center"
-                  style={{ right: icon.right }}
+                  className="absolute top-[2px] grid h-[44px] w-10 place-items-center"
+                  style={{ right: icon.right - 8 }}
                 >
                   {content}
                 </Link>
@@ -99,8 +99,8 @@ export function AppHeader() {
                       button_name: "notification",
                     })
                   }
-                  className="absolute top-3 grid h-6 w-6 place-items-center"
-                  style={{ right: icon.right }}
+                  className="absolute top-[2px] grid h-[44px] w-10 place-items-center"
+                  style={{ right: icon.right - 8 }}
                 >
                   {content}
                 </Link>
@@ -112,8 +112,8 @@ export function AppHeader() {
                 key={icon.label}
                 type="button"
                 aria-label={icon.label}
-                className="absolute top-3 grid h-6 w-6 place-items-center"
-                style={{ right: icon.right }}
+                className="absolute top-[2px] grid h-[44px] w-10 place-items-center"
+                style={{ right: icon.right - 8 }}
               >
                 {content}
               </button>

@@ -14,9 +14,9 @@ export function MyReservationScreen() {
   const time = searchParams.get("time") ?? "13:30";
 
   return (
-    <main className="mx-auto flex min-h-screen w-full max-w-[393px] flex-col bg-white text-[#111827]">
+    <main className="mx-auto flex min-h-screen pb-24 w-full max-w-[393px] flex-col bg-white text-[#111827]">
       <IosStatusBar />
-      <header className="flex h-14 items-center justify-center bg-white">
+      <header className="relative flex h-14 items-center justify-center bg-white">
         <button
           type="button"
           aria-label="홈으로 돌아가기"

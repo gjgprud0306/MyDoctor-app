@@ -119,3 +119,10 @@
 - 기존 병원 썸네일 및 상태바 로컬 export 재사용. 지도는 기존 동적 OpenStreetMap 유지.
 - 필터 CTA의 24곳은 디자인 예시이며 구현에서는 실제 매칭 개수를 표시. 데이터에 없는 비대면 진료 가능 여부는 임의 생성하지 않음.
 - 병원 목록 전용 상태바 `279:3633`을 `final/public/assets/images/system/ios-status-bar-hospital.png` (402×62)로 export 완료.
+
+## 2026-10-11 홈 하단 내비게이션 갱신
+
+- Figma `OHZQWYFBSwxrMLQzviEG6U`, 홈 인스턴스 `24:2910`을 기준으로 확인.
+- 홈·혜택·건강관리·의료기록·내 정보 SVG 5개 export 완료: `final/public/assets/icons/bottom-nav/{home,benefits,health,records,profile}.svg`. 구현에서 로컬 에셋만 사용.
+- 파란 홈 활성 아이콘, 회색 비활성 아이콘, 60px 탭 영역, 흰 배경 적용. 기존 혜택 배지·상단 라운드 제거.
+- viewport 하단 fixed, 홈 콘텐츠에 하단 여백 제공. 기존 390px 홈 폭 유지. 모바일 터치/standalone에서는 가상 상태바·홈 인디케이터를 숨기고 safe-area 사용.

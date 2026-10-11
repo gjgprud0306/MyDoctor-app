@@ -1,6 +1,6 @@
 "use client";
 
-import { SystemIcon } from "@/components/SystemIcon";
+import Image from "next/image";
 import { trackEvent } from "@/lib/analytics";
 
 const navItems = [
@@ -15,7 +15,6 @@ const navItems = [
     label: "혜택",
     icon: "benefits" as const,
     active: false,
-    badge: true,
     gtmId: "bottom-nav-reservation",
     tabName: "reservation",
   },
@@ -46,10 +45,10 @@ export function BottomNavigation({ currentPage = "home" }: { currentPage?: strin
   return (
     <nav
       data-section="bottom-navigation"
-      className="bottom-navigation sticky bottom-0 z-10 mt-[19px] h-[116px] overflow-hidden rounded-t-[24px] border-t border-[#e5e7eb] bg-white"
+      className="bottom-navigation fixed bottom-0 left-0 right-0 z-10 mx-auto h-[94px] w-full max-w-[390px] bg-white"
       aria-label="하단 탭"
     >
-      <div className="grid h-[82px] grid-cols-5 px-[18px] pt-[14px]">
+      <div className="grid h-[60px] grid-cols-5 py-[6px]">
         {navItems.map((item) => (
           <button
             key={item.label}
@@ -64,26 +63,14 @@ export function BottomNavigation({ currentPage = "home" }: { currentPage?: strin
                 current_page: currentPage,
               })
             }
-            className="flex h-[68px] cursor-default flex-col items-center justify-start gap-[7px]"
-            tabIndex={-1}
+            className="flex h-[48px] flex-col items-center justify-center gap-[2px]"
           >
-            <span className="relative grid h-6 w-6 place-items-center">
-              <SystemIcon
-                name={item.icon}
-                className={`h-6 w-6 ${
-                  item.active ? "text-[#21242c]" : "text-[#c4c4c4]"
-                }`}
-                strokeWidth={item.active ? 2.4 : 2}
-              />
-              {item.badge ? (
-                <span className="absolute right-[-3px] top-[-2px] h-[5px] w-[5px] rounded-full bg-[#f04242]" />
-              ) : null}
-            </span>
+            <Image src={`/assets/icons/bottom-nav/${item.icon}.svg`} alt="" width={24} height={24} unoptimized />
             <span
-              className={`whitespace-nowrap text-[11px] leading-[17px] ${
+              className={`whitespace-nowrap text-[10px] font-normal leading-[14px] ${
                 item.active
-                  ? "font-semibold text-[#21242c]"
-                  : "font-medium text-[#c4c4c4]"
+                  ? "text-[#2f6eff]"
+                  : "text-[#9ca3af]"
               }`}
             >
               {item.label}
@@ -92,7 +79,7 @@ export function BottomNavigation({ currentPage = "home" }: { currentPage?: strin
         ))}
       </div>
       <div className="home-indicator relative h-[34px] bg-white">
-        <div className="absolute bottom-2 left-1/2 h-[5px] w-36 -translate-x-1/2 rounded-full bg-black" />
+        <div className="absolute bottom-2 left-1/2 h-[4px] w-36 -translate-x-1/2 rounded-full bg-black" />
       </div>
     </nav>
   );

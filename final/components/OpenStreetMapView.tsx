@@ -113,6 +113,15 @@ export function OpenStreetMapView({
   ariaLabel,
   showControls = true,
 }: OpenStreetMapViewProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [viewportWidth, setViewportWidth] = useState(width);
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+    const observer = new ResizeObserver(() => setViewportWidth(container.clientWidth));
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, []);
   const [mapCenter, setMapCenter] = useState(center);
   const [mapZoom, setMapZoom] = useState(zoom);
   const dragRef = useRef<{
@@ -121,8 +130,8 @@ export function OpenStreetMapView({
     centerPoint: { x: number; y: number };
   } | null>(null);
   const tiles = useMemo(
-    () => getTiles(mapCenter, mapZoom, width, height),
-    [height, mapCenter, mapZoom, width],
+    () => getTiles(mapCenter, mapZoom, viewportWidth, height),
+    [height, mapCenter, mapZoom, viewportWidth],
   );
 
   useEffect(() => {
@@ -137,7 +146,8 @@ export function OpenStreetMapView({
   return (
     <div
       className={`relative overflow-hidden bg-[#eef5ff] touch-none ${className}`}
-      style={{ width, height }}
+      ref={containerRef}
+      style={{ width: "100%", maxWidth: width, height }}
       role="application"
       aria-label={ariaLabel}
       onPointerDown={(event) => {
@@ -182,7 +192,7 @@ export function OpenStreetMapView({
       ))}
 
       {markers.map((marker) => {
-        const position = projectMarker(marker, mapCenter, mapZoom, width, height);
+        const position = projectMarker(marker, mapCenter, mapZoom, viewportWidth, height);
 
         return (
           <span
@@ -204,7 +214,7 @@ export function OpenStreetMapView({
             type="button"
             aria-label="지도 축소"
             onClick={() => setMapZoom((value) => Math.max(minZoom, value - 1))}
-            className="grid h-8 w-8 place-items-center text-[16px] font-bold text-[#4b5563]"
+            className="grid h-10 w-10 place-items-center text-[16px] font-bold text-[#4b5563]"
           >
             -
           </button>
@@ -212,7 +222,7 @@ export function OpenStreetMapView({
             type="button"
             aria-label="지도 확대"
             onClick={() => setMapZoom((value) => Math.min(maxZoom, value + 1))}
-            className="grid h-8 w-8 place-items-center border-l border-[#eef2f7] text-[16px] font-bold text-[#4b5563]"
+            className="grid h-10 w-10 place-items-center border-l border-[#eef2f7] text-[16px] font-bold text-[#4b5563]"
           >
             +
           </button>
@@ -220,7 +230,7 @@ export function OpenStreetMapView({
             type="button"
             aria-label="지도 오른쪽 이동"
             onClick={() => panBy(80, 0)}
-            className="grid h-8 w-8 place-items-center border-l border-[#eef2f7] text-[14px] font-bold text-[#4b5563]"
+            className="grid h-10 w-10 place-items-center border-l border-[#eef2f7] text-[14px] font-bold text-[#4b5563]"
           >
             →
           </button>

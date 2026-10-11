@@ -165,7 +165,7 @@ export function PickupMethodScreen() {
   };
 
   return (
-    <main className="mx-auto min-h-screen w-full max-w-[393px] bg-white text-[#111827]">
+    <main className="mx-auto min-h-screen pb-24 w-full max-w-[393px] bg-white text-[#111827]">
       <IosStatusBar />
       <header className="relative h-14">
         <button
@@ -218,11 +218,11 @@ export function PickupMethodScreen() {
             height={88}
             priority
             unoptimized
-            className="absolute left-[261px] top-1 h-[88px] w-[88px] object-contain"
+            className="absolute right-3 top-1 h-[88px] w-[88px] object-contain"
           />
         </section>
 
-        <section className="absolute left-5 top-[132px] h-[232px] w-[353px]">
+        <section className="absolute left-5 top-[132px] h-[232px] w-[calc(100%-40px)]">
           <div className="flex h-[22px] items-center justify-between">
             <h2 className="text-[16px] font-bold leading-[22px]">
               가까운 병원 위치
@@ -231,7 +231,7 @@ export function PickupMethodScreen() {
               type="button"
               onClick={handleNearbyClick}
               disabled={isLocating}
-              className="text-[12px] font-medium leading-[18px] text-[#6b7280] disabled:text-[#9ca3af]"
+              className="min-h-10 text-[12px] font-medium leading-[18px] text-[#6b7280] disabled:text-[#9ca3af]"
             >
               {isLocating ? "확인 중" : "내 주변 기준"}
             </button>
@@ -253,11 +253,11 @@ export function PickupMethodScreen() {
           ) : null}
         </section>
 
-        <section className="absolute left-5 top-[386px] h-[257px] w-[353px]">
+        <section className="absolute left-5 top-[386px] h-[257px] w-[calc(100%-40px)]">
           <h2 className="text-[16px] font-bold leading-[22px]">
             수령 방법 선택
           </h2>
-          <div className="absolute left-[5px] top-[38px] h-24 w-[344px]">
+          <div className="absolute left-1 top-[38px] h-24 w-[calc(100%-8px)]">
             <MethodCard
               title="병원만 방문"
               description="진료 후 병원에서 바로 약을 받아요."
@@ -272,7 +272,7 @@ export function PickupMethodScreen() {
               }}
             />
           </div>
-          <div className="absolute left-[5px] top-[150px] h-24 w-[344px]">
+          <div className="absolute left-1 top-[150px] h-24 w-[calc(100%-8px)]">
             <MethodCard
               title="병원 + 약국 방문"
               description="진료 후 가까운 약국에서 약을 받아요."

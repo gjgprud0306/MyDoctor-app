@@ -76,15 +76,19 @@ img {
   }
 }
 
-@media (hover: none) and (pointer: coarse) {
+.home-screen { padding-bottom: 94px; }
+
+@media (hover: none) and (pointer: coarse), (display-mode: standalone) {
   body {
     background: #f3f4f7;
   }
 
   .bottom-navigation {
-    height: calc(82px + env(safe-area-inset-bottom));
+    height: calc(60px + env(safe-area-inset-bottom));
     padding-bottom: env(safe-area-inset-bottom);
   }
+
+  .home-screen { padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
 
   .home-indicator {
     display: none;

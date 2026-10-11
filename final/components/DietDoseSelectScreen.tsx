@@ -42,7 +42,7 @@ function DoseStepper({
             quantity,
           });
         }}
-        className="absolute left-0 top-0 h-[30px] w-[32px] text-[18px] font-semibold leading-[30px] text-[#2f70ff]"
+        className="absolute left-0 top-[-6px] h-[42px] w-[40px] text-[18px] font-semibold leading-[30px] text-[#2f70ff]"
       >
         -
       </button>
@@ -62,7 +62,7 @@ function DoseStepper({
             quantity,
           });
         }}
-        className="absolute right-0 top-0 h-[30px] w-[32px] text-[18px] font-semibold leading-[30px] text-[#2f70ff]"
+        className="absolute right-0 top-[-6px] h-[42px] w-[40px] text-[18px] font-semibold leading-[30px] text-[#2f70ff]"
       >
         +
       </button>
@@ -328,7 +328,7 @@ export function DietDoseSelectScreen() {
         </button>
       </section>
 
-      <div className="fixed bottom-0 left-0 right-0 mx-auto h-24 w-full max-w-[393px] bg-white pt-3 shadow-[0_-8px_24px_rgba(17,24,39,0.08)]">
+      <div className="fixed bottom-0 left-0 right-0 mx-auto h-24 w-full max-w-[393px] bg-white px-5 pt-3 shadow-[0_-8px_24px_rgba(17,24,39,0.08)]">
         <button
           type="button"
           data-gtm-id="medicine-select-place-button"
@@ -346,7 +346,7 @@ export function DietDoseSelectScreen() {
               `/pickup-method?medicine=${selectedMedicine.id}&entry_point=${entryPoint}&quantity=${totalQuantity}`,
             );
           }}
-          className="mx-5 h-14 w-[353px] rounded-[8px] bg-[#2f70ff] text-[16px] font-bold leading-6 text-white"
+          className="h-14 w-full rounded-[8px] bg-[#2f70ff] text-[16px] font-bold leading-6 text-white"
         >
           병원 · 약국 선택하기
         </button>

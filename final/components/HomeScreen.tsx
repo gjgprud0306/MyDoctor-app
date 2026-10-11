@@ -52,7 +52,7 @@ export function HomeScreen() {
   }, []);
 
   return (
-    <main className="app-shell relative mx-auto min-h-screen w-full max-w-[390px] bg-appBg">
+    <main className="app-shell home-screen relative mx-auto min-h-screen w-full max-w-[390px] bg-appBg">
       <AppHeader />
       <QuickAccess actions={quickActions} />
       <PromoBanner />

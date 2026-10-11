@@ -50,7 +50,7 @@ export function MedicineListScreen({
     <main className="mx-auto h-[747px] w-full max-w-[393px] bg-white">
       <div className="relative h-full overflow-hidden">
         <div className="absolute left-0 top-0 h-[46px] w-full">
-          <div className="absolute left-[173px] top-4 h-[6px] w-12 rounded-full bg-[#d1d5db]" />
+          <div className="absolute left-1/2 -translate-x-1/2 top-4 h-[6px] w-12 rounded-full bg-[#d1d5db]" />
         </div>
 
         <section className="absolute left-0 top-[46px] h-[116px] w-full px-5">
@@ -71,7 +71,7 @@ export function MedicineListScreen({
           />
         ))}
 
-        <section className="absolute left-5 top-[634px] h-[61px] w-[353px] rounded-[14px] bg-[#f0f6ff]">
+        <section className="absolute left-5 top-[634px] h-[88px] w-[calc(100%-40px)] rounded-[14px] bg-[#f0f6ff]">
           <Image
             src="/assets/images/medicines/info-shield.png"
             alt=""
@@ -97,7 +97,7 @@ export function MedicineListScreen({
               });
               router.push("/medicine-info");
             }}
-            className="absolute left-[258px] top-[18px] h-6 w-[77px] rounded-[12px] bg-white text-[11px] font-semibold leading-4 text-[#4b5563]"
+            className="absolute right-3 top-[40px] h-[40px] w-[88px] rounded-[12px] bg-white text-[11px] font-semibold leading-4 text-[#4b5563]"
           >
             약 정보 보기
           </button>

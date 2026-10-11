@@ -121,7 +121,7 @@ export function HospitalDetailScreen() {
         </h1>
       </header>
 
-      <section className="mx-4 h-[88px] w-[361px] rounded-[10px] border border-[#dce3ee] bg-white shadow-[0_6px_18px_rgba(17,24,39,0.04)]">
+      <section className="mx-4 h-[88px] w-[calc(100%-32px)] max-w-[361px] rounded-[10px] border border-[#dce3ee] bg-white shadow-[0_6px_18px_rgba(17,24,39,0.04)]">
         <div className="relative h-full">
           <Image
             src={selectedHospital.image}
@@ -148,7 +148,7 @@ export function HospitalDetailScreen() {
         </div>
       </section>
 
-      <section className="mx-4 mt-3 w-[361px]">
+      <section className="mx-4 mt-3 w-[calc(100%-32px)] max-w-[361px]">
         <h2 className="text-[20px] font-semibold leading-6">
           진료 가능 시간
         </h2>
@@ -193,12 +193,12 @@ export function HospitalDetailScreen() {
               hospital_name: selectedHospital.name,
             });
           }}
-          className="mt-2 h-[38px] w-[361px] rounded-[8px] border border-[#dce3ee] bg-white text-[13px] font-medium leading-[18px] text-[#4b5563]"
+          className="mt-2 h-[38px] w-full rounded-[8px] border border-[#dce3ee] bg-white text-[13px] font-medium leading-[18px] text-[#4b5563]"
         >
           {isDatePickerOpen ? "날짜 접기" : "다른 날짜 보기"}
         </button>
         {isDatePickerOpen ? (
-          <div className="mt-2 flex h-[38px] w-[361px] touch-pan-x gap-2 overflow-x-auto overflow-y-hidden overscroll-x-contain mobile-scrollbar">
+          <div className="mt-2 flex h-[38px] w-full touch-pan-x gap-2 overflow-x-auto overflow-y-hidden overscroll-x-contain mobile-scrollbar">
             {dateOptions.map((date) => {
               const selected = date === selectedDate;
               return (
@@ -223,7 +223,7 @@ export function HospitalDetailScreen() {
         ) : null}
       </section>
 
-      <section className="mx-4 mt-5 h-[58px] w-[361px] rounded-[10px] bg-[#f6f9ff]">
+      <section className="mx-4 mt-5 h-[58px] w-[calc(100%-32px)] max-w-[361px] rounded-[10px] bg-[#f6f9ff]">
         <div className="relative h-full">
           <div className="absolute left-3 top-[11px]">
             <p className="text-[10px] font-medium leading-[15px] text-[#6b7280]">
@@ -239,7 +239,7 @@ export function HospitalDetailScreen() {
         </div>
       </section>
 
-      <section className="mx-4 mt-3 h-[54px] w-[361px] rounded-[10px] border border-[#e5eaf3] bg-white">
+      <section className="mx-4 mt-3 h-[54px] w-[calc(100%-32px)] max-w-[361px] rounded-[10px] border border-[#e5eaf3] bg-white">
         <div className="px-3 py-[9px]">
           <h2 className="text-[13px] font-medium leading-[18px] text-[#4b5563]">
             예약 변경 · 취소는 마이페이지에서 가능해요
@@ -284,11 +284,10 @@ export function HospitalDetailScreen() {
             });
             router.push(completePath);
           }}
-          className="mt-4 h-12 w-[361px] rounded-[8px] bg-[#2f70ff] text-[16px] font-semibold leading-6 text-white"
+          className="mt-4 h-12 w-full rounded-[8px] bg-[#2f70ff] text-[16px] font-semibold leading-6 text-white"
         >
           예약하기
         </button>
-        <div className="mx-auto mt-8 h-[5px] w-[135px] rounded-full bg-black" />
       </div>
     </main>
   );

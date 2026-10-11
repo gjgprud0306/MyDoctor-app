@@ -18,7 +18,7 @@ export function MedicineCard({ item, top, onSelect }: MedicineCardProps) {
       onClick={onSelect}
       data-gtm-id={`medicine-option-${medicineName}`}
       aria-label={`${item.name} 선택`}
-      className="absolute left-5 flex w-[353px] items-center gap-[10px] rounded-[14px] border border-[#d7dde8] bg-white px-3 py-[5px] text-left"
+      className="absolute left-5 flex w-[calc(100%-40px)] items-center gap-[10px] rounded-[14px] border border-[#d7dde8] bg-white px-3 py-[5px] text-left"
       style={{ top, height: item.cardHeight }}
     >
       <div className="grid h-[68px] w-[68px] shrink-0 place-items-center overflow-hidden bg-white">
@@ -35,8 +35,8 @@ export function MedicineCard({ item, top, onSelect }: MedicineCardProps) {
           }}
         />
       </div>
-      <div className="flex h-[76px] w-[202px] shrink-0 flex-col justify-center">
-        <div className="flex min-h-6 items-center gap-3">
+      <div className="flex h-[76px] min-w-0 flex-1 flex-col justify-center">
+        <div className="flex min-h-6 items-center gap-2">
           <h2 className="shrink-0 whitespace-nowrap text-[17px] font-semibold leading-[22px] text-[#111827]">
             {item.name}
           </h2>
@@ -58,7 +58,7 @@ export function MedicineCard({ item, top, onSelect }: MedicineCardProps) {
       </div>
       <span
         aria-hidden="true"
-        className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-[#e1e6ef] bg-white"
+        className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-[#e1e6ef] bg-white"
       >
         <svg
           aria-hidden="true"

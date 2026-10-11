@@ -84,7 +84,7 @@ function Chip({
   onDelete?: () => void;
 }) {
   return (
-    <div className="flex h-9 items-center rounded-[18px] border border-[#e5e7eb] bg-white text-[13px] font-semibold leading-[18px] text-[#21242c]">
+    <div className="flex h-10 items-center rounded-[18px] border border-[#e5e7eb] bg-white text-[13px] font-semibold leading-[18px] text-[#21242c]">
       <button
         type="button"
         data-gtm-id={keywordType === "popular" ? "search-popular-keyword" : "search-recent-keyword"}
@@ -99,9 +99,9 @@ function Chip({
           type="button"
           aria-label={`${label} 삭제`}
           onClick={onDelete}
-          className="mr-3 grid h-4 w-4 place-items-center rounded-full bg-[#eef2f7] text-[#6b7280]"
+          className="grid h-10 w-10 place-items-center text-[#6b7280]"
         >
-          <CloseIcon />
+          <span className="grid h-4 w-4 place-items-center rounded-full bg-[#eef2f7]"><CloseIcon /></span>
         </button>
       ) : null}
     </div>
@@ -286,7 +286,7 @@ export function ScreenSearch() {
                 <button
                   type="button"
                   onClick={() => setRecentSearches([])}
-                  className="text-[12px] font-semibold leading-4 text-[#6b7280]"
+                  className="min-h-10 text-[12px] font-semibold leading-4 text-[#6b7280]"
                 >
                   전체 삭제
                 </button>
@@ -374,7 +374,7 @@ export function ScreenSearch() {
           <section>
             <div className="mb-4 flex items-end justify-between">
               <h2 className="text-[17px] font-bold leading-6">검색 결과</h2>
-              <span className="text-[12px] font-semibold leading-4 text-[#6b7280]">
+              <span className="min-h-10 text-[12px] font-semibold leading-4 text-[#6b7280]">
                 {results.length}개
               </span>
             </div>
